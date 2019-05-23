@@ -1,0 +1,730 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+body{
+    font-family: "Arial", Serif;
+    background-color: #e6e6e6;
+    overflow-x: hidden;
+
+}
+/*Logo and Navigation styl*/
+.logo{
+  float: left;
+  margin:-26.5px 0 0 -10px;
+}
+.reg-btn{
+border: 0.9px solid white;
+}
+
+.navbar{
+    background-color: #3c6a96;
+    overflow: hidden;
+    height: 63.5px;
+    text-align: left;
+    
+}
+
+.navbar a{
+    float: right;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 8px 7px;
+    margin: 4px;
+    text-decoration: none;
+    font-size: 17px;
+   
+}
+.navbar ul{
+    margin: 10px 0 0 0; 
+    list-style: none; 
+   
+
+}
+.navbar a:hover{
+    background-color: #eceff1;
+    color: #000;
+}
+.side-nav{
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top:0;
+    left: 0;
+    background-color: #526575;
+    opacity: 0.9;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+
+}
+.side-nav a{
+    padding: 10px 10px 10px 30px;
+    text-decoration: none;
+    font-size: 22px;
+    color: #ccc;
+    display: block;
+    transition: 0.3s;
+
+}
+.side-nav a:hover{
+    color: #fff;
+}
+.side-nav .btn-close{
+    position: absolute;
+    top:0;
+    right: 22px;
+    font-size: 36px;
+    margin-left: 50px;
+
+}
+#main{
+    transition: margin-left 0.5;
+    padding: 20px;
+    overflow: hidden;
+    width: 100%;
+}
+@media(max-width:568px){
+    .navbar-nav{
+        display: none;
+    }
+    .image-slide img{
+        width: 100%;
+        left:0;
+    }
+
+    .modal-content{
+     display: flex;
+     position: absolute;
+     overflow: auto;
+    
+    }
+    .modal-img{
+     width: 100%;
+    }
+    .model-btn{
+        position: absolute;
+        width: 100%;
+        max-width: 25%;
+        left: 28px;
+        margin-bottom: 10%;
+        padding-top: 90px;
+        display: inline-block;
+
+    }
+    .model-price{
+        flex:1;
+        position: relative;
+        width:100%;
+        max-width: 30%;
+        left:120px;
+        padding-top: 70px;
+
+    }
+
+    .newUserInfo{
+        width: 100%;
+        position: absolute;
+        margin-top:90%;
+        margin-right: -20px;
+    
+    }
+    .login{
+        width:100%;
+        position: absolute;
+        margin-top:10%;
+        margin-left:20%;
+    }
+
+}
+@media(min-width:770px){
+    .open-slide{
+        display: none;
+    }
+}
+/*--------------------------*/
+/*containerss*/
+*{
+    box-sizing: border-box;
+    padding: 0;
+}
+.wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+.short-note{
+    flex:1;
+    order:2;
+    margin: 140px 100px;
+    border: 1px solid rgb(134, 140, 146);
+    background: #ccc;
+    padding: 10px;
+
+}
+
+.container-signup{
+    flex:1;
+    order:1;
+    margin: 5px 180px;
+    box-sizing: border-box; 
+
+}
+@media(max-width:568px){
+.wrapper{
+    overflow: hidden;
+    
+}
+.container-signup{
+    padding: 0;
+    margin: 0;
+}
+
+}
+h1{
+    font-size: 60px;
+    margin: 30px 30px; 
+    color: gray;
+}
+.container-signup h1{
+    float: left;
+    font-size: 22px;
+    color: rgb(14, 14, 14);
+    border-bottom: 3px solid rgb(44, 99, 163);
+    margin-bottom: 30px;
+    padding: 13px;
+}
+.textBox{
+    width: 100%;
+    overflow:hidden;
+    font-size: 10px;
+    padding: 8px 1px;
+    margin:8px 0;
+    border-bottom: 1px solid rgb(111, 138, 212);
+}
+.textBox input{
+    border: none;
+    outline: none;
+    background: none;
+    color: rgb(8, 8, 8);
+    font-weight: 300;
+    font-size: 18px;
+    width: 270px;
+    float: left;
+    margin: 5px;
+}
+.btn input{
+    background: none;
+    outline: none;
+    width: 100%;
+    border: 2px solid rgb(44, 99, 163);
+    border-radius: 20px;
+    color: rgb(12, 12, 12);
+    font-weight: 700;
+    padding:5px;
+    font-size: 19px;
+    cursor: pointer;
+    margin: 20px 0;
+}
+.btn input:hover{
+    background:rgb(13, 63, 119);
+    color: white;
+}
+
+
+  /*search*/
+  #search{
+    display: block;
+    position: absolute;
+    top: 16px;
+    right: 50px;
+    width: 180px;
+    left: 50%;
+
+    transition: width ease 0.2s, opacity ease 0.4s;
+    border-radius: 32px;
+    -webkit-font-smoothing: antialise;
+    text-align: left;
+    font: "Arial", Serif;
+    padding: 4px 10px;
+    border: none;
+    margin-bottom: 0;
+    outline: none;
+    color: black;
+    font-weight: 600;
+    }
+    
+    @media(max-width: 768px){
+    #search{
+    position: static;
+    width: 100%;
+    font-size: 1.3em;
+    line-height: 1.8em;
+    text-indent: 3px;
+    border:0;
+    border-radius: 0;
+    padding: 1px 0;
+    margin: 0;
+    }
+    }
+
+ /*Main Page of car Post*/
+    .wrapper{
+        display: flex;
+        padding: 0;
+        margin:0;
+    }
+    .categories{
+        flex:1;
+        background: rgb(206, 209, 212);
+        margin-top: 20px;
+    }
+    .categories h2, input{
+        margin-left: 8px;
+    }
+    .categories ul li{
+      font-size: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid white;
+      margin-left: 10px;
+      text-align: left;
+      list-style-type: none;
+    }
+    .categories li a{
+        text-decoration: none;
+        background: transparent;
+        color: rgb(59, 58, 58);
+    }
+    .categories li a:hover{
+        color: rgb(13, 13, 14);
+        font-weight: 600;
+    }
+
+    .price-range{
+        border: 1px solid rgb(185, 184, 184);
+        margin: 15px 10px 4px 10px;
+        padding-left:5px;
+        margin-top: 30%;
+        
+
+    }
+    .price-range select{
+        width: 50%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+    .search{
+        position: relative;
+        width: 10%;
+        margin-bottom: -8px;
+    }
+    
+    .car-post{
+        flex:3;
+        background: #e6e6e6;  
+    }
+    .car-post ul li{
+        width: 100%;
+        max-width: 400px;
+        height: 350px;
+        list-style-type: none;
+        background-color: white;
+        border: 1px solid rgb(202, 202, 202);
+        margin: 5px 8px 5px 20px;
+    }
+    .car-post ul li img{
+        width: 250px;
+        height: auto;
+    }
+    .car-post ul{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        
+    
+    }
+    .car-post ul li{
+        flex: 1;
+    }
+
+    figcaption a{
+        color: rgb(10, 10, 10);
+        font-size: 18px;
+        font-weight: 600;
+    }
+    .car-view-btn{
+        text-decoration: none;
+        width: 33%;
+        height: 14%;
+        border: 1px solid black;
+        color: white;
+        text-align: center;
+        background:black ;
+        border-radius: 5%;
+        position:relative;
+        /* margin-left:40%; */
+        padding: 2px 2px;
+        top:40%;
+        left: 15%;
+        transform: translate(50%);
+        -ms-transform: translate(50%);
+        /* opacity: 0.5; */
+        transition: 0.3s;
+        display: none;
+
+    }
+    .car-view-btn:hover{
+        color:black;
+        background: white;
+        cursor: pointer;
+    
+    }
+    /*display btn when hover on the list of cars*/
+    .car-post ul li:hover .car-view-btn{
+        display: inline-block;
+    }
+
+    .car-post ul li:hover{
+        box-shadow: 5px 5px 5px 5px grey;
+        
+    }
+
+    /*cardetailsimage*/
+    .wrapper-car-details{
+        width: 100%;
+        max-width:500px;
+        margin: 30px;
+        padding: 0;
+       
+    }
+    .small-img img{
+        float:left;
+        margin: 5px 5px;
+        padding: 2px 2px;
+        width:20%;
+        height: 40px;
+        cursor:pointer;
+        border: 1px solid gray;
+        border-radius: 3px;
+
+    }
+    .mySlides2{
+        width: 100%;
+        height: 300px;
+        border: 1px solid gray;
+        margin:0;  
+        border-radius: 3px; 
+    }
+    .carInfo{
+        margin: 30px 10px;
+        padding: 30px;
+        border: 1px solid rgb(162, 162, 165);
+        width: 52%;
+        background: rgb(206, 209, 212);
+        border-radius: 3px;
+
+
+    }
+    .carInfo h3{
+        color:rgb(190, 62, 62);
+    }
+    .addbtn button{
+        background: #3c6a96;
+        color: white;
+        margin: 10px 10px;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+
+    }
+    .addbtn button:hover{
+        background: white ;
+        color: #063968; 
+    }
+    .price-counter #minus,#plus{
+        background: white;
+        color: black;
+        align-items: center;
+        margin: 7px 7px;
+        padding: 5px;
+        border-radius: 3px;
+    }
+    .description{
+        width: 100%;
+        margin-left: 10px;
+        line-height: 1.8em;
+        border: 1px solid rgb(162, 162, 165);
+        border-radius: 3px;
+        padding: 40px;
+        background:rgb(206, 209, 212);
+
+        
+    } 
+    .description header{
+        border-bottom: 1px solid rgb(229, 229, 243);
+    }
+    /*CarSlide*/
+    .image-slide{
+        width: 100%;
+        height: auto;
+    }
+    .mySlides1{
+        position: relative;
+        width: 100%;
+        height: 300px;
+        max-width: 600px;
+        left:20%;
+  
+    }
+
+    /*modalTable*/
+    #modal{
+        display: none;
+
+     }
+    .modal-content{
+        /* margin: 10px; */
+        display: flex;
+        line-height: 1.7em;
+        margin: 1px; /* 15% from the top and centered */
+        border: 2px solid rgb(6, 108, 175);
+        position: absolute;
+        z-index: 1;
+        left: 2%;
+        top: 25%;
+        width: 100%; 
+        max-width: 1200px;
+        height: 400px; 
+        overflow: auto; 
+        background-color: rgb(243, 236, 236); 
+        background-color: rgba(247, 243, 243, 0.966);
+    }
+    .mySlides3{
+        width: 100%;
+        max-width: 300px;
+        height:auto;
+    }
+    .modal-img{
+        flex:2;
+        order:left;
+        margin: 2% 5% 0 7%;
+
+    }
+    .model-price{
+        flex:1;
+        margin:-20% 50% 0 0;
+        float:right;
+
+    }
+    .model-btn{
+      flex:1;
+      margin:-23% 7% 0 0;
+      float:right;
+    }
+
+
+    .modal-img .close{
+        background: black;
+        color: white;
+        padding: 10px;
+        font-size: 18px;
+    
+    }
+    .close:hover{
+        background: white;
+        color: #000;
+        cursor: pointer;
+
+    }
+
+    .model-btn button{
+        background: #3c6a96;
+        color: white;
+        margin: 10px 10px;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        
+
+    }
+    .model-btn button:hover{
+        background: white ;
+        color: #063968; 
+    }
+    .model-btn button a{
+        color: white;
+       
+        text-decoration: none;
+        margin:0;
+        padding:20px;
+        border-radius: 5px;
+
+    }
+    .model-btn button a:hover{
+        color:#063968;
+    }
+
+    .model-price .pric{
+        color: rgb(165, 78, 78);
+    }
+    /*finalcheckouttoCart*/
+    .wrapper-buying-cart{
+        margin-top: 80px;
+        margin-left: 50px;
+    }
+    .mySlides4{
+    width:100%;
+    max-width: 100px;
+    }
+    table{
+        width: 100%;
+        max-width: 1000px;
+        margin:0;
+        /* margin: 10px 5px 0 20px; */
+        text-align: center;
+        table-layout: fixed;
+
+    }
+
+    table,tr,th{
+        border-bottom: 2px solid rgb(44, 99, 163);
+    
+    }
+
+
+ .buy-btn{
+        background: none;
+        outline: none;
+        width: 15%;
+        border: 1px solid rgb(44, 99, 163);
+        border-radius: 5%;
+        color: rgb(12, 12, 12);
+        font-weight: 400;
+        padding:2px;
+        font-size: 15px;
+        cursor: pointer;
+        margin: 20px 0;
+    }
+    .buy-btn:hover{
+        background:rgb(13, 63, 119);
+        color: white;
+    }
+
+/*login style8*/
+.login{
+    width: 100%;
+    max-width:400px; 
+    padding: 2px 10px;
+    position: absolute;
+    top:48%;
+    left:30%;
+    transform: translate(-50%,-50%);
+    /* border: 2px solid rgb(44, 99, 163); */
+    
+
+} 
+.login h1{
+    float: left;
+    font-size: 40px;
+    border-bottom: 6px solid rgb(29, 136, 29);
+    margin-bottom: 50px;
+    padding: 13px 0;
+
+}
+.textbox1{
+    width: 100%;
+    overflow: hidden;
+    font-size: 20px;
+    padding: 8px 0;
+    margin: 8px 0;
+    border-bottom: 1px solid rgb(44, 99, 163);
+
+}
+.textbox1 input{
+    border: none;
+    outline: none;
+    background:none;
+    color: black;
+    font-size: 18px;
+    width: 80%;
+    float: left;
+    margin: 0 10px;
+}
+.textbox1 i{
+    width: 26px;
+    background: #e6e6e6;
+    color: #000;
+    float:left;
+    text-align: center;
+   
+}
+
+.login h1{
+    float: left;
+    font-size: 22px;
+    color: rgb(14, 14, 14);
+    border-bottom: 3px solid rgb(44, 99, 163);
+    margin-bottom: 30px;
+    padding: 13px;
+}
+.login-btn{
+    background: none;
+    outline: none;
+    width: 100%;
+    border: 2px solid rgb(44, 99, 163);
+    border-radius: 20px;
+    color: rgb(12, 12, 12);
+    font-weight: 700;
+    padding:5px;
+    font-size: 19px;
+    cursor: pointer;
+    margin: 20px 0;
+}
+.login-btn:hover{
+    background:rgb(13, 63, 119);
+    color: white;
+}
+.login a{
+    text-decoration: none;
+    color: rgb(44, 99, 163);
+    padding: 10px 0;
+}
+.login a:hover{
+    color: #1a1b1a;
+}
+
+.newUserInfo{
+    width: 100%;
+    max-width:300px; 
+    height: 270px;
+    padding: 5px 10px;
+    margin-left:0;
+    float: right;
+    position: absolute;
+    top:30%;
+    right:10%;
+    text-align: center;
+    border: 1px solid rgb(134, 140, 146);
+    background: #ccc;
+    
+}
+.newUserInfo li{
+    list-style: none;
+}
+.newUserInfo input{
+    background: none;
+    outline: none;
+    width: 50%;
+    border: 1px solid rgb(44, 99, 163);
+    border-radius: 5%;
+    color: rgb(12, 12, 12);
+    font-weight: 400;
+    padding:2px;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 20px 0;
+}
+.newUserInfo input:hover{
+    background:rgb(13, 63, 119);
+    color: white;
+}

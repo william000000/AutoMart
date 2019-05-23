@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <title>AutoMart</title>
+</head>
+<body>
+<!--Navigation bar-->   
+    <nav class="navbar">
+        <div class="logo">
+           <p><a href="home.html"><img src="../img/logo.jpg" alt="logo"></a></p>         
+        </div>   
+       <span class="open-slide">
+            <a href="#" onclick="openSlideMenu()">
+                <svg width="30" height="30">
+                    <path d="M0,5 30,5" stroke="#fff" stroke-width="5"/>
+                    <path d="M0,14 30,14" stroke="#fff" stroke-width="5"/>
+                    <path d="M0,23 30,23" stroke="#fff" stroke-width="5"/>
+                </svg>
+            </a>
+        </span>
+        <ul class="navbar-nav">
+            <li><a href="../index.html" class="reg-btn">SignUp</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="home.html">Home</a></li>
+        </ul>
+    </nav>
+
+    <div id="side-menu" class="side-nav">
+        <a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
+        <a href="#">Home</a>
+        <a href="#">Login</a>
+        <a href="#">SignUp</a>
+    </div>
+    <div id="search">
+            <input id="search" type="text" placeholder="Search" autocomplete="off">
+    </div>
+    <!--Main Content-->
+<div class="wrapper">
+
+
+    <div class="wrapper-car-details">
+        <img class="mySlides mySlides2" src="../img/car1.jpg" style="display:none">
+        <img class="mySlides mySlides2" src="../img/car2.jpg">
+        <img class="mySlides mySlides2" src="../img/car3.jpg" style="display:none">
+       <br>
+        <div class="row-padding section">
+          <div class="small-img">
+            <img class="pic " src="../img/car1.jpg"  onclick="currentDiv(1)">
+          </div>
+          <div class="small-img">
+            <img class="pic" src="../img/car2.jpg"  onclick="currentDiv(2)">
+          </div>
+          <div class="small-img">
+            <img class="pic" src="../img/car3.jpg" onclick="currentDiv(3)">
+          </div>
+        </div>
+    </div>
+    <div class="carInfo">
+        <section class="productView">
+            <h2>Lamborghini</h2>
+            <span>Available</span>
+            <h3>$10000</h3>
+        </section>
+        <div class="price-counter">
+            <label for="id">Quantity</label>
+            <button type="button" id="minus" onclick="minus()">-</button>
+            <span id="clicks">0</span>
+            <button type="button" id="plus" onclick="plus()">+</button>
+            <br>
+            <br>
+            Total: <span id="sums">0</span>
+            <br>
+            <div class="addbtn">
+                <button class="addtocart-btn" id="add"><a>Add to Cart</a></button>
+            </div>
+        </div>
+    </div>
+    <div class="description">
+        <header>
+            <h3>Description</h3>
+        </header>
+        <p>
+            Type: ...........<br>
+            Status: .........<br>
+            BodyType: ...... <br>
+            Manufacturer: .....<br>
+        </p>
+    </div>
+
+</div>
+
+<div  id="modal" class="modal-content">
+
+    <div class="modal-img">
+        <span class="close">&times;</span>
+        <p> Ok <span id="items">0</span> Items Were Added to Your Cart<br></p>
+        <img class="mySlides mySlides3" src="../img/car2.jpg">
+    </div>
+    <div class="model-price">
+            <span><h3>Lamborghini</h3></span><br>
+            <span id="itemss" class="pric">0</span>x<span class="pric">$10000</span>
+    </div>
+    <div class="model-btn">
+        Total:<span id="sumcart">0</span><br>
+        <button><a href="updateOrBuy.html">CheckOut</a></button><br>
+        <button><a href="car-details.html">Continue Shopping</a></button><br>
+        <button><a href="updateOrBuy.html">View Or Update Your Order</a></button>
+        
+    </div>
+        
+        
+</div>
+
+    <script src="../js/script.js"></script>
+    <script src="../js/priceTag.js"></script>
+    <script src="../js/modal.js"></script>
+</body>
+</html>
