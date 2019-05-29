@@ -33,9 +33,9 @@
 
     <div id="side-menu" class="side-nav">
         <a href="#" class="btn-close" onclick="closeSlideMenu()">&times;</a>
-        <a href="#">Home</a>
-        <a href="#">Login</a>
-        <a href="#">SignUp</a>
+        <a href="home.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="../index.html">SignUp</a>
     </div>
     <div id="search">
             <input id="search" type="text" placeholder="Search" autocomplete="off">
@@ -69,11 +69,32 @@
                 <span id="sumcart2">0</span> 
             </td>
             <td>
-                <span>&times;cancel</span>
+                <span id="cancel" >&times;</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img class="mySlides mySlides4" src="../img/car5.jpg">
+                <span><h3>BMW</h3></span>
+            </td>
+            <td>
+                <span class="pric">$11000</span>
+            </td>
+            <td>
+                <button type="button" id="minuss" onclick="minus()"><i class="fas fa-chevron-down"></i></button>
+                <span id="clicks">0</span>
+                <button type="button" id="pluss" onclick="plus()"><i class="fas fa-chevron-up"></i></button>
+            </td>
+            <td>
+                <span id="sumcart2">0</span> 
+            </td>
+            <td>
+                <span id="cancel" >&times;</span>
             </td>
         </tr>
     </table>
-    <button class="buy-btn"><a>CheckOut</a></button>
+    <button class="buy-btn"><a>Buy</a></button>
+    <p><a href="./home.html">Back Home</a></p>
         
 </div>
 

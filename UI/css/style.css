@@ -8,7 +8,7 @@ body{
 /*Logo and Navigation styl*/
 .logo{
   float: left;
-  margin:-26.5px 0 0 -10px;
+  margin:-26px 0 0 -10px;
 }
 .reg-btn{
 border: 0.9px solid white;
@@ -134,6 +134,30 @@ border: 0.9px solid white;
         margin-top:10%;
         margin-left:20%;
     }
+    .seller-post{
+        position: absolute;
+        width: 100%;
+        top:55%;
+        left:-19%;
+    }
+    .model-content{
+        width:100%;
+    }
+    .categories2{
+        width: 100%;
+        max-width: 400px;
+        max-height: 250px;
+    }
+    .posted-cars{
+        position: absolute;
+        width:100%;
+        margin-top: 55%;
+        left:-15%;
+    
+    }
+    .posted-cars table th,td{ 
+        display:block;
+    }
 
 }
 @media(min-width:770px){
@@ -181,6 +205,7 @@ border: 0.9px solid white;
 }
 
 }
+
 h1{
     font-size: 60px;
     margin: 30px 30px; 
@@ -193,6 +218,15 @@ h1{
     border-bottom: 3px solid rgb(44, 99, 163);
     margin-bottom: 30px;
     padding: 13px;
+}
+
+.container-signup span a{
+ color:rgb(44, 99, 163);
+ text-decoration: none;
+ padding: 10px;
+}
+.container-signup span a:hover{
+    color: #20c228;
 }
 .textBox{
     width: 100%;
@@ -266,6 +300,7 @@ h1{
     padding: 1px 0;
     margin: 0;
     }
+    
     }
 
  /*Main Page of car Post*/
@@ -280,10 +315,10 @@ h1{
         margin-top: 20px;
     }
     .categories h2, input{
-        margin-left: 8px;
+        margin-left: 10px;
     }
     .categories ul li{
-      font-size: 18px;
+      font-size: 15px;
       padding-bottom: 10px;
       border-bottom: 1px solid white;
       margin-left: 10px;
@@ -305,18 +340,20 @@ h1{
         margin: 15px 10px 4px 10px;
         padding-left:5px;
         margin-top: 30%;
-        
 
     }
     .price-range select{
         width: 50%;
+        font-size: 13px;
         height: auto;
         margin-bottom: 10px;
+        border-radius: 7px;
     }
     .search{
         position: relative;
-        width: 10%;
+        width: 8%;
         margin-bottom: -8px;
+        color: black;
     }
     
     .car-post{
@@ -325,12 +362,18 @@ h1{
     }
     .car-post ul li{
         width: 100%;
-        max-width: 400px;
-        height: 350px;
+        max-width: 380px;
+        height: 320px;
         list-style-type: none;
         background-color: white;
         border: 1px solid rgb(202, 202, 202);
         margin: 5px 8px 5px 20px;
+        line-height: 1.2em;
+        box-shadow: 2px 3px rgba(185, 184, 184, 0.596);
+    }
+    .car-post blockquote{
+        line-height: .7em;
+        font-size: 15px;
     }
     .car-post ul li img{
         width: 250px;
@@ -348,24 +391,25 @@ h1{
     }
 
     figcaption a{
-        color: rgb(10, 10, 10);
-        font-size: 18px;
+        color:rgb(43, 61, 99);
+        text-decoration: none;
+        font-size: 17px;
         font-weight: 600;
     }
     .car-view-btn{
         text-decoration: none;
         width: 33%;
         height: 14%;
-        border: 1px solid black;
-        color: white;
+        border: 1px solid rgb(16, 72, 136);
+        color: rgb(17, 50, 122);
         text-align: center;
-        background:black ;
-        border-radius: 5%;
+        background: white;
+        border-radius: 5px;
         position:relative;
-        /* margin-left:40%; */
+        font-weight: 500;
         padding: 2px 2px;
         top:40%;
-        left: 15%;
+        left: 20%;
         transform: translate(50%);
         -ms-transform: translate(50%);
         /* opacity: 0.5; */
@@ -374,10 +418,40 @@ h1{
 
     }
     .car-view-btn:hover{
-        color:black;
-        background: white;
+        color: white;
+        background: rgb(95, 125, 158);
         cursor: pointer;
     
+    }
+    .car-delete-btn{
+        text-decoration: none;
+        width: 33%;
+        height: 14%;
+        border: 1px solid rgb(16, 72, 136);
+        color: rgb(17, 50, 122);
+        text-align: center;
+        background:white;
+        border-radius: 5px;
+        position:relative;
+        /* margin-left:40%; */
+        padding: 2px 2px;
+        top:40%;
+        left: -48%;
+        position: relative;
+        transform: translate(50%);
+        -ms-transform: translate(50%);
+        /* opacity: 0.5; */
+        transition: 0.3s;
+        display: none;  
+    }
+    .car-delete-btn:hover{
+        color: white;
+        background: rgb(95, 125, 158);
+        cursor: pointer;
+    
+    }
+    .car-post ul li:hover .car-delete-btn{
+        display: inline-block;
     }
     /*display btn when hover on the list of cars*/
     .car-post ul li:hover .car-view-btn{
@@ -414,16 +488,17 @@ h1{
         border: 1px solid gray;
         margin:0;  
         border-radius: 3px; 
+        margin-left: 8px;
     }
     .carInfo{
-        margin: 30px 10px;
-        padding: 30px;
+        margin: 20px 30px;
+        height: 38%;
         border: 1px solid rgb(162, 162, 165);
-        width: 52%;
+        width: 42%;
         background: rgb(206, 209, 212);
         border-radius: 3px;
-
-
+        padding-left: 30px;
+        margin-top: 2.5%;
     }
     .carInfo h3{
         color:rgb(190, 62, 62);
@@ -451,6 +526,7 @@ h1{
     }
     .description{
         width: 100%;
+        max-width: 1180px;
         margin-left: 10px;
         line-height: 1.8em;
         border: 1px solid rgb(162, 162, 165);
@@ -467,15 +543,31 @@ h1{
     .image-slide{
         width: 100%;
         height: auto;
+        background: rgb(17, 14, 14);
+        
     }
     .mySlides1{
+        margin-top:1px;
+        object-fit:cover;
         position: relative;
         width: 100%;
         height: 300px;
-        max-width: 600px;
-        left:20%;
+        max-width: 1300px;
+        /* left:20%; */
+        opacity: 0.5;
   
     }
+    .image-slide h2 { 
+        position: absolute; 
+        top: 150px; 
+        left:0; 
+        width: 100%; 
+        color: white;
+        font-size: 40px;
+        flex-wrap: wrap;
+        text-align: center;
+
+     }
 
     /*modalTable*/
     #modal{
@@ -564,7 +656,7 @@ h1{
         color:#063968;
     }
 
-    .model-price .pric{
+    .pric{
         color: rgb(165, 78, 78);
     }
     /*finalcheckouttoCart*/
@@ -595,19 +687,39 @@ h1{
  .buy-btn{
         background: none;
         outline: none;
-        width: 15%;
-        border: 1px solid rgb(44, 99, 163);
+        width: 12%;
+        border: 2px solid rgb(44, 99, 163);
         border-radius: 5%;
         color: rgb(12, 12, 12);
         font-weight: 400;
         padding:2px;
-        font-size: 15px;
+        font-size: 18px;
+        font-weight: 600;
         cursor: pointer;
-        margin: 20px 0;
+        margin: 20px 20% 0 0 ;
+        float: right;
     }
     .buy-btn:hover{
         background:rgb(13, 63, 119);
         color: white;
+    }
+    .wrapper-buying-cart #cancel{
+        font-size: 30px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    #cancel:hover{
+        color:rgb(206, 35, 35);
+    }
+
+    .wrapper-buying-cart p a{
+        text-decoration: none;
+        border: 1px solid rgb(77, 156, 202);
+        background: #f2f2f2;
+        width: 20%;
+        padding:5px;
+        color: black;
+        border-radius: 3px;
     }
 
 /*login style8*/
@@ -711,20 +823,138 @@ h1{
 .newUserInfo li{
     list-style: none;
 }
-.newUserInfo input{
-    background: none;
+.newUserInfo a{
+    background: rgb(111, 171, 211);
     outline: none;
     width: 50%;
     border: 1px solid rgb(44, 99, 163);
-    border-radius: 5%;
+    border-radius: 3px;
     color: rgb(12, 12, 12);
     font-weight: 400;
     padding:2px;
     font-size: 15px;
     cursor: pointer;
     margin: 20px 0;
+    text-decoration: none;
 }
-.newUserInfo input:hover{
+.newUserInfo a:hover{
+    background:rgb(13, 63, 119);
+    color: white;
+}
+/*seller page style*/
+.seller-post{
+    display: block;
+    overflow: auto;
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid grey;
+    margin: 5%;
+    padding:0 4%;
+    margin-left:20%;
+    width: 100%;
+    height: 570px;
+    font-size: 14px;
+    font-weight: 450;
+    border-radius: 5px;
+
+}
+
+.seller-post input,select{
+    width: 100%;
+    padding:5px 5px;
+    margin:5px 0 4px 0;
+    border-radius:4px;
+    background: #ccc;
+       
+}
+.seller-post input[type='submit']{
+    font-size: 15px;
+    background: #063968;
+    color:white;
+    width: 30%;
+    cursor: pointer;
+    margin: 15px  5px;
+    padding:8px;
+    border-radius: 8px;
+    border-bottom: 2px solid grey;
+}
+.seller-post input[type='submit']:hover{
+    background: #437246;
+}
+.seller-post h3{
+    border-bottom: 2px solid grey;
+}
+.seller-post .cancel-post{
+    font-size: 15px;
+    background: #063968;
+    color:white;
+    width: 33%;
+    padding: 8px;
+    cursor: pointer;
+    margin: 15px  5px;
+    border-bottom: 2px solid grey;
+    text-decoration: none;
+    border-radius: 8px;
+
+}
+.seller-post .cancel-post:hover{
+    background: #437246;
+}
+.seller-post textarea{
+    width: 100%;
+    height: 100px;
+}
+
+.categories2{
+    width: 200px;
+    height: 1000px;
+    background: rgb(206, 209, 212);
+    margin-top: 20px;
+    overflow: auto;
+}
+.categories2 h3, input{
+    margin-left: 10px;
+}
+.categories2 ul li{
+  font-size: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid white;
+  margin-left: 10px;
+  text-align: left;
+  list-style-type: none;
+}
+.categories2 li a{
+    text-decoration: none;
+    background: transparent;
+    color: rgb(59, 58, 58);
+}
+.categories2 li a:hover{
+    color: rgb(13, 13, 14);
+    font-weight: 600;
+}
+.posted-cars{
+    width:70%;
+    margin-left:17%;
+    top: 120%;
+    position: absolute;
+
+}
+
+#change-stat, #update-cost{
+    background: none;
+    outline: none;
+    width:100%;
+    max-width: 40%;
+    border: 2px solid rgb(44, 99, 163);
+    border-radius: 8px;
+    color: rgb(12, 12, 12);
+    font-weight: 700;
+    padding:5px;
+    font-size: 15px;
+    cursor: pointer;
+    margin: 20px 0;
+}
+#change-stat:hover, #update-cost:hover{
     background:rgb(13, 63, 119);
     color: white;
 }
