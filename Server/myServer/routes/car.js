@@ -4,4 +4,7 @@ const router = express.Router();
 
 router.post("/car", carController.addCarPost);
 
+router.post("/order", carController.purchaseOrder);
+
+
 export default router;
