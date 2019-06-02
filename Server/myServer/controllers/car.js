@@ -84,5 +84,25 @@ class carController{
             else return res.status(400).send({status:400, message: "car is not found"});   
         }else return res.status(400).send({status:400, message: "incorrect Email account"});
     }
+    
+    static updateCarPrice(req,res){
+        const car_id = req.params.id;
+        const checkCar = cars.find(c=>c.id===parseInt(car_id));
+        if(checkCar){ 
+                const newPrice=parseFloat(req.body.price); 
+                checkCar.price = newPrice;
+                res.status(200).send({status: 200, data:{
+                    id: checkCar.id,
+                    car_id: checkCar.car_id,
+                    created_on: new Date(),
+                    model:checkCar.model,
+                    status: checkCar.status,
+                    state: checkCar.state,
+                    price: parseFloat(checkCar.price),
+                    manufacturer: checkCar.manufacturer
+                }});  
+        }
+        else return res.status(400).send({message:"Your Car not found"}); 
+    }
 }
 export default carController;
