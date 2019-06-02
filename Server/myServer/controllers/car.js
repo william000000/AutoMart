@@ -63,5 +63,26 @@ class carController{
         }
         else return res.status(400).send({message:"Your order not exist"});
     }
+    static markPosted(req,res){
+        const singleCar = cars.find(cr=>cr.id===parseInt(req.params.id));
+        const userEmail = user.find(us=>us.email===req.body.email);
+        if(userEmail){
+            if(singleCar){
+                if(singleCar.status==="available"){
+                    const newStatus = cars.map(c=>{if(c.status==="available") c.status="sold"; return c;});
+                    res.status(200).send({status:200, data:{
+                        id:singleCar.id,
+                        email:userEmail.email,
+                        created_on:singleCar.created_on,
+                        manufacturer:singleCar.manufacturer,
+                        model: singleCar.model,
+                        status: singleCar.status,
+                        state: singleCar.state
+                        }})
+                }else return res.status(400).send({status:400, message: "car status is sold"});
+            }
+            else return res.status(400).send({status:400, message: "car is not found"});   
+        }else return res.status(400).send({status:400, message: "incorrect Email account"});
+    }
 }
 export default carController;
