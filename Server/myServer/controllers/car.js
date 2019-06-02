@@ -46,5 +46,22 @@ class carController{
         }
     }else res.status(400).send({status: 400, message: "user not found"});
     }
+    static updatePriceOfOrder(req,res){
+        const order_id = req.params.id;
+        const checkOrder = order.find(o=>o.id===parseInt(order_id));
+        if(checkOrder){ 
+            if(checkOrder.status==="pending"){ const newPrice=parseFloat(req.body.price); 
+                res.status(200).send({status: 200, data:{
+                    id: checkOrder.id,
+                    car_id: checkOrder.car_id,
+                    status: "pending",
+                    oldPrice: parseFloat(checkOrder.amount),
+                    newPrice: parseFloat(newPrice) 
+                }});  
+            }
+            else{return res.status(400).send({message:"Your order is not in pending mode"});}
+        }
+        else return res.status(400).send({message:"Your order not exist"});
+    }
 }
 export default carController;
