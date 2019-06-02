@@ -32,6 +32,18 @@ class userController{
             }
             else{res.status(404).send({status:404, message:'not data inserted!'});}
         }
-
+    static signin(req,res){
+        const token = jwt.sign({_id:user.id}, process.env.secretKey)
+        const singleUser=user.find(useer=>useer.email===req.body.email && (useer.password===req.body.password));
+        if(!singleUser) return res.status(400).send({status: 400 , message: "incorrect username or password"});
+        if(singleUser){res.status(200).send({status: 200,data:{
+            token:token,
+            id:singleUser.id,
+            first_name:singleUser.first_name,
+            last_name:singleUser.last_name,
+            email: singleUser.email,
+            address: singleUser.address
+        }});}
+    }
 }
 export default userController; 
