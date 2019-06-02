@@ -22,5 +22,29 @@ class carController{
         }
         else{res.status(400).send({message:"not found"});}
     }
+
+    static purchaseOrder(req,res){
+        const singleCar = cars.find(c=>c.model===req.body.model);
+        const buyer = user.find(us=>us.email===req.body.email);
+        if(buyer){
+        if(singleCar){
+            if(singleCar.status==="available"){
+                const priceOffered = req.body.price;
+               return res.status(200).send({status: 200, data: {
+                    id: order.length+1,
+                    car_id: singleCar.id,
+                    created_on: new Date(),
+                    status: "pending",
+                    price: singleCar.price,
+                    priceOfffered: priceOffered} });
+            }else{
+                res.status(400).send({status:400, message: "pendind or sold"});
+            }
+        }
+        else{
+            res.status(400).send({status: 400, message: "car not found"});
+        }
+    }else res.status(400).send({status: 400, message: "user not found"});
+    }
 }
 export default carController;
