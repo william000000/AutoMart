@@ -4,7 +4,7 @@ let cars = [
         owner: 1,
         created_on: new Date(),
         state: "new",
-        status: "available",
+        status: "sold",
         price: 5000.0,
         manufacturer: "lamborghini",
         model: "lamborghini",

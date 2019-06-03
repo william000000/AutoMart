@@ -99,7 +99,7 @@ class carController{
     }
     static viewSpecificCar(req,res){
         const car_id = req.params.id;
-        const checkCar = cars.findAll(c=>c.id===parseInt(car_id));
+        const checkCar = cars.find(c=>c.id===parseInt(car_id));
         if(checkCar){ 
                 res.status(200).send({status: 200, data:checkCar});  
         }
@@ -120,5 +120,11 @@ class carController{
             return res.status(200).send({status: 200, data:result})}
         else return res.status(400).send({message:"Car not found"}); 
      }
+     
+     static viewAllPostedCar(req,res){
+        const checkCar = cars.filter(car=>car.status==="sold"||car.status==="available");
+        if(checkCar){ res.status(200).send({status: 200, data:checkCar}); }
+        else return res.status(400).send({message:"Car not found"});   
+    }
 }
 export default carController;
