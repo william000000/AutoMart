@@ -105,5 +105,12 @@ class carController{
         }
         else return res.status(400).send({message:"Car not found"}); 
     }
+    static viewAllUnsoldCar(req,res){
+        const checkCar = cars.filter(car=>car.status==="available");
+        if(checkCar){ 
+         res.status(200).send({status: 200, data:checkCar});      
+        }
+        else return res.status(400).send({message:"Car not found"}); 
+    }
 }
 export default carController;
