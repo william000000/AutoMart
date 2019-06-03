@@ -9,5 +9,6 @@ router.patch("/car/:id/status",carController.markPosted);
 router.patch("/car/:id/price",carController.updateCarPrice);
 router.get("/car/:id",carController.viewSpecificCar);
 router.get("/car",carController.viewAllUnsoldCar);
+router.delete("/car/:id",carController.deleteCar);
 
 export default router;
