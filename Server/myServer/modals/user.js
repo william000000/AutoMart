@@ -17,5 +17,5 @@ let user = [
         address:"Nigeria",
         isAdmin:false
     }
-]
+];
 export default user;

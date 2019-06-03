@@ -11,6 +11,5 @@ router.get("/car/:id",carController.viewSpecificCar);
 router.get("/car",carController.viewAllUnsoldCar);
 router.delete("/car/:id",carController.deleteCar);
 router.get("/cars",carController.viewAllPostedCar);
-
-
+router.post("/flag",carController.flagAsFraudulent);
 export default router;

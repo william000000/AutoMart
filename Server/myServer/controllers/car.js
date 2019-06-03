@@ -1,6 +1,7 @@
 import cars from "../modals/cars";
 import user from "../modals/user";
 import order from "../modals/order";
+import flags from "../modals/flags";
 class carController{
     static addCarPost(req,res){
         const singleUser = user.find(useer=>useer.email===req.body.email);
@@ -125,6 +126,21 @@ class carController{
         const checkCar = cars.filter(car=>car.status==="sold"||car.status==="available");
         if(checkCar){ res.status(200).send({status: 200, data:checkCar}); }
         else return res.status(400).send({message:"Car not found"});   
+    }
+    static flagAsFraudulent(req,res){
+        const car_id = req.body.id;
+        const checkCar = cars.find(car=>car.id == car_id);
+        if(checkCar){
+        const newFlag = {
+            id: flags.length+1,
+            car_id: checkCar.id,
+            reason: "Not working well",
+            description: "Engine issues"
+        }
+        if(newFlag)return res.status(200).send({data:newFlag});
+        else return res.status(400).send("flag not specified");    
+        }
+        else{return res.status(400).send({status: 400, data: "a car not found"});}
     }
 }
 export default carController;

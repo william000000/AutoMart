@@ -4,15 +4,15 @@ let flags = [
         car_id: 1,
         created_on: new Date(),
         reason: "pricing",
-        descriptive: " Working great..."
+        descriptive: " Has weak technology..."
     },
     {
         id: 2,
         car_id: 1,
         created_on: new Date(),
         reason: "weird demands",
-        descriptive: " Working great..."
+        descriptive: " Engine not Working well..."
     }
-]
+];
 
 export default flags;
