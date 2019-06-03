@@ -9,7 +9,7 @@ app.use(express.urlencoded({extended:true}));
 app.use("/api/v1/auth/",AuthRouter);
 app.use("/api/v1/",carRouter);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 2000;
 app.listen(port,()=>{
     console.log(`Server connected on port ${port}`);
 });
