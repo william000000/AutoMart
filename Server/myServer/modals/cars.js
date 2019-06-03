@@ -32,5 +32,5 @@ let cars = [
         model: "BMW",
         body_type: "car"
     }
-]
+];
 export default cars;
