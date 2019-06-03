@@ -112,5 +112,13 @@ class carController{
         }
         else return res.status(400).send({message:"Car not found"}); 
     }
+    static deleteCar(req,res){
+        const car_id = req.params.id;
+        const checkCar = cars.find(car=>car.id===parseInt(car_id));
+        if(checkCar){  
+            const result = cars.filter(car=>car.id!==parseInt(car_id));
+            return res.status(200).send({status: 200, data:result})}
+        else return res.status(400).send({message:"Car not found"}); 
+     }
 }
 export default carController;
