@@ -19,10 +19,8 @@ class carController{
             };
             cars.push(newCar); 
             res.status(200).send({ status: 200, newCar}); 
-        }
-        else{res.status(400).send({message:"not found"});}
+        }else{res.status(400).send({message:"not found"});}
     }
-
     static purchaseOrder(req,res){
         const singleCar = cars.find(c=>c.model===req.body.model);
         const buyer = user.find(us=>us.email===req.body.email);
@@ -37,13 +35,9 @@ class carController{
                     status: "pending",
                     price: singleCar.price,
                     priceOfffered: priceOffered} });
-            }else{
-                res.status(400).send({status:400, message: "pendind or sold"});
-            }
+            }else{res.status(400).send({status:400, message: "pendind or sold"});}
         }
-        else{
-            res.status(400).send({status: 400, message: "car not found"});
-        }
+        else{res.status(400).send({status: 400, message: "car not found"}); }
     }else res.status(400).send({status: 400, message: "user not found"});
     }
     static updatePriceOfOrder(req,res){
@@ -83,8 +77,7 @@ class carController{
             }
             else return res.status(400).send({status:400, message: "car is not found"});   
         }else return res.status(400).send({status:400, message: "incorrect Email account"});
-    }
-    
+    } 
     static updateCarPrice(req,res){
         const car_id = req.params.id;
         const checkCar = cars.find(c=>c.id===parseInt(car_id));
@@ -103,6 +96,14 @@ class carController{
                 }});  
         }
         else return res.status(400).send({message:"Your Car not found"}); 
+    }
+    static viewSpecificCar(req,res){
+        const car_id = req.params.id;
+        const checkCar = cars.findAll(c=>c.id===parseInt(car_id));
+        if(checkCar){ 
+                res.status(200).send({status: 200, data:checkCar});  
+        }
+        else return res.status(400).send({message:"Car not found"}); 
     }
 }
 export default carController;
