@@ -16,4 +16,5 @@ router.get("/car-range", carController.viewAllUnsoldCarInRange);
 router.get("/car-used", carController.viewAllUnsoldCarBySpecificMakeUsed);
 router.get("/car-new", carController.viewAllUnsoldCarBySpecificMakeNew);
 router.get("/car-make",carController.viewAllUnsoldCarofSpecificMake);
+router.get("/car-body",carController.viewAllCarByBodyType);
 export default router;
