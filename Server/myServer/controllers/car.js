@@ -159,19 +159,21 @@ class carController {
         const min = req.query.min_price;
         const max = req.query.max_price;
         const status = req.query.status;
-        const check = cars.filter(car => car.price >= parseFloat(min) && car.price <= parseFloat(max));
-        if (check) {
-            res.status(200).send({ status: 200, data: check });
-        } else return res.status(200).send({ status: 200, data: "not found" });
+        const checked = cars.find(car=>car.status===status);
+        if (checked&&status==="available"){
+            const check = cars.filter(car => car.price >= parseFloat(min) && car.price <= parseFloat(max)&&car.status==="available");
+            if(check){res.status(200).send({ status: 200, data: check });}
+            else {return res.status(200).send({ status: 200, data: "sold and not available!!" });}
+        } else return res.status(200).send({ status: 200, data: "the range you specified not found" });
     }
     static viewAllUnsoldCarBySpecificMakeUsed(req, res) {
         const maker = req.body.make;
-        const statu = req.query.status;
+        const status = req.query.status;
         const state = req.query.state;
         const findCar = cars.find(car=>car.manufacturer === maker && car.state==="used" && car.status==="available");
         
         if (findCar) {
-            const result = cars.filter(car=>car.manufacturer === maker&&car.status===statu&&car.state===state);
+            const result = cars.filter(car=>car.manufacturer === maker&&car.status===status&&car.state===state);
             if(result){return res.status(200).send({ status: 200, data: result });}
             else return res.status(400).send({ message: "manufacturer not found" });
             }
