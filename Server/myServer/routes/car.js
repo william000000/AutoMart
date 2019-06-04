@@ -15,4 +15,5 @@ router.post("/flag", carController.flagAsFraudulent);
 router.get("/car-range", carController.viewAllUnsoldCarInRange);
 router.get("/car-used", carController.viewAllUnsoldCarBySpecificMakeUsed);
 router.get("/car-new", carController.viewAllUnsoldCarBySpecificMakeNew);
+router.get("/car-make",carController.viewAllUnsoldCarofSpecificMake);
 export default router;
