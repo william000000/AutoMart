@@ -31,7 +31,7 @@ Auto Mart, users can sell their cars or buy from trusted sellers.
 - Start Server 
 ```npm run dev```
 - Run Postman to check my API Endpoint on 
-```localhost:4000``` 
+```localhost:2000``` 
 
 ## Use these method and path to test my API Endpoint
 
@@ -45,6 +45,13 @@ Auto Mart, users can sell their cars or buy from trusted sellers.
 | PATCH       | /api/v1/car/:id/status                     | To Mark a posted car Ad as sold        |
 | PATCH       | /api/v1/car/:id/price                      | To Update a car price                  |
 | GET         | /api/v1/car/:id                            | To View a specific car                 |
+| GET         | /api/v1/car                                | To View All Unsold car                 |
+| DELETE      | /api/v1/car/:id                            | Delete specific Car                    |
+| GET         | /api/v1/car-all                            | To view all posted cars                |
+| POST        | /api/v1/flag                               | Flag/report posted car as fraudulent   |
+| GET         | /api/v1/car-range                          | To view all cars with a range of price |
+| GET         | /api/v1/car-used                           | To View all unsold cars&Used by make   |
+| GET         | /api/v1/car-new                            | To View all unsold cars&New by make    |
 
 ## Technologies Used
 
@@ -54,5 +61,6 @@ Auto Mart, users can sell their cars or buy from trusted sellers.
 ### Front-End
 - HTML
 - CSS
+- JavaScript
 
-## Author: Willy Boris
+## Author: Willy Boris 
