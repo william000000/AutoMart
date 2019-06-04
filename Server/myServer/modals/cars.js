@@ -53,6 +53,17 @@ let cars = [
         manufacturer: "fusso",
         model: "fusso",
         body_type: "Truck"
+    },
+    {
+        id: 6,
+        owner: 2,
+        created_on: new Date(),
+        state: "new",
+        status: "available",
+        price: 10000.0,
+        manufacturer: "v8",
+        model: "land-cruiser",
+        body_type: "car"
     }
 ];
 export default cars;
