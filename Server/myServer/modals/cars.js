@@ -25,12 +25,34 @@ let cars = [
         id: 3,
         owner: 2,
         created_on: new Date(),
-        state: "new",
+        state: "used",
         status: "sold",
         price: 12000.0,
         manufacturer: "BMW",
         model: "BMW",
         body_type: "car"
+    },
+    {
+        id: 4,
+        owner: 2,
+        created_on: new Date(),
+        state: "used",
+        status: "available",
+        price: 20000.0,
+        manufacturer: "Nissan",
+        model: "Nissan",
+        body_type: "Truck"
+    },
+    {
+        id: 5,
+        owner: 1,
+        created_on: new Date(),
+        state: "used",
+        status: "available",
+        price: 20000.0,
+        manufacturer: "fusso",
+        model: "fusso",
+        body_type: "Truck"
     }
 ];
 export default cars;
