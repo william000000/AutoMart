@@ -193,7 +193,7 @@ class carController {
         else return res.status(400).send({ status:400, message: "no cars available that are new" });
     }
     static viewAllUnsoldCarofSpecificMake(req,res){
-        const maker = req.query.make;
+        const maker = req.query.manufacturer;
         const status = req.query.status;
         const findCar = cars.filter(car=>car.manufacturer === maker && car.status==="available");
         if (findCar) {
@@ -202,6 +202,15 @@ class carController {
         }
             
         else return res.status(400).send({status:400, message: "Manufacturer not found in available car" });
+    }
+    static viewAllCarByBodyType(req,res){
+        const body_type = req.query.body_type;
+        const findBody = cars.find(car=>car.body_type===body_type);
+        
+        if (findBody){
+            const findCar = cars.filter(car=>car.body_type === body_type);
+            return res.status(200).send({ status: 200, data: findCar }); }   
+        else return res.status(400).send({status:400, message: "Body Type not found" });
     }
 }
 export default carController; 
