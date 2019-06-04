@@ -164,5 +164,18 @@ class carController {
             res.status(200).send({ status: 200, data: check });
         } else return res.status(200).send({ status: 200, data: "not found" });
     }
+    static viewAllUnsoldCarBySpecificMakeUsed(req, res) {
+        const maker = req.body.make;
+        const statu = req.query.status;
+        const state = req.query.state;
+        const findCar = cars.find(car=>car.manufacturer === maker && car.state==="used" && car.status==="available");
+        
+        if (findCar) {
+            const result = cars.filter(car=>car.manufacturer === maker&&car.status===statu&&car.state===state);
+            if(result){return res.status(200).send({ status: 200, data: result });}
+            else return res.status(400).send({ message: "manufacturer not found" });
+            }
+        else return res.status(400).send({ message: "no cars available that are used" });
+    }
 }
 export default carController; 
