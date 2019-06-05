@@ -167,16 +167,16 @@ border: 0.9px solid white;
         top:35%;
         margin-left:30%;
     }
-    .wrapper .textBox2{
+    .wrappers .textBox2{
         width: 100%;
         margin-left:-37%;
     }
-    .wrapper h3{
+    .wrappers h3{
         position: relative;
         width: 100%;
         left:-12%;
     }
-    .wrapper .btnn input{
+    .wrappers .btnn input{
         width: 100%;
         max-width: 40%;
         position: absolute;
@@ -1083,7 +1083,7 @@ h1{
 }
 
 /*Reset password*/
-.wrapper h3{
+.wrappers h3{
     float: left;
     font-size: 20px;
     color: rgb(14, 14, 14);
