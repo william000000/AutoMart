@@ -11,20 +11,22 @@
 </head>
 <body>
 <!--Navigation bar-->   
-    <nav class="navbar">
+<nav class="navbar">
         <div class="logo">
-           <p><a href="home.html"><img src="../img/logo.jpg" alt="logo"></a></p>         
-        </div>   
-       <span class="open-slide">
+            <p><a href="home.html"><img src="../img/logo.jpg" alt="logo"></a></p>
+        </div>
+        <span class="open-slide">
             <a href="#" onclick="openSlideMenu()">
                 <svg width="30" height="30">
-                    <path d="M0,5 30,5" stroke="#fff" stroke-width="5"/>
-                    <path d="M0,14 30,14" stroke="#fff" stroke-width="5"/>
-                    <path d="M0,23 30,23" stroke="#fff" stroke-width="5"/>
+                    <path d="M0,5 30,5" stroke="#fff" stroke-width="5" />
+                    <path d="M0,14 30,14" stroke="#fff" stroke-width="5" />
+                    <path d="M0,23 30,23" stroke="#fff" stroke-width="5" />
                 </svg>
             </a>
         </span>
         <ul class="navbar-nav">
+            <li><img src="../img/user-account.jpg" alt="user-img" class="user-img" id="userImg" onmouseover="showDiv()">
+            </li>
             <li><a href="../index.html" class="reg-btn">SignUp</a></li>
             <li><a href="login.html">Login</a></li>
             <li><a href="home.html">Home</a></li>
@@ -36,12 +38,22 @@
         <a href="home.html">Home</a>
         <a href="login.html">Login</a>
         <a href="../index.html">SignUp</a>
+        <a href="./login.html">Logout</a>
     </div>
     <div id="search">
-            <input id="search" type="text" placeholder="Search" autocomplete="off">
+        <input id="search" type="text" placeholder="Search" onkeyup="myFunction()" autocomplete="off">
+    </div>
+    <!--User Account-->
+    <div class="user-account" id="userAcc">
+        <div class="account-img"><img src="../img/user-account.jpg" alt="user-img2" class="user-img2"></div>
+        <div class="account-text">
+            <h3>Hello,<strong>User</strong>!</h3>
+        </div>
+        <div class="account-btn"><button onclick="window.location.href='./resetPass.html';">Change password</button></div>
+        <div class="account-btn"><button onclick="window.location.href='./login.html';">Logout</button></div>
     </div>
     <!--Main Content-->
-<div class="wrapper-buying-cart">
+<div class="wrapper-buying-cart" id="wrap1">
 
     <h2>Your Cart has <span id="itemss2">0</span> Items</h2> 
     <table>
@@ -101,5 +113,6 @@
     <script src="../js/script.js"></script>
     <script src="../js/priceTag.js"></script>
     <script src="../js/modal.js"></script>
+    <script src="../js/userAccount.js"></script>
 </body>
 </html>
