@@ -124,7 +124,7 @@ border: 0.9px solid white;
     .newUserInfo{
         width: 100%;
         position: absolute;
-        margin-top:90%;
+        margin-top:100%;
         margin-right: -20px;
     
     }
@@ -143,20 +143,45 @@ border: 0.9px solid white;
     .model-content{
         width:100%;
     }
-    .categories2{
+    .wrapper .categories2{
         width: 100%;
         max-width: 400px;
         max-height: 250px;
     }
-    .posted-cars{
+    .posted-cars table{
         position: absolute;
         width:100%;
         margin-top: 55%;
-        left:-15%;
+        left:-20%;
+    background: #e8ece9;
     
     }
-    .posted-cars table th,td{ 
+    .posted-cars table th,td,tr{ 
         display:block;
+        margin: 10px auto;
+
+    }
+    .textBox2{
+        width: 100%;
+        position: absolute;
+        top:35%;
+        margin-left:30%;
+    }
+    .wrapper .textBox2{
+        width: 100%;
+        margin-left:-37%;
+    }
+    .wrapper h3{
+        position: relative;
+        width: 100%;
+        left:-12%;
+    }
+    .wrapper .btnn input{
+        width: 100%;
+        max-width: 40%;
+        position: absolute;
+        top: 45%;
+        margin-left:30%;
     }
 
 }
@@ -300,7 +325,37 @@ h1{
     padding: 1px 0;
     margin: 0;
     }
-    
+    .seller-car-post{
+        width: 100%;
+        max-width: 400px;
+    }
+    .posted-cars{
+        width: 100%;
+        max-width: 550px;
+        left:12%;
+        margin: 15% 5px 0 0;
+    }
+    .posted-cars #change-stat,.posted-cars #update-cost{
+        width: 100%;
+        max-width: 60px;
+        display: inline-block;
+        font-size: 10px;
+    }
+    .user-account{
+        width: 100%;
+    }
+    .user-account .account-img{
+        width:100%;
+        margin: 3px 7px 0 13px;
+    }
+    .user-account .account-text{
+        margin: 3px 7px 0 9px;
+    }
+    .user-account .account-btn button{
+        width: 100%;
+        font-size: 8px;
+        margin: 2px 1px 0 27px
+    } 
     }
 
  /*Main Page of car Post*/
@@ -824,7 +879,7 @@ h1{
     list-style: none;
 }
 .newUserInfo a{
-    background: rgb(111, 171, 211);
+    background: rgb(181, 190, 196);
     outline: none;
     width: 50%;
     border: 1px solid rgb(44, 99, 163);
@@ -957,4 +1012,128 @@ h1{
 #change-stat:hover, #update-cost:hover{
     background:rgb(13, 63, 119);
     color: white;
+}
+
+/*my bodytyp search*/
+#mySearch{
+    position: relative;
+    padding: 5px;
+    border-radius: 6px;
+}
+.user-img{
+    width: 100px;
+    max-width:40px;
+    height: 35px;
+    border-radius: 50%;
+    float:right;
+    margin:6px 5px 2px 3px;
+}
+
+.user-account{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 14%;
+    height: 40%;
+    float:right;
+    padding: 0;
+    margin:0;
+    position: absolute;
+    left:85%;
+    background: white;
+    z-index: 6;
+    border-radius: 5px;
+    display: none;
+}
+.user-img2{
+    width: 100%;
+    max-width: 70%;
+}
+.account-img{
+    margin:10px 3px 4px 50px;
+    padding:5px;
+}
+.account-text{
+    font-weight: 600;
+    font-size: 14px;
+    margin:5px 40px; 
+}
+.account-btn button{
+    background: none;
+    outline: none;
+    width: 100%;
+    max-width: 50%;
+    border: 2px solid rgb(44, 99, 163);
+    border-radius: 5px;
+    color: rgb(12, 12, 12);
+    font-weight: 600;
+    padding:3px;
+    font-size: 12px;
+    cursor: pointer;
+    margin:5px 40px;
+
+
+}
+.account-btn button:hover{
+    border: 2px solid rgb(172, 159, 159);
+}
+
+.navbar-nav li img:hover{
+    border: 2px solid rgb(127, 134, 133);
+}
+
+/*Reset password*/
+.wrapper h3{
+    float: left;
+    font-size: 20px;
+    color: rgb(14, 14, 14);
+    border-bottom: 3px solid rgb(44, 99, 163);
+    margin-bottom: 30px;
+    padding: 13px;
+    margin-left: 30%;
+    margin-top:3%;
+}
+.textBox2{
+    position: absolute;
+    width: 100%;
+    max-width: 400px;
+    overflow:hidden;
+    font-size: 10px;
+    padding: 3px 1px;
+    margin:10% 0;
+    border-bottom: 1px solid rgb(111, 138, 212);
+    float: left;
+    left: 33%;
+}
+.textBox2 input{
+    border: none;
+    outline: none;
+    background: none;
+    color: rgb(8, 8, 8);
+    font-weight: 300;
+    font-size: 17px;
+    width: 270px;
+    text-align: right;
+    float: left;
+    margin: 10px;
+
+}
+.btnn input{
+    position: absolute;
+    background: none;
+    outline: none;
+    width: 10%;
+    border: 2px solid rgb(44, 99, 163);
+    border-radius: 10px;
+    color: rgb(12, 12, 12);
+    font-weight: 500;
+    padding:5px;
+    font-size: 17px;
+    cursor: pointer;
+    margin: 10px 0;
+    margin-top:15%;
+    margin-left: -25%;
+}
+.btnn input:hover{
+    border:2px solid rgb(163, 161, 161);
 }

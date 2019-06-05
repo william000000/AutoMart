@@ -25,6 +25,7 @@
             </a>
         </span>
         <ul class="navbar-nav">
+            <li><img src="../img/user-account.jpg" alt="user-img" class="user-img" id="userImg" onmouseover="showDiv()"></li>
             <li><a href="../index.html" class="reg-btn">SignUp</a></li>
             <li><a href="login.html">Login</a></li>
             <li><a href="home.html">Home</a></li>
@@ -40,6 +41,13 @@
     <div id="search">
             <input id="search" type="text" placeholder="Search" onkeyup="myFunction()" autocomplete="off">
     </div>
+    <!--User Account-->
+    <div class="user-account" id="userAcc">
+      <div class="account-img"><img src="../img/user-account.jpg" alt="user-img2" class="user-img2"></div>  
+        <div class="account-text"><h3>Hello,<strong>User</strong>!</h3></div>
+        <div class="account-btn"><button onclick="window.location.href='./resetPass.html';">Change password</button></div>
+        <div class="account-btn"><button onclick="window.location.href='./login.html';">Logout</button></div>
+    </div>
     <!--Car Image slid-->
     <div class="image-slide">
         <img class="mySlides mySlides1" src="../img/car7.jpg">
@@ -48,7 +56,7 @@
         <h2>AutoMart<br>Our Reputation Goes With It</h2>
     </div>
     <!--Main Content-->
-    <div class="wrapper">
+    <div class="wrapper" id="wrap1">
 
     <div class="categories">
         
@@ -123,7 +131,13 @@
     </div>
 
     </div>
+    <!-- <div class="footer">
+        <footer>
+
+        </footer>
+    </div> -->
     
     <script src="../js/script.js"></script>
+    <script src="../js/userAccount.js"></script>
 </body>
 </html>
