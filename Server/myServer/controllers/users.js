@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import joi from "joi";
 import user from "../modals/user";
 import bcrypt from "bcrypt";
+import admin from "../middleware/admin";
 
 dotenv.config();
 class userController {
@@ -19,7 +20,7 @@ class userController {
             isAdmin: false};
             const salt = await bcrypt.genSalt(10);
             newUser.password = await bcrypt.hash(newUser.password,salt);      
-        const token = jwt.sign({ _id: user.id }, process.env.secretKey);
+        const token = jwt.sign({ _id: user.id}, process.env.secretKey);
         if (newUser) {
             user.push(newUser);
             res.status(200).send({ status: 200, 
@@ -36,9 +37,9 @@ class userController {
         }
         else { res.status(404).send({ status: 404, message: "not data inserted!" }); }
     }
-    static signin(req, res) {
-        const token = jwt.sign({ _id: user.id }, process.env.secretKey);
+    static signin(req, res) { 
         const singleUser = user.find(useer => useer.email === req.body.email && (useer.password === req.body.password));
+        const token = jwt.sign({ _id: user.id, isAdmin: singleUser.isAdmin }, process.env.secretKey);
         if (!singleUser) return res.status(400).send({ status: 400, message: "incorrect username or password" });
         if (singleUser) {
             res.status(200).send({
@@ -48,7 +49,8 @@ class userController {
                     first_name: singleUser.first_name,
                     last_name: singleUser.last_name,
                     email: singleUser.email,
-                    address: singleUser.address
+                    address: singleUser.address,
+                    isAdmin: singleUser.isAdmin
                 }
             });
         }
