@@ -21,6 +21,6 @@ let order = [
     status: "accepted"
 }
 
-]
+];
 
 export default order;

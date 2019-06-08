@@ -54,7 +54,7 @@ class carController {
                     status: 200, data: {
                         id: checkOrder.id,
                         car_id: checkOrder.car_id,
-                        status: "pending",
+                        status: checkOrder.status,
                         oldPrice: parseFloat(checkOrder.amount),
                         newPrice: parseFloat(newPrice)
                     }
@@ -120,7 +120,7 @@ class carController {
         const statuss = req.query.status;
         const checkCar = cars.filter(car => car.status === "available");
         if (checkCar) {
-            if (statuss === "available") { return res.status(200).send({ status: 200, data: checkCar }); }
+            if (statuss.toLowerCase() === "available") { return res.status(200).send({ status: 200, data: checkCar }); }
             else { return res.status(400).send({status:400, message:"search for available status not others"}); }
         }
         else return res.status(400).send({status:400, message: "Car status are not available" });
@@ -142,13 +142,13 @@ class carController {
     }
     static flagAsFraudulent(req, res) {
         const car_id = req.body.id;
-        const checkCar = cars.find(car => car.id == car_id);
+        const checkCar = flags.find(car => car.car_id == car_id);
         if (checkCar) {
             const newFlag = {
                 id: flags.length + 1,
                 car_id: checkCar.id,
-                reason: "Not working well",
-                description: "Engine issues"
+                reason: checkCar.reason,
+                description: checkCar.descriptive
             };
             if (newFlag) return res.status(200).send({ status: 200, data: newFlag });
             else return res.status(400).send({status:400, message:"flag not specified"});
@@ -159,8 +159,8 @@ class carController {
         const min = req.query.min_price;
         const max = req.query.max_price;
         const status = req.query.status;
-        const checked = cars.find(car=>car.status===status);
-        if (checked&&status==="available"){
+        const checked = cars.find(car=>car.status===status.toLowerCase());
+        if (checked&&status.toLowerCase()==="available"){
             const check = cars.filter(car => car.price >= parseFloat(min) && car.price <= parseFloat(max)&&car.status==="available");
             if(check){res.status(200).send({ status: 200, data: check });}
             else {return res.status(200).send({ status: 200, data: "sold and not available!!" });}
@@ -170,10 +170,10 @@ class carController {
         const maker = req.body.make;
         const status = req.query.status;
         const state = req.query.state;
-        const findCar = cars.find(car=>car.manufacturer === maker && car.state==="used" && car.status==="available");
+        const findCar = cars.find(car=>car.manufacturer === maker.toLowerCase() && car.state==="used" && car.status==="available");
         
         if (findCar) {
-            const result = cars.filter(car=>car.manufacturer === maker&&car.status===status&&car.state===state);
+            const result = cars.filter(car=>car.manufacturer === maker.toLowerCase()&&car.status===status.toLowerCase()&&car.state===state);
             if(result){return res.status(200).send({ status: 200, data: result });}
             else return res.status(400).send({ status:400, message: "manufacturer not found" });
             }
@@ -183,10 +183,10 @@ class carController {
         const maker = req.body.make;
         const statu = req.query.status;
         const state = req.query.state;
-        const findCar = cars.find(car=>car.manufacturer === maker && car.state==="new" && car.status==="available");
+        const findCar = cars.find(car=>car.manufacturer === maker.toLowerCase() && car.state==="new" && car.status==="available");
         
         if (findCar) {
-            const result = cars.filter(car=>car.manufacturer === maker&&car.status===statu&&car.state===state);
+            const result = cars.filter(car=>car.manufacturer === maker.toLowerCase()&&car.status===statu.toLowerCase()&&car.state===state);
             if(result){return res.status(200).send({ status: 200, data: result });}
             else return res.status(400).send({status:400, message: "manufacturer not found" });
             }
@@ -195,9 +195,9 @@ class carController {
     static viewAllUnsoldCarofSpecificMake(req,res){
         const maker = req.query.manufacturer;
         const status = req.query.status;
-        const findCar = cars.filter(car=>car.manufacturer === maker && car.status==="available");
+        const findCar = cars.filter(car=>car.manufacturer === maker.toLowerCase() && car.status==="available");
         if (findCar) {
-            if(status==="available"){return res.status(200).send({ status: 200, data: findCar });}
+            if(status.toLowerCase()==="available"){return res.status(200).send({ status: 200, data: findCar });}
             else{ return res.status(400).send({status:400, message: "cars status is not available, use (available) status" });}
         }
             
@@ -205,10 +205,10 @@ class carController {
     }
     static viewAllCarByBodyType(req,res){
         const body_type = req.query.body_type;
-        const findBody = cars.find(car=>car.body_type===body_type);
+        const findBody = cars.find(car=>car.body_type===body_type.toLowerCase());
         
         if (findBody){
-            const findCar = cars.filter(car=>car.body_type === body_type);
+            const findCar = cars.filter(car=>car.body_type === body_type.toLowerCase());
             return res.status(200).send({ status: 200, data: findCar }); }   
         else return res.status(400).send({status:400, message: "Body Type not found" });
     }
