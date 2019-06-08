@@ -2,10 +2,11 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import joi from "joi";
 import user from "../modals/user";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 class userController {
-    static signup(req, res) {
+    static async signup(req, res) {
         const singleUser = user.find(useer => useer.email === req.body.email);
         if (singleUser) return res.status(400).send({ status: 400, message: "User already exists" });
         const newUser = {
@@ -16,6 +17,8 @@ class userController {
             password: req.body.password,
             address: req.body.address,
             isAdmin: false};
+            const salt = await bcrypt.genSalt(10);
+            newUser.password = await bcrypt.hash(newUser.password,salt);      
         const token = jwt.sign({ _id: user.id }, process.env.secretKey);
         if (newUser) {
             user.push(newUser);
@@ -26,7 +29,8 @@ class userController {
                     first_name: newUser.first_name,
                     last_name: newUser.last_name,
                     email: newUser.email,
-                    address: newUser.address
+                    address: newUser.address,
+                    password:newUser.password
                 }
             });
         }
