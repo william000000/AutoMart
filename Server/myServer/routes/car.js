@@ -1,5 +1,7 @@
 import express from "express";
 import carController from "../controllers/car";
+import admin from "../middleware/admin";
+import auth from "../middleware/auth";
 const router = express.Router();
 
 router.post("/car", carController.addCarPost);
@@ -9,7 +11,7 @@ router.patch("/car/:id/status", carController.markPosted);
 router.patch("/car/:id/price", carController.updateCarPrice);
 router.get("/car/:id", carController.viewSpecificCar);
 router.get("/car", carController.viewAllUnsoldCar);
-router.delete("/car/:id", carController.deleteCar);
+router.delete("/car/:id",[auth,admin], carController.deleteCar);
 router.get("/car-all", carController.viewAllPostedCar);
 router.post("/flag", carController.flagAsFraudulent);
 router.get("/car-range", carController.viewAllUnsoldCarInRange);
