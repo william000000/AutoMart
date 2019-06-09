@@ -1,6 +1,8 @@
+import "@babel/polyfill";
 import express from "express";
 import AuthRouter from "./routes/user";
 import carRouter from "./routes/car";
+
 const app = express();
 
 app.use(express.json());

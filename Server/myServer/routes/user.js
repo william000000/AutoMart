@@ -4,7 +4,7 @@ import auth from "../middleware/auth";
 const router = express.Router();
 
 router.post("/signup",userController.signup);
-router.post("/signin",auth,userController.signin);
+router.post("/signin",userController.signin);
 
 
 export default router;
