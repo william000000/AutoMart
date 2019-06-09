@@ -4,7 +4,7 @@ let user = [
         email: "willy@gmail.com",
         first_name: "Musinga",
         last_name: "Willy",
-        password: "12345",
+        password: "$2b$10$w2KXzGvkWuU.vIQjYL3B5enKTYnexcjxZS8LpySAWjumUVhusUHHa",
         address: "Kigali",
         isAdmin: true
     },
@@ -13,7 +13,7 @@ let user = [
         email: "bobo@gmail.com",
         first_name: "Bobo",
         last_name: "Willo",
-        password: "123456",
+        password: "$2b$10$w2KXzGvkWuU.vIQjYL3B5enKTYnexcjxZS8LpySAWjumUVhusUHHa",
         address: "Nigeria",
         isAdmin: false
     }

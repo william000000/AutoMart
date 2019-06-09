@@ -21,7 +21,6 @@ class userController {
             const salt = await bcrypt.genSalt(10);
             newUser.password = await bcrypt.hash(newUser.password,salt);      
         const token = jwt.sign({ _id: user.id}, process.env.secretKey);
-        if (newUser) {
             user.push(newUser);
             res.status(200).send({ status: 200, 
                 data: {
@@ -34,13 +33,13 @@ class userController {
                     password:newUser.password
                 }
             });
-        }
-        else { res.status(404).send({ status: 404, message: "not data inserted!" }); }
     }
     static signin(req, res) { 
-        const singleUser = user.find(useer => useer.email === req.body.email && (useer.password === req.body.password));
-        const token = jwt.sign({ _id: user.id, isAdmin: singleUser.isAdmin }, process.env.secretKey);
+        const singleUser = user.find(useer => useer.email === req.body.email );
         if (!singleUser) return res.status(400).send({ status: 400, message: "incorrect username or password" });
+        const isPasswordCorrect = bcrypt.compareSync(req.body.password,singleUser.password);
+        const token = jwt.sign({ _id: user.id, isAdmin: singleUser.isAdmin }, process.env.secretKey);
+        if (!isPasswordCorrect) return res.status(400).send({ status: 400, message: "incorrect username or password" });
         if (singleUser) {
             res.status(200).send({
                 status: 200, data: {
