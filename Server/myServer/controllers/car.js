@@ -116,15 +116,7 @@ class carController {
         }
         else return res.status(400).send({status:400, message: "Car not found" });
     }
-    static viewAllUnsoldCar(req, res) {
-        const statuss = req.query.status;
-        const checkCar = cars.filter(car => car.status === "available");
-        if (checkCar) {
-            if (statuss.toLowerCase() === "available") { return res.status(200).send({ status: 200, data: checkCar }); }
-            else { return res.status(400).send({status:400, message:"search for available status not others"}); }
-        }
-        else return res.status(400).send({status:400, message: "Car status are not available" });
-    }
+
     static deleteCar(req, res) {
         const car_id = req.params.id;
         const checkCar = cars.find(car => car.id === parseInt(car_id));
@@ -135,11 +127,6 @@ class carController {
         else { return res.status(400).send({status:400, message: "Car not found" }); }
     }
 
-    static viewAllPostedCar(req, res) {
-        const checkCar = cars.filter(car => car.status === "sold" || car.status === "available");
-        if (checkCar) { res.status(200).send({ status: 200, data: checkCar }); }
-        else return res.status(400).send({ status:400, message: "Car not found" });
-    }
     static flagAsFraudulent(req, res) {
         const car_id = req.body.id;
         const checkCar = flags.find(car => car.car_id == car_id);
@@ -155,62 +142,94 @@ class carController {
         }
         else { return res.status(400).send({ status: 400, data: "a car not found" }); }
     }
-    static viewAllUnsoldCarInRange(req, res) {
+    static viewAllPostedCar(req, res) {
+        const checkCar = cars.filter(car => car.status === "sold" || car.status === "available");
+        if (checkCar) { res.status(200).send({ status: 200, data: checkCar }); }
+        else return res.status(400).send({ status:400, message: "Car not found" });
+    }
+
+    //Routes with qwery parameter
+    static viewCar(req, res) {
+       
+        const status = req.query.status;
+        const state = req.query.state;
         const min = req.query.min_price;
         const max = req.query.max_price;
-        const status = req.query.status;
-        const checked = cars.find(car=>car.status===status.toLowerCase());
-        if (checked&&status.toLowerCase()==="available"){
-            const check = cars.filter(car => car.price >= parseFloat(min) && car.price <= parseFloat(max)&&car.status==="available");
-            if(check){res.status(200).send({ status: 200, data: check });}
-            else {return res.status(200).send({ status: 200, data: "sold and not available!!" });}
-        } else return res.status(200).send({ status: 200, data: "the range you specified not found" });
-    }
-    static viewAllUnsoldCarBySpecificMakeUsed(req, res) {
         const maker = req.body.make;
-        const status = req.query.status;
-        const state = req.query.state;
-        const findCar = cars.find(car=>car.manufacturer === maker.toLowerCase() && car.state==="used" && car.status==="available");
-        
-        if (findCar) {
-            const result = cars.filter(car=>car.manufacturer === maker.toLowerCase()&&car.status===status.toLowerCase()&&car.state===state);
-            if(result){return res.status(200).send({ status: 200, data: result });}
-            else return res.status(400).send({ status:400, message: "manufacturer not found" });
-            }
-        else return res.status(400).send({ status:400 ,message: "no cars available that are used" });
-    }
-    static viewAllUnsoldCarBySpecificMakeNew(req, res) {
-        const maker = req.body.make;
-        const statu = req.query.status;
-        const state = req.query.state;
-        const findCar = cars.find(car=>car.manufacturer === maker.toLowerCase() && car.state==="new" && car.status==="available");
-        
-        if (findCar) {
-            const result = cars.filter(car=>car.manufacturer === maker.toLowerCase()&&car.status===statu.toLowerCase()&&car.state===state);
-            if(result){return res.status(200).send({ status: 200, data: result });}
-            else return res.status(400).send({status:400, message: "manufacturer not found" });
-            }
-        else return res.status(400).send({ status:400, message: "no cars available that are new" });
-    }
-    static viewAllUnsoldCarofSpecificMake(req,res){
-        const maker = req.query.manufacturer;
-        const status = req.query.status;
-        const findCar = cars.filter(car=>car.manufacturer === maker.toLowerCase() && car.status==="available");
-        if (findCar) {
-            if(status.toLowerCase()==="available"){return res.status(200).send({ status: 200, data: findCar });}
-            else{ return res.status(400).send({status:400, message: "cars status is not available, use (available) status" });}
-        }
-            
-        else return res.status(400).send({status:400, message: "Manufacturer not found in available car" });
-    }
-    static viewAllCarByBodyType(req,res){
+        const manufacturer = req.query.manufacturer;
         const body_type = req.query.body_type;
-        const findBody = cars.find(car=>car.body_type===body_type.toLowerCase());
+
+        //find all unsold car by manufacturer and state = used
+        if(status&&status.toLowerCase()==="available"&&maker&&state==="used"){
+            const findCar = cars.find(car=>car.manufacturer === maker.toLowerCase()); 
+            if(findCar){return res.status(200).send({ status: 200, data: findCar });}
+            else return res.status(404).send({status:404, message: "Manufacturer not found in available car" });
+        }
+        //find all unsold car by manufacturer and state = new
+        if(status&&status.toLowerCase()==="available"&&maker&&state==="new"){
+            const findCar = cars.find(car=>car.manufacturer === maker.toLowerCase()); 
+            if(findCar){return res.status(200).send({ status: 200, data: findCar });}
+            else return res.status(404).send({status:404, message: "Manufacturer not found in available car" });
+        }
+
+        //find availble cars in range of price
+        else if(status&&status.toLowerCase()==="available"&&min&&max){
+            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max));
+            if(check){res.status(200).send({ 
+                status: 200, 
+                data: check });}
+            else {return res.status(400).send({ 
+                status: 400,
+                data: "the range of price you specified not available!!" });}
+        }
+        //sstatus available and state used
+        else if(status&&status === "available" && state === "used") {
+            const checkCar = cars.filter(car => car.status === "available"&&car.state==="used");
+            if(checkCar) {
+                res.status(200).send({
+                    status: "200",
+                    data:{ checkCar}
+                });
+            } else {
+                res.status(404).send({
+                    status: "404",
+                    message: "Not found"
+                });
+            }
+        }
+        //find all unsold by make, status=avail.. and manufacturer=xxx
+        else if(status&&status.toLowerCase() === "available" &&manufacturer){
+            const findCar = cars.filter(car=>car.manufacturer === manufacturer.toLowerCase());
+            if(findCar){return res.status(200).send({ status: 200, data: findCar });}
+            //else{ return res.status(404).send({status:404, message: "cars status is not available, use (available) status" });}
         
-        if (findBody){
-            const findCar = cars.filter(car=>car.body_type === body_type.toLowerCase());
-            return res.status(200).send({ status: 200, data: findCar }); }   
+        }
+        //find all unsold car, status= available
+        else if (status&&status.toLowerCase() === "available") {
+            const checkCar = cars.filter(car => car.status === "available");
+            if(checkCar){
+                return res.status(200).send({ status: 200, data: checkCar }); 
+            } 
+            else return res.status(404).send({status:404, message: "Car status are not available" });
+        }
+        //find all posted whether sold or not
+        else if(!status&&!min&&!max&&!maker&&!manufacturer&&!body_type){
+            return res.status(200).send({ status: 200, data: cars });
+        }
+        //find all unsold by body-type      
+        else if (body_type){
+            const findBody = cars.filter(car=>car.body_type === body_type.toLowerCase());
+            if(findBody.length>0){
+             res.status(200).send({ status: 200, data: findBody }); 
+            }   
         else return res.status(400).send({status:400, message: "Body Type not found" });
+        }
+        else{
+            return res.status(400).send({status:400, message: "Bad request"});
+        }
+
+
     }
+        
 }
 export default carController; 
