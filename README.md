@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/william000000/AutoMart.svg?branch=develop)](https://travis-ci.org/william000000/AutoMart)
 # AutoMart
 Auto Mart is an online marketplace for automobiles of diverse marks, model or body type. With
 Auto Mart, users can sell their cars or buy from trusted sellers.
@@ -58,11 +59,11 @@ https://www.pivotaltracker.com/n/projects/2350443
 | GET         | /api/v1/car?`status=available&manufacturer= XXXValue`     | View all unsold cars of a specific make|
 | GET         | /api/vi/car?`body_type= bodyType`                         | View all cars of a specific body type.
 
-##  API Heroku
+## API
 - https://dashboard.heroku.com/apps/automart-pro
 
-##  API Documentation
--  Swagger soon
+## API Documentation
+-  Swagger
 
 ## Technologies Used
 
