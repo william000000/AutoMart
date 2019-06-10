@@ -16,7 +16,7 @@ Auto Mart, users can sell their cars or buy from trusted sellers.
 - Admin can delete a posted AD record.
 - Admin can view all posted ads whether sold or unsold.
 
-##Pivotal Tracker stories
+## Pivotal Tracker stories
 https://www.pivotaltracker.com/n/projects/2350443
 
 ### UI Template
@@ -52,17 +52,17 @@ https://www.pivotaltracker.com/n/projects/2350443
 | DELETE      | /api/v1/car/:id                                                | Delete specific Car                    |
 | GET         | /api/v1/car-all?`status=available`                             | View all posted cars                   |
 | POST        | /api/v1/flag                                                   | Flag/report posted car as fraudulent   |
-| GET         | /api/v1/car-range?`status=available&min_price=xx &max_price=xx`| View all cars with a range of price    |
-| GET         | /api/v1/car-used?`status=available&state=used`                 | View all unsold cars&Used by make      |
-| GET         | /api/v1/car-new?`status=available&state=new`                   | View all unsold cars&New by make       |
-| GET         | /api/v1/car-make?`status=available&manufacturer= XXXValue`     | View all unsold cars of a specific make|
-| GET         | /api/vi/car-body?`body_type= bodyType`                         | View all cars of a specific body type.
+| GET         | /api/v1/car?`status=available&min_price=xx &max_price=xx`| View all cars with a range of price    |
+| GET         | /api/v1/car?`status=available&state=used`                 | View all unsold cars&Used by make      |
+| GET         | /api/v1/car?`status=available&state=new`                   | View all unsold cars&New by make       |
+| GET         | /api/v1/car?`status=available&manufacturer= XXXValue`     | View all unsold cars of a specific make|
+| GET         | /api/vi/car?`body_type= bodyType`                         | View all cars of a specific body type.
 
-##API
-- Heroku link soon
+##  API Heroku
+- https://dashboard.heroku.com/apps/automart-pro
 
-##API Documentation
-- Swagger
+##  API Documentation
+-  Swagger soon
 
 ## Technologies Used
 
