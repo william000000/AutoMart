@@ -20,7 +20,7 @@ function slider() {
     x[i].style.display = "none"; 
   }
   slideIndex++;
-  if (slideIndex > x.length) {slideIndex = 1} 
+  if (slideIndex > x.length) {slideIndex = 1;}
   x[slideIndex-1].style.display = "block"; 
   setTimeout(slider, 3000); 
 }
@@ -33,8 +33,8 @@ function currentDiv(n) {
     var i;
     var x = document.getElementsByClassName("mySlides2");
     var dots = document.getElementsByClassName("pic");
-    if (n > x.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = x.length}
+    if (n > x.length) {slideIndex = 1;}
+    if (n < 1) {slideIndex = x.length;}
     for (i = 0; i < x.length; i++) {
       x[i].style.display = "none";
     }
