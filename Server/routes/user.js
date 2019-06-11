@@ -1,9 +1,11 @@
 import express from "express";
 import userController from "../controllers/users";
 import auth from "../middleware/auth";
+import validateUser from "../helper/signUpValid";
 const router = express.Router();
 
-router.post("/signup",userController.signup);
+const {validateSignup} = validateUser;
+router.post("/signup",validateSignup,userController.signup);
 router.post("/signin",userController.signin);
 
 

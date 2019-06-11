@@ -18,10 +18,8 @@ class userController {
             last_name: req.body.last_name,
             password: req.body.password,
             address: req.body.address,
-            isAdmin: false};
-            validUser.validate(newUser);
-            const salt = await bcrypt.genSalt(10);
-            newUser.password = await bcrypt.hash(newUser.password,salt);      
+            isAdmin: false};  
+            newUser.password = await bcrypt.hash(newUser.password,10);      
         const token = jwt.sign({ _id: user.id}, process.env.secretKey);
             user.push(newUser);
             res.status(200).send({ status: 200, 
