@@ -36,11 +36,30 @@ describe("Cars", ()=>{
                 });
         });
 
+        
+
         it("Should not display via unsold cars ", (done)=>{
             chai.request(app)
                 .get("/api/v1/car/status=sold")
                 .end((req,res)=>{
                     res.should.have.a.status(400);
+                    done();
+                });
+        });
+        it("Should filter cars according to status and state", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&state=new")
+                .end((req,res)=>{
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
+
+        it("Should filter cars according to status and state", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&state=used")
+                .end((req,res)=>{
+                    res.should.have.a.status(200);
                     done();
                 });
         });
@@ -50,6 +69,15 @@ describe("Cars", ()=>{
             chai.request(app)
                 .delete(`/api/v1/car/${id}`)
                 .set("x-auth-token",TOKEN)
+                .end((req,res)=>{
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
+
+        it("Should filter cars according to status and state", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&state=new")
                 .end((req,res)=>{
                     res.should.have.a.status(200);
                     done();
@@ -148,6 +176,21 @@ describe("Cars", ()=>{
         });
 
         it("Should not login when user provide incorrect password", (done)=>{
+            // rand = Math.floor(Math.random()*1000);
+            const newUser = {
+                "email":"willy@gmail.com",
+                "password":"aaaa"
+              
+        };
+            chai.request(app)
+                .post("/api/v1/auth/signin")
+                .end((req,res)=>{
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should not login when user provide incorrect password", (done)=>{
             const newUser = {
                 "email":"2324785375785478575",
                 "password": "12"
@@ -228,7 +271,7 @@ describe("Cars", ()=>{
         });
 
         it("Should update the price of purchase order if car id exist", (done)=>{
-            let id = 1;
+            let id = 2;
             const price ={
                 "price":500000
         };
@@ -242,6 +285,19 @@ describe("Cars", ()=>{
         
         it("Should update the price of purchase order if car id not exist", (done)=>{
             let id = -1;
+            const price ={
+                "price":500000
+        };
+            chai.request(app)
+                .patch(`/api/v1/car/${id}/price`)
+                .end((req,res)=>{
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should update the price of purchase order if order not in pending", (done)=>{
+            let id = 1;
             const price ={
                 "price":500000
         };
@@ -296,7 +352,7 @@ describe("Cars", ()=>{
         });
 
         it("Should update the price of purchase order if car id exist", (done)=>{
-            let id = 1;
+            let id = 2;
             const price ={
                 "price":500000
         };
@@ -343,7 +399,119 @@ describe("Cars", ()=>{
                 });
         });
 
+        it("Should filter cars according to status and manufacturer", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&manufacturer=nissan")
+                .end((req,res)=>{
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
 
+        
+
+
+        it("Should get feedback for car", (done)=>{
+            const id = 1;
+            const data = { id };
+            chai.request(app)
+                .post("/api/v1/flag")
+                .send(data)
+                .end((req,res)=>{
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
+
+        it("Should bring error feedback for car does not exist", (done)=>{
+            const id = -1;
+            const data = { id };
+            chai.request(app)
+                .post("/api/v1/flag")
+                .send(data)
+                .end((req,res)=>{
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should filter car according to prices", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&min_price=1000&max_price=15000")
+                .end((req,res)=>{
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
+
+        // All cars was deleted
+        it("Should bring message for empty if no car available", (done)=>{
+            const ids = [1,2,3,4,5,6,7];
+            ids.forEach(id=>{ chai.request(app)
+                .delete(`/api/v1/car/${id}`)
+                .set("x-auth-token",TOKEN)
+                .end((req,res)=>{});});
+            chai.request(app)
+                .get("/api/v1/car?status=available")
+                .end((req,res)=>{
+                    res.should.have.a.status(404);
+                    done();
+                });
+        });
+
+        it("Should not filter cars according to status and state", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&state=new")
+                .end((req,res)=>{
+                    res.should.have.a.status(404);
+                    done();
+                });
+        });
+
+        it("Should not filter cars according to status and state", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&state=new")
+                .end((req,res)=>{
+                    res.should.have.a.status(404);
+                    done();
+                });
+        });
+
+        it("Should not filter cars according to status and state(used)", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&state=used")
+                .end((req,res)=>{
+                    res.should.have.a.status(404);
+                    done();
+                });
+        });
+
+        it("Should bring error when proveded invalid info", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=availabl")
+                .end((req,res)=>{
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should not filter cars according to status and state", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&state=new")
+                .end((req,res)=>{
+                    res.should.have.a.status(404);
+                    done();
+                });
+        });
+
+        it("Should not filter car according to prices", (done)=>{
+            chai.request(app)
+                .get("/api/v1/car?status=available&min_price=1000&max_price=15000")
+                .end((req,res)=>{
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
 
     });
 });

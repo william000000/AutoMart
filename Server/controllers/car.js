@@ -62,8 +62,7 @@ class carController {
             }
             else { return res.status(400).send({status:400, message: "Your order is not in pending mode" }); }
         }
-        else return res.status(400).send({status:400, message: "Your order not exist" });
-    }
+        else return res.status(400).send({status:400, message: "Your order not exist" });}
     static markPosted(req, res) {
         const singleCar = cars.find(cr => cr.id === parseInt(req.params.id));
         const userEmail = user.find(us => us.email === req.body.email);
@@ -85,8 +84,7 @@ class carController {
                 } else return res.status(400).send({ status: 400, message: "car status is sold" });
             }
             else return res.status(400).send({ status: 400, message: "car is not found" });
-        } else return res.status(400).send({ status: 400, message: "incorrect Email account" });
-    }
+        } else return res.status(400).send({ status: 400, message: "incorrect Email account" });}
     static updateCarPrice(req, res) {
         const car_id = req.params.id;
         const checkCar = cars.find(c => c.id === parseInt(car_id));
@@ -121,6 +119,7 @@ class carController {
         const car_id = req.params.id;
         const checkCar = cars.find(car => car.id === parseInt(car_id));
         if (checkCar) {
+            cars.splice(cars.indexOf(checkCar),1);
             const result = cars.filter(car => car.id !== parseInt(car_id));
             return res.status(200).send({ status: 200, data: result });
         }
@@ -144,7 +143,7 @@ class carController {
     }
     static viewAllPostedCar(req, res) {
         const checkCar = cars.filter(car => car.status === "sold" || car.status === "available");
-        if (checkCar) { res.status(200).send({ status: 200, data: checkCar }); }
+        if (checkCar.length>0) { res.status(200).send({ status: 200, data: checkCar }); }
         else return res.status(400).send({ status:400, message: "Car not found" });
     }
 
@@ -175,7 +174,7 @@ class carController {
         //find availble cars in range of price
         else if(status&&status.toLowerCase()==="available"&&min&&max){
             const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max));
-            if(check){res.status(200).send({ 
+            if(check.length>0){res.status(200).send({ 
                 status: 200, 
                 data: check });}
             else {return res.status(400).send({ 
@@ -185,7 +184,7 @@ class carController {
         //sstatus available and state used
         else if(status&&status === "available" && state === "used") {
             const checkCar = cars.filter(car => car.status === "available"&&car.state==="used");
-            if(checkCar) {
+            if(checkCar.length>0) {
                 res.status(200).send({
                     status: "200",
                     data:{ checkCar}
@@ -200,18 +199,18 @@ class carController {
         //find all unsold by make, status=avail.. and manufacturer=xxx
         else if(status&&status.toLowerCase() === "available" &&manufacturer){
             const findCar = cars.filter(car=>car.manufacturer === manufacturer.toLowerCase());
-            if(findCar){return res.status(200).send({ status: 200, data: findCar });}
+            if(findCar.length>0){return res.status(200).send({ status: 200, data: findCar });}
             //else{ return res.status(404).send({status:404, message: "cars status is not available, use (available) status" });}
         
         }
         //find all unsold car, status= available
         else if (status&&status.toLowerCase() === "available") {
             const checkCar = cars.filter(car => car.status === "available");
-            if(checkCar){
+            if(checkCar.length>0){
                 return res.status(200).send({ status: 200, data: checkCar }); 
             } 
             else return res.status(404).send({status:404, message: "Car status are not available" });
-        }
+    }
         //find all posted whether sold or not
         else if(!status&&!min&&!max&&!maker&&!manufacturer&&!body_type){
             return res.status(200).send({ status: 200, data: cars });
@@ -225,8 +224,7 @@ class carController {
         else return res.status(400).send({status:400, message: "Body Type not found" });
         }
         else{
-            return res.status(400).send({status:400, message: "Bad request"});
-        }
+            return res.status(400).send({status:400, message: "Bad request"});}
 
 
     }
