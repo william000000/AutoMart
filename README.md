@@ -61,8 +61,8 @@ https://www.pivotaltracker.com/n/projects/2350443
 | GET         | /api/v1/car?`status=available&manufacturer= XXXValue`          | View all unsold cars of a specific make|
 | GET         | /api/vi/car?`body_type= bodyType`                              | View all cars of a specific body type.
 
-## API
-- https://dashboard.heroku.com/apps/automart-pro
+## API on Heroku
+- https://automart-pro.herokuapp.com/
 
 ## API Documentation
 -  Swagger
