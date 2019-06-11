@@ -1,3 +1,7 @@
+env:
+  global:
+    - secretKey=dsakjdfeeyf82394sndkfn
+    
 language: node_js
 node_js:
 - 10.15.3
