@@ -363,10 +363,10 @@ h1{
   #search{
     display: block;
     position: absolute;
-    top: 16px;
+    top: 14px;
     right: 50px;
     width: 180px;
-    left: 50%;
+    left: 48%;
     transition: width ease 0.2s, opacity ease 0.4s;
     border-radius: 32px;
     -webkit-font-smoothing: antialise;
@@ -721,11 +721,95 @@ h1{
 
      }
 
-    /*modalTable*/
+    /*All modalTable*/
     #modal{
         display: none;
 
      }
+     .modal-container{
+        display: flex;
+        line-height: 1.7em;
+        margin: 1px; /* 15% from the top and centered */
+        border: 2px solid rgb(6, 108, 175);
+        position: absolute;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 1;
+        left: 45%;
+        top: 80%;
+        width: 100%; 
+        max-width: 450px;
+        height: 250px; 
+        overflow: hidden; 
+        background-color: rgb(243, 236, 236); 
+        background-color: rgba(247, 243, 243, 0.966); 
+    
+       display: none;
+     }
+     .modal-container .messag{
+         display: inline-block;
+         position: absolute;
+         margin-top:10%;
+         width: 100%;
+         max-width: 80%;
+         left:10%;
+        
+     }
+     .model-btn1{
+        display: inline-block;
+        margin-top: 28%;
+        width: 100%;
+       max-width: 300px;
+       margin-left: 20%;
+      
+      }
+      .message{
+          position: absolute;
+          color: green;
+          margin-top:-50%;
+          right:3%;
+          display: none;
+         visibility: hidden;
+      }
+      /* .modal-img{
+          color: white;
+          font-weight: 600;
+          background:#526575;
+          height: 15%;
+          text-align: center;
+          padding:2px 6px;
+          margin-bottom: 2px;
+      } */
+      .modal-img1{
+        width: 100%;
+        max-width: 20%;
+        color: white;
+        font-weight: 600;
+        background:#526575;
+        height: 15%;
+        text-align: center;
+        padding:2px 6px;
+        margin-bottom: 2px;
+      }
+
+      .model-btn1 button{
+        
+        background: #949ea7;
+        color: black;
+        font-weight: 700;
+        margin: 15% 10px;
+        padding:4px 5px 8px 5px;
+        border-radius: 5px;
+        font-size: 14px;
+        display: inline-block;
+        height: 25%;
+
+      }
+      .model-btn1 button:hover{
+        background: #949ea7;
+        color: #053766;
+      }
+   
     .modal-content{
         /* margin: 10px; */
         display: flex;
@@ -1265,3 +1349,19 @@ h1{
     padding: 4px 0 2px 0;
     margin-top: 40%;
  }
+
+ /*flag*/
+ .car-post ul li p{
+     position: relative;
+     color:rgb(175, 84, 84);
+     float: right;
+     margin-right: 17%;
+     top: -25%;
+     width: 10%;
+ }
+
+ .car-post ul li p:hover{
+     color: black;
+
+ }
+

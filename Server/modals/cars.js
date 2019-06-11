@@ -17,8 +17,8 @@ let cars = [
         state: "new",
         status: "available",
         price: 10000.0,
-        manufacturer: "Range",
-        model: "Range",
+        manufacturer: "range",
+        model: "range",
         body_type: "car"
     },
     {
@@ -28,8 +28,8 @@ let cars = [
         state: "used",
         status: "sold",
         price: 12000.0,
-        manufacturer: "BMW",
-        model: "BMW",
+        manufacturer: "bmw",
+        model: "bmw",
         body_type: "car"
     },
     {
@@ -39,9 +39,9 @@ let cars = [
         state: "used",
         status: "available",
         price: 20000.0,
-        manufacturer: "Nissan",
-        model: "Nissan",
-        body_type: "Truck"
+        manufacturer: "nissan",
+        model: "nissan",
+        body_type: "truck"
     },
     {
         id: 5,
@@ -52,7 +52,7 @@ let cars = [
         price: 20000.0,
         manufacturer: "fusso",
         model: "fusso",
-        body_type: "Truck"
+        body_type: "truck"
     },
     {
         id: 6,
@@ -73,8 +73,8 @@ let cars = [
         status: "available",
         price: 20000.0,
         manufacturer: "fusso",
-        model: "Huidai",
-        body_type: "Truck"
+        model: "huidai",
+        body_type: "truck"
     }
 ];
 export default cars;
