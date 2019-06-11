@@ -1,4 +1,4 @@
-var removeClassElements = document.getElementsByClassName('car-delete-btn');
+var removeClassElements = document.getElementById('view-car-model');
 
 for(var i = 0; i < removeClassElements.length; i++){
   var element = removeClassElements[i];  
