@@ -116,8 +116,8 @@ describe("Cars", ()=>{
         it("Should create an account", (done)=>{
             const newUser = {
                 "email":"woo1000@gmail.com",
-                "first_name":"mago",
-                "last_name":"Wiu",
+                "first_name":"magoooo",
+                "last_name":"Wiuuuuu",
                 "password":"12",
                 "address": "kigali"
         };
@@ -133,8 +133,8 @@ describe("Cars", ()=>{
         it("Should not create an account if email already exist", (done)=>{
             const newUser = {
                 "email":"willy@gmail.com",
-                "first_name":"mago",
-                "last_name":"Wiu",
+                "first_name":"maohdhdh",
+                "last_name":"Wiuueueu",
                 "password":"12",
                 "address": "kigali"
         };
