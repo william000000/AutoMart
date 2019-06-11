@@ -4,6 +4,7 @@ import joi from "joi";
 import user from "../modals/user";
 import bcrypt from "bcrypt";
 import admin from "../middleware/admin";
+import validUser from "../helper/signUpValid";
 
 dotenv.config();
 class userController {
@@ -18,6 +19,7 @@ class userController {
             password: req.body.password,
             address: req.body.address,
             isAdmin: false};
+            validUser.validate(newUser);
             const salt = await bcrypt.genSalt(10);
             newUser.password = await bcrypt.hash(newUser.password,salt);      
         const token = jwt.sign({ _id: user.id}, process.env.secretKey);
@@ -40,7 +42,6 @@ class userController {
         const isPasswordCorrect = bcrypt.compareSync(req.body.password,singleUser.password);
         const token = jwt.sign({ _id: user.id, isAdmin: singleUser.isAdmin }, process.env.secretKey);
         if (!isPasswordCorrect) return res.status(400).send({ status: 400, message: "incorrect username or password" });
-        if (singleUser) {
             res.status(200).send({
                 status: 200, data: {
                     token: token,
@@ -52,7 +53,7 @@ class userController {
                     isAdmin: singleUser.isAdmin
                 }
             });
-        }
+        
     }
 }
 export default userController; 
