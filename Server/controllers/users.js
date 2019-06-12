@@ -4,7 +4,7 @@ import joi from "joi";
 import user from "../modals/user";
 import bcrypt from "bcrypt";
 import admin from "../middleware/admin";
-import validUser from "../helper/signUpValid";
+import validUser from "../helper/authValidation";
 
 dotenv.config();
 class userController {
@@ -18,40 +18,42 @@ class userController {
             last_name: req.body.last_name,
             password: req.body.password,
             address: req.body.address,
-            isAdmin: false};  
-            newUser.password = await bcrypt.hash(newUser.password,10);      
-        const token = jwt.sign({ _id: user.id}, process.env.secretKey);
-            user.push(newUser);
-            res.status(200).send({ status: 200, 
-                data: {
-                    token: token,
-                    id: newUser.id,
-                    first_name: newUser.first_name,
-                    last_name: newUser.last_name,
-                    email: newUser.email,
-                    address: newUser.address,
-                    password:newUser.password
-                }
-            });
+            isAdmin: false
+        };
+        newUser.password = await bcrypt.hash(newUser.password, 10);
+        const token = jwt.sign({ _id: user.id }, process.env.secretKey);
+        user.push(newUser);
+        res.status(200).send({
+            status: 200,
+            data: {
+                token: token,
+                id: newUser.id,
+                first_name: newUser.first_name,
+                last_name: newUser.last_name,
+                email: newUser.email,
+                address: newUser.address,
+                password: newUser.password
+            }
+        });
     }
-    static signin(req, res) { 
-        const singleUser = user.find(useer => useer.email === req.body.email );
+    static signin(req, res) {
+        const singleUser = user.find(useer => useer.email === req.body.email);
         if (!singleUser) return res.status(400).send({ status: 400, message: "incorrect username or password" });
-        const isPasswordCorrect = bcrypt.compareSync(req.body.password,singleUser.password);
+        const isPasswordCorrect = bcrypt.compareSync(req.body.password, singleUser.password);
         const token = jwt.sign({ _id: user.id, isAdmin: singleUser.isAdmin }, process.env.secretKey);
         if (!isPasswordCorrect) return res.status(400).send({ status: 400, message: "incorrect username or password" });
-            res.status(200).send({
-                status: 200, data: {
-                    token: token,
-                    id: singleUser.id,
-                    first_name: singleUser.first_name,
-                    last_name: singleUser.last_name,
-                    email: singleUser.email,
-                    address: singleUser.address,
-                    isAdmin: singleUser.isAdmin
-                }
-            });
-        
+        res.status(200).send({
+            status: 200, data: {
+                token: token,
+                id: singleUser.id,
+                first_name: singleUser.first_name,
+                last_name: singleUser.last_name,
+                email: singleUser.email,
+                address: singleUser.address,
+                isAdmin: singleUser.isAdmin
+            }
+        });
+
     }
 }
 export default userController; 
