@@ -108,14 +108,17 @@
                         <span>Lamborghini</span>
                     </td>
                     <td>
-                        <span class="pric">$10000</span>
+                        <span class="pric" id="price">$10000</span>
                     </td>
                     <td>
-                        <span>Available</span>
+                        <select name="status" id="status" onchange="confirmChange()">
+                                <option>Available</option>
+                                <option>Sold</option>
+                        </select>
                     </td>
                     <td>
-                        <button id="change-stat">Change Status</button>
-                        <button id="update-cost">Update Cost</button>
+                        <button id="change-stat" onclick="status()">Update Status</button>
+                        <button id="update-cost" onclick="displayForm()">Update Cost</button>
                     </td>
                 </tr>
                 <tr>
@@ -124,21 +127,30 @@
                         <span>Lamborghini</span>
                     </td>
                     <td>
-                        <span class="pric">$10000</span>
+                        <span class="pric" id="price">10000</span>
                     </td>
                     <td>
-                        <span>Available</span>
+                        <select name="status" id="status" onchange="confirmChange()">
+                            <option>Available</option>
+                            <option>Sold</option>
+                        </select>
                     </td>
 
                     <td>
-                        <button id="change-stat">Change Status</button>
-                        <button id="update-cost">Update Cost</button>
+                        <button id="change-stat" onclick="status()">Update Status</button>
+                        <button id="update-cost" onclick="displayForm()">Update Cost</button>
                     </td>
                 </tr>
             </table>
         </div>
     </div>
-    <div class="footer">
+    <div class="updateCost" id="form">
+        
+        <input type="text" id="newPrice" placeholder="New Price">
+        <button type="button" onclick="changePrice()">Ok</button>
+        <button type="button" onclick="cancel()">Cancel</button>
+    </div>
+    <div class="footer" id="footer-seller">
         <footer>
             <p>&copy;AutoMart</p>
         </footer>
