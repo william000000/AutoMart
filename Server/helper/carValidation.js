@@ -15,8 +15,8 @@ class validateCar {
       if (!model.test(req.body.model)) throw new Error('invalid input model');
       next();
     } catch (err) {
-      res.status(412).json({
-        status: 412,
+      res.status(400).json({
+        status: 400,
         error: err.message,
       });
     }

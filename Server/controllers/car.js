@@ -138,16 +138,17 @@ class carController {
                 reason: checkCar.reason,
                 description: checkCar.descriptive
             };
-            if (newFlag) return res.status(200).send({ status: 200, data: newFlag });
-            else return res.status(400).send({ status: 400, message: "flag not specified" });
+            return res.status(200).send({ status: 200, data: newFlag });
         }
         else { return res.status(400).send({ status: 400, data: "a car not found" }); }
     }
+
+    /*
     static viewAllPostedCar(req, res) {
         const checkCar = cars.filter(car => car.status === "sold" || car.status === "available");
         if (checkCar.length > 0) { res.status(200).send({ status: 200, data: checkCar }); }
         else return res.status(400).send({ status: 400, message: "Car not found" });
-    }
+    }*/
 
     //Routes with qwery parameter
     static viewCar(req, res) {
