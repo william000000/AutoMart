@@ -244,6 +244,14 @@ border: 0.9px solid white;
         font-size: .9em;
         padding:0;
     }
+    #form{
+        width: 100%;
+        margin-left:-43%;
+        margin-top: 110%;
+    }
+    #footer-seller{
+        display: none;
+    }
 
 
 }
@@ -1203,6 +1211,13 @@ h1{
     position: absolute;
 
 }
+.posted-cars table tr td select{
+    width: 100%;
+    max-width: 100px;
+    background: transparent;
+    text-align: center;
+    font-size: 15px;
+}
 
 #change-stat, #update-cost{
     background: none;
@@ -1388,3 +1403,41 @@ h1{
 
  }
 
+ .updateCost{
+    display: flex;
+    line-height: 1.7em;
+    margin: 1px; 
+    border: 2px solid rgb(6, 108, 175);
+    position: absolute;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 1;
+    left: 45%;
+    top: 120%;
+    width: 100%; 
+    max-width: 350px;
+    height: 90px; 
+    overflow: hidden; 
+    background-color: rgba(161, 160, 160, 0.966);
+    display:none; 
+ }
+.updateCost input{
+    width:100%;
+    max-width: 50%;
+    margin-top:10%;
+    height: 100%;
+    max-height: 20px;
+}
+.updateCost label{
+    margin-top:10%;
+    margin-left:2%;
+  
+}
+.updateCost button{
+    width: 100%;
+    max-width: 20%;
+    max-height: 22px;
+    margin: 23px 2px;
+    background: transparent;
+    border: 2px solid rgb(46, 100, 136);
+}
