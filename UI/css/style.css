@@ -233,7 +233,7 @@ border: 0.9px solid white;
         width: 100%;
         font-weight: 500;
         position: absolute;
-        top: 143%;
+        top: 132%;
         left:20px;
         font-size: 13px;
     }
@@ -244,6 +244,8 @@ border: 0.9px solid white;
         font-size: .9em;
         padding:0;
     }
+
+
 }
 @media(min-width:770px){
     .open-slide{
@@ -400,6 +402,11 @@ h1{
     padding: 1px 0;
     margin: 0;
     }
+    .car-post ul li p{
+        width: 100%;
+        top: 10px;
+    }
+
     .car-post ul li figure{
         width:100%;
         margin-left:15%;
@@ -439,6 +446,22 @@ h1{
         width: 100%;
         margin-left: -2%;
         height: 200px;
+    }
+     #modal1{
+        width: 100%;
+        max-width: 200px;
+        float: left;
+        left:20%;
+        margin-top:130%;
+        background: #b1b9b1;
+    }
+    .modal-container .messag input{
+        width: 100%;
+
+    }
+    #modal1 .model-btn1{
+        margin-top: 75%;
+        margin-left:  10px;
     }
     }
 
