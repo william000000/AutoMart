@@ -5,509 +5,511 @@ import TOKEN from "./token";
 chai.use(chaiHttp);
 chai.should();
 
-describe("Cars", ()=>{
-    describe("GET",()=>{
-        it("Should via a car if id provided exist", (done)=>{
+describe("Cars", () => {
+    describe("GET", () => {
+        it("Should via a car if id provided exist", (done) => {
             let id = 1;
             chai.request(app)
                 .get(`/api/v1/car/${id}`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should return an error if id does not exit", (done)=>{
+        it("Should return an error if id does not exit", (done) => {
             let id = -1;
             chai.request(app)
                 .get(`/api/v1/car/${id}`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should bring all available cars", (done)=>{
+        it("Should bring all available cars", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        
 
-        it("Should not display via unsold cars ", (done)=>{
+
+        it("Should not display via unsold cars ", (done) => {
             chai.request(app)
                 .get("/api/v1/car/status=sold")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
-        it("Should filter cars according to status and state", (done)=>{
+        it("Should filter cars according to status and state", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&state=new")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should filter cars according to status and state", (done)=>{
+        it("Should filter cars according to status and state", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&state=used")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should delete a existing car", (done)=>{
+        it("Should delete a existing car", (done) => {
             let id = 1;
             chai.request(app)
                 .delete(`/api/v1/car/${id}`)
-                .set("x-auth-token",TOKEN)
-                .end((req,res)=>{
+                .set("x-auth-token", TOKEN)
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should filter cars according to status and state", (done)=>{
+        it("Should filter cars according to status and state", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&state=new")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should validate the token before delete", (done)=>{
+        it("Should validate the token before delete", (done) => {
             let id = 1;
             chai.request(app)
                 .delete(`/api/v1/car/${id}`)
-                .set("x-auth-token","ss")
-                .end((req,res)=>{
+                .set("x-auth-token", "ss")
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should not delete a invalid car", (done)=>{
+        it("Should not delete a invalid car", (done) => {
             let id = -1;
             chai.request(app)
                 .delete(`/api/v1/car/${id}`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should via get all cars", (done)=>{
+        it("Should via get all cars", (done) => {
             chai.request(app)
                 .get("/api/v1/car/")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
-        it("Should create an account", (done)=>{
+        it("Should create an account", (done) => {
             const newUser = {
-                "email":"woo1000@gmail.com",
-                "first_name":"magoooo",
-                "last_name":"Wiuuuuu",
-                "password":"12",
+                "email": "woo1000@gmail.com",
+                "first_name": "magoooo",
+                "last_name": "Wiuuuuu",
+                "password": "12",
                 "address": "kigali"
-        };
+            };
             chai.request(app)
                 .post("/api/v1/auth/signup")
                 .send(newUser)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should not create an account if email already exist", (done)=>{
-            const newUser = {
-                "email":"willy@gmail.com",
-                "first_name":"maohdhdh",
-                "last_name":"Wiuueueu",
-                "password":"12",
-                "address": "kigali"
-        };
-            chai.request(app)
-                .post("/api/v1/auth/signup")
-                .send(newUser)
-                .end((req,res)=>{
-                    res.should.have.a.status(400);
-                    done();
-                });
-        });
-
-        it("Should login when user provide true email", (done)=>{
+        it("Should not create an account if email already exist", (done) => {
             const newUser = {
                 "email": "willy@gmail.com",
-                 "password":"12"
-         };
+                "first_name": "maohdhdh",
+                "last_name": "Wiuueueu",
+                "password": "12",
+                "address": "kigali"
+            };
+            chai.request(app)
+                .post("/api/v1/auth/signup")
+                .send(newUser)
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should login when user provide true email", (done) => {
+            const newUser = {
+                "email": "willy@gmail.com",
+                "password": "12"
+            };
             chai.request(app)
                 .post("/api/v1/auth/signin")
                 .send(newUser)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should not login when user provide incorrect email", (done)=>{
+        it("Should not login when user provide incorrect email", (done) => {
             // rand = Math.floor(Math.random()*1000);
             const newUser = {
-                "email":"willyetwt@gmail.com",
-              
-        };
+                "email": "willyetwt@gmail.com",
+
+            };
             chai.request(app)
                 .post("/api/v1/auth/signin")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should not login when user provide incorrect password", (done)=>{
+        it("Should not login when user provide incorrect password", (done) => {
             // rand = Math.floor(Math.random()*1000);
             const newUser = {
-                "email":"willy@gmail.com",
-                "password":"aaaa"
-              
-        };
+                "email": "willy@gmail.com",
+                "password": "aaaa"
+
+            };
             chai.request(app)
                 .post("/api/v1/auth/signin")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should not login when user provide incorrect password", (done)=>{
+        it("Should not login when user provide incorrect password", (done) => {
             const newUser = {
-                "email":"2324785375785478575",
+                "email": "2324785375785478575",
                 "password": "12"
-              
-        };
+
+            };
             chai.request(app)
                 .post("/api/v1/auth/signin")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
 
-        it("Should create a car post when user provide existing email", (done)=>{
-            const newCar ={
-                "email":"willy@gmail.com",
-               "manufacturer": "Rava4",
+        it("Should create a car post when user provide existing email", (done) => {
+            const newCar = {
+                "email": "willy@gmail.com",
+                "manufacturer": "Rava4",
                 "model": "Rava",
-                "price":40000,
+                "price": 40000,
                 "state": "new"
-        };
+            };
             chai.request(app)
                 .post("/api/v1/car")
                 .send(newCar)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should create a car post when seller provide unkwon email account", (done)=>{
-            const newCar ={
-                "email":"willy1233@gmail.com",
-               "manufacturer": "Rava4",
+        it("Should create a car post when seller provide unkwon email account", (done) => {
+            const newCar = {
+                "email": "willy1233@gmail.com",
+                "manufacturer": "Rava4",
                 "model": "Rava",
-                "price":40000,
+                "price": 40000,
                 "state": "new"
-        };
+            };
             chai.request(app)
                 .post("/api/v1/car")
                 .send(newCar)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should make purchase order if user exist", (done)=>{
-            const newCar ={
-                "email":"willy@gmail.com",
-               "manufacturer": "Rava4",
+        it("Should make purchase order if user exist", (done) => {
+            const newCar = {
+                "email": "willy@gmail.com",
+                "manufacturer": "Rava4",
                 "model": "Rava",
-                "price":40000,
+                "price": 40000,
                 "state": "new"
-    };
+            };
             chai.request(app)
                 .post("/api/v1/order")
                 .send(newCar)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should make purchase order if user not exist", (done)=>{
-            const newCar ={
-                "email":"willy3663@gmail.com",
-                "model":"lamborghini",
-                "price":500000
-        };
+        it("Should make purchase order if user not exist", (done) => {
+            const newCar = {
+                "email": "willy3663@gmail.com",
+                "model": "lamborghini",
+                "price": 500000
+            };
             chai.request(app)
                 .post("/api/v1/order")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should update the price of purchase order if car id exist", (done)=>{
+        it("Should update the price of purchase order if car id exist", (done) => {
             let id = 2;
-            const price ={
-                "price":500000
-        };
+            const price = {
+                "price": 500000
+            };
             chai.request(app)
                 .patch(`/api/v1/car/${id}/price`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
-        
-        it("Should update the price of purchase order if car id not exist", (done)=>{
+
+        it("Should update the price of purchase order if car id not exist", (done) => {
             let id = -1;
-            const price ={
-                "price":500000
-        };
+            const price = {
+                "price": 500000
+            };
             chai.request(app)
                 .patch(`/api/v1/car/${id}/price`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should update the price of purchase order if order not in pending", (done)=>{
+        it("Should update the price of purchase order if order not in pending", (done) => {
             let id = 1;
-            const price ={
-                "price":500000
-        };
+            const price = {
+                "price": 500000
+            };
             chai.request(app)
                 .patch(`/api/v1/car/${id}/price`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should mark posted car as sold if user email exist", (done)=>{
+        it("Should mark posted car as sold if user email exist", (done) => {
             let id = 5;
-            const userEmail ={
-                "email":"willy@gmail.com"
-        };
+            const userEmail = {
+                "email": "willy@gmail.com"
+            };
             chai.request(app)
                 .patch(`/api/v1/car/${id}/status`)
                 .send(userEmail)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should mark posted car as sold if user email not exist", (done)=>{
+        it("Should mark posted car as sold if user email not exist", (done) => {
             let id = 1;
-            const userEmail ={
-                "email":"willy6438t@gmail.com"
-        };
+            const userEmail = {
+                "email": "willy6438t@gmail.com"
+            };
             chai.request(app)
                 .patch(`/api/v1/car/${id}/status`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        
 
-        it("Should mark posted car as sold if id not exist", (done)=>{
+
+        it("Should mark posted car as sold if id not exist", (done) => {
             let id = -1;
-            const userEmail ={
-                "email":"willy@gmail.com"
-        };
+            const userEmail = {
+                "email": "willy@gmail.com"
+            };
             chai.request(app)
                 .patch(`/api/v1/car/${id}/status`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should update the price of purchase order if car id exist", (done)=>{
+        it("Should update the price of purchase order if car id exist", (done) => {
             let id = 2;
-            const price ={
-                "price":500000
-        };
+            const price = {
+                "price": 500000
+            };
             chai.request(app)
                 .patch(`/api/v1/car/${id}/price`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
-        
-        it("Should update the price of a car if car id not exist", (done)=>{
+
+        it("Should update the price of a car if car id not exist", (done) => {
             let id = -1;
-            const price ={
-                "price":500000
-        };
+            const price = {
+                "price": 500000
+            };
             chai.request(app)
                 .patch(`/api/v1/car/${id}/price`)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should find bodytype when it exist", (done)=>{
+        it("Should find bodytype when it exist", (done) => {
 
-            
+
             chai.request(app)
                 .get("/api/v1/car?body_type=truck")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should not find bodytype when it exist", (done)=>{
+        it("Should not find bodytype when it exist", (done) => {
 
-            
+
             chai.request(app)
                 .get("/api/v1/car?body_type=truckk")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should filter cars according to status and manufacturer", (done)=>{
+        it("Should filter cars according to status and manufacturer", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&manufacturer=nissan")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        
 
 
-        it("Should get feedback for car", (done)=>{
+
+        it("Should get feedback for car", (done) => {
             const id = 1;
             const data = { id };
             chai.request(app)
                 .post("/api/v1/flag")
                 .send(data)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
-        it("Should bring error feedback for car does not exist", (done)=>{
+        it("Should bring error feedback for car does not exist", (done) => {
             const id = -1;
             const data = { id };
             chai.request(app)
                 .post("/api/v1/flag")
                 .send(data)
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should filter car according to prices", (done)=>{
+        it("Should filter car according to prices", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&min_price=1000&max_price=15000")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
                 });
         });
 
         // All cars was deleted
-        it("Should bring message for empty if no car available", (done)=>{
-            const ids = [1,2,3,4,5,6,7];
-            ids.forEach(id=>{ chai.request(app)
+        it("Should bring message for empty if no car available", (done) => {
+            const ids = [1, 2, 3, 4, 5, 6, 7];
+            ids.forEach(id => {
+                chai.request(app)
                 .delete(`/api/v1/car/${id}`)
-                .set("x-auth-token",TOKEN)
-                .end((req,res)=>{});});
+                .set("x-auth-token", TOKEN)
+                .end((req, res) => { });
+            });
             chai.request(app)
                 .get("/api/v1/car?status=available")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
                 });
         });
 
-        it("Should not filter cars according to status and state", (done)=>{
+        it("Should not filter cars according to status and state", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&state=new")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
                 });
         });
 
-        it("Should not filter cars according to status and state", (done)=>{
+        it("Should not filter cars according to status and state", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&state=new")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
                 });
         });
 
-        it("Should not filter cars according to status and state(used)", (done)=>{
+        it("Should not filter cars according to status and state(used)", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&state=used")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
                 });
         });
 
-        it("Should bring error when proveded invalid info", (done)=>{
+        it("Should bring error when proveded invalid info", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=availabl")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should not filter cars according to status and state", (done)=>{
+        it("Should not filter cars according to status and state", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&state=new")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
                 });
         });
 
-        it("Should not filter car according to prices", (done)=>{
+        it("Should not filter car according to prices", (done) => {
             chai.request(app)
                 .get("/api/v1/car?status=available&min_price=1000&max_price=15000")
-                .end((req,res)=>{
+                .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
