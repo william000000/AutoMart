@@ -18,9 +18,10 @@ class carController {
                 state: req.body.state,
                 status: "available"
             };
+            if(newCar&&newCar.state!=="new"&&newCar.state!=="used"){return res.status(400).send({status: 400, message: "state must be [new or used]"});}
             cars.push(newCar);
-            res.status(200).send({ status: 200, newCar });
-        } else { res.status(400).send({ status: 400, message: "not found" }); }
+            return res.status(200).send({ status: 200, newCar }); 
+        } else { res.status(400).send({ status: 400, message: "invalid data" }); }
     }
     static purchaseOrder(req, res) {
         const singleCar = cars.find(c => c.model === req.body.model);
@@ -123,9 +124,9 @@ class carController {
         if (checkCar) {
             cars.splice(cars.indexOf(checkCar), 1);
             const result = cars.filter(car => car.id !== parseInt(car_id));
-            return res.status(200).send({ status: 200, data: result });
+            return res.status(200).send({ status: 200, message: "Successfully Deleted!" });
         }
-        else { return res.status(400).send({ status: 400, message: "Car not found" }); }
+        else { return res.status(404).send({ status: 404, message: "Car not found" }); }
     }
 
     static flagAsFraudulent(req, res) {
@@ -176,7 +177,7 @@ class carController {
 
         //find availble cars in range of price
         else if (status && status.toLowerCase() === "available" && min && max) {
-            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max));
+            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status==="available");
             if (check.length > 0) {
                 res.status(200).send({
                     status: 200,
