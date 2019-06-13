@@ -31,7 +31,7 @@ describe("Cars", () => {
             chai.request(app)
                 .get(`/api/v1/car/${id}`)
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
@@ -51,7 +51,7 @@ describe("Cars", () => {
             chai.request(app)
                 .get("/api/v1/car/status=sold")
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
@@ -216,6 +216,22 @@ describe("Cars", () => {
             const newUser = {
                 "email": "woo1000@gmail.com",
                 "first_name": "",
+                "last_name": "Wiuuuuu",
+                "password": "africa",
+                "address": "kigali"
+            };
+            chai.request(app)
+                .post("/api/v1/auth/signup")
+                .send(newUser)
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+        it("Should not create an account firstname empty", (done) => {
+            const newUser = {
+                "email": "",
+                "first_name": "dfdndn",
                 "last_name": "Wiuuuuu",
                 "password": "africa",
                 "address": "kigali"
@@ -401,11 +417,12 @@ describe("Cars", () => {
 
         it("Should create a car post when user provide existing email", (done) => {
             const newCar = {
-                "email": "willy@gmail.com",
-                "manufacturer": "Rava4",
-                "model": "Rava",
-                "price": 40000,
-                "state": "new"
+                email: "willy@gmail.com",
+                manufacturer: "Rava4",
+                model: "Rava",
+                price: 40000,
+                state: "new",
+                status:"available"
             };
             chai.request(app)
                 .post("/api/v1/car")
@@ -415,7 +432,23 @@ describe("Cars", () => {
                     done();
                 });
         });
-
+        it("Should create a car post when user provide existing email(sold)", (done) => {
+            const newCar = {
+                email: "willy@gmail.com",
+                manufacturer: "Rava4",
+                model: "Rava",
+                price: 40000,
+                state: "new",
+                status:"sold"
+            };
+            chai.request(app)
+                .post("/api/v1/car")
+                .send(newCar)
+                .end((req, res) => {
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
         it("Should not create a car post when manufacturer empty", (done) => {
             const newCar = {
                 "email": "willy@gmail.com",
@@ -531,7 +564,7 @@ describe("Cars", () => {
                 .post("/api/v1/order")
                 .send(newCar)
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
@@ -604,7 +637,7 @@ describe("Cars", () => {
                 .patch(`/api/v1/car/${id}/price`)
                 .send(price)
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
@@ -659,7 +692,7 @@ describe("Cars", () => {
                 .patch(`/api/v1/car/${id}/status`)
                 .send(userEmail)
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
@@ -722,7 +755,7 @@ describe("Cars", () => {
             chai.request(app)
                 .get("/api/v1/car?body_type=truckk")
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
@@ -758,16 +791,16 @@ describe("Cars", () => {
                 .post("/api/v1/flag")
                 .send(data)
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
 
-        it("Should filter car according to prices", (done) => {
+        it("Should not filter car according to prices", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&min_price=1000&max_price=15000")
+                .get("/api/v1/car?status=available&min_price=2000&max_price=1000")
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
@@ -775,7 +808,7 @@ describe("Cars", () => {
             chai.request(app)
                 .get("/api/v1/car?status=sold&min_price=1000&max_price=15000")
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(200);
                     done();
                 });
         });
@@ -837,7 +870,7 @@ describe("Cars", () => {
             chai.request(app)
                 .get("/api/v1/car?status=available&min_price=1000&max_price=15000")
                 .end((req, res) => {
-                    res.should.have.a.status(400);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
