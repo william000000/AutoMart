@@ -2,6 +2,7 @@ import cars from "../modals/cars";
 import user from "../modals/user";
 import order from "../modals/order";
 import flags from "../modals/flags";
+
 class carController {
     static addCarPost(req, res) {
         const singleUser = user.find(useer => useer.email === req.body.email);
@@ -16,8 +17,10 @@ class carController {
                 created_on: new Date(),
                 price: parseFloat(req.body.price),
                 state: req.body.state,
+                image: req.body.image,
                 status: "available"
             };
+ 
             if(newCar&&newCar.state!=="new"&&newCar.state!=="used"){return res.status(400).send({status: 400, message: "state must be [new or used]"});}
             cars.push(newCar);
             return res.status(200).send({ status: 200, newCar }); 
