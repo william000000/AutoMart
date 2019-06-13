@@ -31,7 +31,7 @@ class validateCar {
 
       if (!email.test(req.body.email)) throw new Error('invalid email, try like this sample ex: willy@gmail.com');
       if (!model.test(req.body.model)) throw new Error('invalid input model');
-      if (!state.test(req.body.state) && (req.body.state!=="new") && (req.body.state!=="used")) throw new Error('invalid input state');
+      if (!state.test(req.body.state)) throw new Error('invalid input state');
       if (!manufacturer.test(req.body.manufacturer)) throw new Error('invalid input manufacturer');
       next();
     } catch (err) {

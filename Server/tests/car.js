@@ -767,7 +767,15 @@ describe("Cars", () => {
             chai.request(app)
                 .get("/api/v1/car?status=available&min_price=1000&max_price=15000")
                 .end((req, res) => {
-                    res.should.have.a.status(200);
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+        it("Should not filter car when status not available", (done) => {
+            chai.request(app)
+                .get("/api/v1/car?status=sold&min_price=1000&max_price=15000")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
                     done();
                 });
         });
