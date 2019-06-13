@@ -21,7 +21,7 @@ class carController {
             if(newCar&&newCar.state!=="new"&&newCar.state!=="used"){return res.status(400).send({status: 400, message: "state must be [new or used]"});}
             cars.push(newCar);
             return res.status(200).send({ status: 200, newCar }); 
-        } else { res.status(404).send({ status: 404, message: "invalid data" }); }
+        } else { res.status(400).send({ status: 400, message: "invalid data" }); }
     }
     static purchaseOrder(req, res) {
         const singleCar = cars.find(c => c.model === req.body.model);
