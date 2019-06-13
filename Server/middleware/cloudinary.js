@@ -13,7 +13,6 @@ cloudinary.config({
 cloudinary.v2.uploader.upload(req.body.image, (error, result) => {
     if (result) {
         req.body.image = result.secure_url;
-        console.log(req.body.image);
     }
 return next();
 });

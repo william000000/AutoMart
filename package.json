@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "nyc --export=text mocha --require @babel/register Server/tests/*.js --timeout 1000 --exit",
+    "test": "nyc --export=text mocha --require @babel/register Server/tests/*.js --exit",
     "start": "babel-node Server/app.js",
     "dev": "nodemon --exec babel-node Server/app.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
