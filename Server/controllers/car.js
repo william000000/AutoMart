@@ -42,8 +42,8 @@ class carController {
                     });
                 } else { res.status(400).send({ status: 400, message: "pendind or sold" }); }
             }
-            else { res.status(400).send({ status: 400, message: "car not found" }); }
-        } else res.status(400).send({ status: 400, message: "user not found" });
+            else { res.status(404).send({ status: 404, message: "car not found" }); }
+        } else res.status(404).send({ status: 404, message: "user not found" });
     }
     static updatePriceOfOrder(req, res) {
         const order_id = req.params.id;
@@ -63,7 +63,7 @@ class carController {
             }
             else { return res.status(400).send({ status: 400, message: "Your order is not in pending mode" }); }
         }
-        else return res.status(400).send({ status: 400, message: "Your order not exist" });
+        else return res.status(404).send({ status: 404, message: "Your order not exist" });
     }
     static markPosted(req, res) {
         const singleCar = cars.find(cr => cr.id === parseInt(req.params.id));
@@ -85,7 +85,7 @@ class carController {
                     });
                 } else return res.status(400).send({ status: 400, message: "car status is sold" });
             }
-            else return res.status(400).send({ status: 400, message: "car is not found" });
+            else return res.status(404).send({ status: 404, message: "car is not found" });
         } else return res.status(400).send({ status: 400, message: "incorrect Email account" });
     }
     static updateCarPrice(req, res) {
@@ -107,7 +107,7 @@ class carController {
                 }
             });
         }
-        else return res.status(400).send({ status: 400, message: "Your Car not found" });
+        else return res.status(404).send({ status: 404, message: "Your Car not found" });
     }
     static viewSpecificCar(req, res) {
         const car_id = req.params.id;
@@ -115,7 +115,7 @@ class carController {
         if (checkCar) {
             res.status(200).send({ status: 200, data: checkCar });
         }
-        else return res.status(400).send({ status: 400, message: "Car not found" });
+        else return res.status(404).send({ status: 404, message: "Car not found" });
     }
 
     static deleteCar(req, res) {
@@ -141,7 +141,7 @@ class carController {
             };
             return res.status(200).send({ status: 200, data: newFlag });
         }
-        else { return res.status(400).send({ status: 400, data: "a car not found" }); }
+        else { return res.status(404).send({ status: 404, data: "a car not found" }); }
     }
 
     /*
@@ -185,9 +185,25 @@ class carController {
                 });
             }
             else {
-                return res.status(400).send({
-                    status: 400,
-                    data: "the range of price you specified not available!!"
+                return res.status(404).send({
+                    status: 404,
+                    data: "Not found, the range of price you specified not available!!"
+                });
+            }
+        }
+        //find sold cars in range of price
+        else if (status && status.toLowerCase()==="sold"&& min && max) {
+            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status==="sold");
+            if (check.length > 0) {
+                res.status(200).send({
+                    status: 200,
+                    data: check
+                });
+            }
+            else {
+                return res.status(404).send({
+                    status: 404,
+                    data: "Not found, the range of price you specified is available!!"
                 });
             }
         }
@@ -201,7 +217,7 @@ class carController {
                 });
             } else {
                 res.status(404).send({
-                    status: "404",
+                    status: 404,
                     message: "Not found"
                 });
             }
@@ -231,7 +247,7 @@ class carController {
             if (findBody.length > 0) {
                 res.status(200).send({ status: 200, data: findBody });
             }
-            else return res.status(400).send({ status: 400, message: "Body Type not found" });
+            else return res.status(404).send({ status: 404, message: "Body Type not found" });
         }
         else {
             return res.status(400).send({ status: 400, message: "Bad request" });
