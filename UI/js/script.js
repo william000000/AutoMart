@@ -61,4 +61,32 @@ function currentDiv(n) {
       }
     }
   }
+/*display success message when change status of a car on seller pg*/
+function confirmChange(){
+  confirm("Are you sure you to update status");
+}
+function status(){
+    alert("Status Succefully Update");  
+}
 
+function displayForm(){
+  let btn = document.getElementById("form");
+  btn.style.display="block";
+}
+function changePrice() {
+  
+  let updatetInput = document.getElementById("price");
+  let updatetInputt = document.getElementById("pricee");
+  let newPrice = document.getElementById('newPrice').value;
+  let btn = document.getElementById("form");
+
+  updatetInput.innerText = newPrice;  
+  
+  btn.style.display="none";  
+  alert("succesfully updated!");
+}
+
+function cancel(){
+  let btn = document.getElementById("form"); 
+  btn.style.display="none"; 
+}

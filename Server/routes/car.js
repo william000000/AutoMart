@@ -2,6 +2,7 @@ import express from "express";
 import carController from "../controllers/car";
 import admin from "../middleware/admin";
 import auth from "../middleware/auth";
+import cloudinary from "../middleware/cloudinary";
 import validateCar from "../helper/carValidation";
 const router = express.Router();
 const {createCarPost} = validateCar;
@@ -9,7 +10,7 @@ const {makePurchaseOrder} = validateCar;
 const {validatePurchaseOrder} = validateCar;
 const {validateMake} = validateCar;
 
-router.post("/car", createCarPost, carController.addCarPost);
+router.post("/car", cloudinary, createCarPost, carController.addCarPost);
 router.post("/order", makePurchaseOrder, carController.purchaseOrder);
 router.patch("/order/:id/price",validatePurchaseOrder,carController.updatePriceOfOrder);
 router.patch("/car/:id/status", carController.markPosted);

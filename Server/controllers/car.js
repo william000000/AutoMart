@@ -2,6 +2,7 @@ import cars from "../modals/cars";
 import user from "../modals/user";
 import order from "../modals/order";
 import flags from "../modals/flags";
+
 class carController {
     static addCarPost(req, res) {
         const singleUser = user.find(useer => useer.email === req.body.email);
@@ -16,11 +17,14 @@ class carController {
                 created_on: new Date(),
                 price: parseFloat(req.body.price),
                 state: req.body.state,
+                image: req.body.image,
                 status: "available"
             };
+ 
+            if(newCar&&newCar.state!=="new"&&newCar.state!=="used"){return res.status(400).send({status: 400, message: "state must be [new or used]"});}
             cars.push(newCar);
-            res.status(200).send({ status: 200, newCar });
-        } else { res.status(400).send({ status: 400, message: "not found" }); }
+            return res.status(200).send({ status: 200, newCar }); 
+        } else { res.status(400).send({ status: 400, message: "invalid data" }); }
     }
     static purchaseOrder(req, res) {
         const singleCar = cars.find(c => c.model === req.body.model);
@@ -41,8 +45,8 @@ class carController {
                     });
                 } else { res.status(400).send({ status: 400, message: "pendind or sold" }); }
             }
-            else { res.status(400).send({ status: 400, message: "car not found" }); }
-        } else res.status(400).send({ status: 400, message: "user not found" });
+            else { res.status(404).send({ status: 404, message: "car not found" }); }
+        } else res.status(404).send({ status: 404, message: "user not found" });
     }
     static updatePriceOfOrder(req, res) {
         const order_id = req.params.id;
@@ -62,7 +66,7 @@ class carController {
             }
             else { return res.status(400).send({ status: 400, message: "Your order is not in pending mode" }); }
         }
-        else return res.status(400).send({ status: 400, message: "Your order not exist" });
+        else return res.status(404).send({ status: 404, message: "Your order not exist" });
     }
     static markPosted(req, res) {
         const singleCar = cars.find(cr => cr.id === parseInt(req.params.id));
@@ -84,7 +88,7 @@ class carController {
                     });
                 } else return res.status(400).send({ status: 400, message: "car status is sold" });
             }
-            else return res.status(400).send({ status: 400, message: "car is not found" });
+            else return res.status(404).send({ status: 404, message: "car is not found" });
         } else return res.status(400).send({ status: 400, message: "incorrect Email account" });
     }
     static updateCarPrice(req, res) {
@@ -106,7 +110,7 @@ class carController {
                 }
             });
         }
-        else return res.status(400).send({ status: 400, message: "Your Car not found" });
+        else return res.status(404).send({ status: 404, message: "Your Car not found" });
     }
     static viewSpecificCar(req, res) {
         const car_id = req.params.id;
@@ -114,7 +118,7 @@ class carController {
         if (checkCar) {
             res.status(200).send({ status: 200, data: checkCar });
         }
-        else return res.status(400).send({ status: 400, message: "Car not found" });
+        else return res.status(404).send({ status: 404, message: "Car not found" });
     }
 
     static deleteCar(req, res) {
@@ -123,9 +127,9 @@ class carController {
         if (checkCar) {
             cars.splice(cars.indexOf(checkCar), 1);
             const result = cars.filter(car => car.id !== parseInt(car_id));
-            return res.status(200).send({ status: 200, data: result });
+            return res.status(200).send({ status: 200, message: "Successfully Deleted!" });
         }
-        else { return res.status(400).send({ status: 400, message: "Car not found" }); }
+        else { return res.status(404).send({ status: 404, message: "Car not found" }); }
     }
 
     static flagAsFraudulent(req, res) {
@@ -138,16 +142,17 @@ class carController {
                 reason: checkCar.reason,
                 description: checkCar.descriptive
             };
-            if (newFlag) return res.status(200).send({ status: 200, data: newFlag });
-            else return res.status(400).send({ status: 400, message: "flag not specified" });
+            return res.status(200).send({ status: 200, data: newFlag });
         }
-        else { return res.status(400).send({ status: 400, data: "a car not found" }); }
+        else { return res.status(404).send({ status: 404, data: "a car not found" }); }
     }
+
+    /*
     static viewAllPostedCar(req, res) {
         const checkCar = cars.filter(car => car.status === "sold" || car.status === "available");
         if (checkCar.length > 0) { res.status(200).send({ status: 200, data: checkCar }); }
         else return res.status(400).send({ status: 400, message: "Car not found" });
-    }
+    }*/
 
     //Routes with qwery parameter
     static viewCar(req, res) {
@@ -175,7 +180,7 @@ class carController {
 
         //find availble cars in range of price
         else if (status && status.toLowerCase() === "available" && min && max) {
-            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max));
+            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status==="available");
             if (check.length > 0) {
                 res.status(200).send({
                     status: 200,
@@ -183,9 +188,25 @@ class carController {
                 });
             }
             else {
-                return res.status(400).send({
-                    status: 400,
-                    data: "the range of price you specified not available!!"
+                return res.status(404).send({
+                    status: 404,
+                    data: "Not found, the range of price you specified not available!!"
+                });
+            }
+        }
+        //find sold cars in range of price
+        else if (status && status.toLowerCase()==="sold"&& min && max) {
+            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status==="sold");
+            if (check.length > 0) {
+                res.status(200).send({
+                    status: 200,
+                    data: check
+                });
+            }
+            else {
+                return res.status(404).send({
+                    status: 404,
+                    data: "Not found, the range of price you specified is available!!"
                 });
             }
         }
@@ -199,7 +220,52 @@ class carController {
                 });
             } else {
                 res.status(404).send({
-                    status: "404",
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
+        //status availble and state = new
+        else if (status && status === "available" && state === "new") {
+            const checkCar = cars.filter(car => car.status === "available" && car.state === "new");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
+        //status sold and state = new
+        else if (status && status === "sold" && state === "new") {
+            const checkCar = cars.filter(car => car.status === "sold" && car.state === "new");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
+        //status sold and state = new
+        else if (status && status === "sold" && state === "used") {
+            const checkCar = cars.filter(car => car.status === "sold" && car.state === "used");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
                     message: "Not found"
                 });
             }
@@ -229,7 +295,7 @@ class carController {
             if (findBody.length > 0) {
                 res.status(200).send({ status: 200, data: findBody });
             }
-            else return res.status(400).send({ status: 400, message: "Body Type not found" });
+            else return res.status(404).send({ status: 404, message: "Body Type not found" });
         }
         else {
             return res.status(400).send({ status: 400, message: "Bad request" });
