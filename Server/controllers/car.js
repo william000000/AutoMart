@@ -225,6 +225,51 @@ class carController {
                 });
             }
         }
+        //status availble and state = new
+        else if (status && status === "available" && state === "new") {
+            const checkCar = cars.filter(car => car.status === "available" && car.state === "new");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
+        //status sold and state = new
+        else if (status && status === "sold" && state === "new") {
+            const checkCar = cars.filter(car => car.status === "sold" && car.state === "new");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
+        //status sold and state = new
+        else if (status && status === "sold" && state === "used") {
+            const checkCar = cars.filter(car => car.status === "sold" && car.state === "used");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
         //find all unsold by make, status=avail.. and manufacturer=xxx
         else if (status && status.toLowerCase() === "available" && manufacturer) {
             const findCar = cars.filter(car => car.manufacturer === manufacturer.toLowerCase());

@@ -415,40 +415,7 @@ describe("Cars", () => {
         });
 
 
-        it("Should create a car post when user provide existing email", (done) => {
-            const newCar = {
-                email: "willy@gmail.com",
-                manufacturer: "Rava4",
-                model: "Rava",
-                price: 40000,
-                state: "new",
-                status:"available"
-            };
-            chai.request(app)
-                .post("/api/v1/car")
-                .send(newCar)
-                .end((req, res) => {
-                    res.should.have.a.status(200);
-                    done();
-                });
-        });
-        it("Should create a car post when user provide existing email(sold)", (done) => {
-            const newCar = {
-                email: "willy@gmail.com",
-                manufacturer: "Rava4",
-                model: "Rava",
-                price: 40000,
-                state: "new",
-                status:"sold"
-            };
-            chai.request(app)
-                .post("/api/v1/car")
-                .send(newCar)
-                .end((req, res) => {
-                    res.should.have.a.status(200);
-                    done();
-                });
-        });
+     
         it("Should not create a car post when manufacturer empty", (done) => {
             const newCar = {
                 "email": "willy@gmail.com",
@@ -501,43 +468,12 @@ describe("Cars", () => {
                 });
         });
 
-        it("Should create a car post when user provide existing email", (done) => {
-            const newCar = {
-                "email": "willy@gmail.com",
-                "manufacturer": "",
-                "model": "",
-                "price": 40000,
-                "state": ""
-            };
-            chai.request(app)
-                .post("/api/v1/car")
-                .send(newCar)
-                .end((req, res) => {
-                    res.should.have.a.status(400);
-                    done();
-                });
-        });
+        
+        
 
-        it("Should create a car post when seller provide unkwon email account", (done) => {
+        it("Should not make purchase order if user exist", (done) => {
             const newCar = {
-                "email": "willy1233@gmail.com",
-                "manufacturer": "Rava4",
-                "model": "Rava",
-                "price": 40000,
-                "state": "new"
-            };
-            chai.request(app)
-                .post("/api/v1/car")
-                .send(newCar)
-                .end((req, res) => {
-                    res.should.have.a.status(400);
-                    done();
-                });
-        });
-
-        it("Should make purchase order if user exist", (done) => {
-            const newCar = {
-                "email": "willy@gmail.com",
+                "email": "willy@gmailer.com",
                 "manufacturer": "Rava4",
                 "model": "Rava",
                 "price": 40000,
@@ -547,7 +483,7 @@ describe("Cars", () => {
                 .post("/api/v1/order")
                 .send(newCar)
                 .end((req, res) => {
-                    res.should.have.a.status(200);
+                    res.should.have.a.status(404);
                     done();
                 });
         });
