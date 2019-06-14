@@ -54,7 +54,18 @@ class validateCar {
     }
   }
   static validateMake(req, res, next) {
+    const {status,state} = req.query;
     try {
+      if(state){
+        if(state!=="new" &&state!=="used"){
+          throw new Error("try valid state");
+        }
+      }
+      if(status){
+        if(status!=="available" &&status!=="sold"){
+          throw new Error("try valid status");
+        }
+      }
       if (!manufacturer.test(req.body.make)) throw new Error('invalid input make');
       next();
     } catch (err) {

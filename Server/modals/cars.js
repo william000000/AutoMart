@@ -69,7 +69,7 @@ let cars = [
         id: 7,
         owner: 1,
         created_on: new Date(),
-        state: "sold",
+        state: "used",
         status: "available",
         price: 20000.0,
         manufacturer: "fusso",
