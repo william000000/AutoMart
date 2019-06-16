@@ -11,11 +11,11 @@ const createTables = async () => {
     const userTable = `
     CREATE TABLE IF NOT EXISTS users(
         id SERIAL PRIMARY KEY UNIQUE,
-        email VARCHAR(30) NOT NULL UNIQUE,
-        first_name VARCHAR(30) NOT NULL,
-        last_name VARCHAR(30) NOT NULL,
-        password VARCHAR(200) NOT NULL,
-        address VARCHAR(200),
+        email TEXT NOT NULL UNIQUE,
+        first_name TEXT NOT NULL,
+        last_name TEXT NOT NULL,
+        password TEXT NOT NULL,
+        address TEXT,
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         isAdmin boolean DEFAULT false
     )`;
@@ -24,12 +24,12 @@ const createTables = async () => {
         id SERIAL PRIMARY KEY UNIQUE,
         owner TEXT NOT NULL REFERENCES users(email),
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        state VARCHAR(30) NOT NULL,
-        status VARCHAR(30) NOT NULL,
+        state TEXT NOT NULL,
+        status TEXT NOT NULL,
         price INTEGER NOT NULL,
-        manufacturer VARCHAR(30),
-        model VARCHAR(30),
-        body_type VARCHAR(30),
+        manufacturer TEXT,
+        model TEXT,
+        body_type TEXT,
         carName TEXT NOT NULL,
         image TEXT
     )`;
@@ -39,14 +39,14 @@ const createTables = async () => {
         buyer TEXT NOT NULL REFERENCES users(email),
         car_id INTEGER NOT NULL REFERENCES cars(id),
         amount INTEGER NOT NULL,
-        status VARCHAR(30) DEFAULT 'pending'
+        status TEXT DEFAULT 'pending'
     )`;
     const flagTable = `
     CREATE TABLE IF NOT EXISTS flags(
         id SERIAL PRIMARY KEY UNIQUE,
         car_id INTEGER NOT NULL REFERENCES cars(id),
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        reason VARCHAR(30),
+        reason TEXT,
         description VARCHAR(50)
     )`;
     const tokenTable = `
@@ -56,13 +56,14 @@ const createTables = async () => {
         email TEXT NOT NULL UNIQUE REFERENCES users(email),
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )`;
-
+        
     await pool.query(userTable);
     await pool.query(carTable);
     await pool.query(flagTable);
     await pool.query(orderTable);
     await pool.query(tokenTable);
     pool.end();
+    console.log("Table created");
 
 };
 createTables();
