@@ -1,8 +1,8 @@
 const user = {
     createUser: `
-    INSERT INTO users(email, password, firt_name, last_name, address)
+    INSERT INTO users(email, password, first_name, last_name, address)
     VALUES($1, $2, $3, $4, $5) RETURNING *`,
-    login: `SELECT * FROM users WHERE email = $1 and password = $2`,
+    login: `SELECT * FROM users WHERE email = $1`,
     isUserLogged: `SELECT * FROM tokens WHERE email = $1`,
     createToken: `INSERT INTO tokens(token, email) VALUES($1, $2) RETURNING token`,
     logout: `DELETE FROM tokens WHERE token = $1 RETURNING token`,
@@ -35,6 +35,6 @@ const flag = {
     createFlag: `INSERT INTO flags(car_id, reason, description)`,
 };
 
-export default { user, car, order, flag };
+export { user, car, order, flag };
 
 
