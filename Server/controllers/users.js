@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import joi from "joi";
-//import user from "../modals/user";
 import bcrypt from "bcrypt";
 import admin from "../middleware/admin";
 import validUser from "../helper/authValidation";
