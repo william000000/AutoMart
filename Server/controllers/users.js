@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import joi from "joi";
-//import user from "../modals/user";
 import bcrypt from "bcrypt";
 import admin from "../middleware/admin";
 import validUser from "../helper/authValidation";
@@ -76,7 +75,8 @@ class userController {
         } catch(err) {
             res.status(400).send({
                 status: 400,
-                error: 'incorrect username or password',
+                error: 'incorrect username or password!',
+
          });
         }
 
