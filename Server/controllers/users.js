@@ -75,7 +75,7 @@ class userController {
         } catch(err) {
             res.status(400).send({
                 status: 400,
-                error: 'incorrect username or password',
+                error: 'incorrect username or password!',
          });
         }
 
