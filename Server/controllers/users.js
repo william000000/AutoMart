@@ -76,6 +76,7 @@ class userController {
             res.status(400).send({
                 status: 400,
                 error: 'incorrect username or password!',
+
          });
         }
 
