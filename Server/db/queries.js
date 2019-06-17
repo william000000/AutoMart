@@ -20,9 +20,10 @@ const car = {
     VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
     getCars: `SELECT * FROM cars`,
     getCar: `SELECT * FROM cars WHERE id = $1`,
-    updateCar: `UPDATE cars SET $2 = $3 WHERE id = $1 RETURNING *`,
+    updateCar: `UPDATE cars SET status = $2 WHERE id = $1 RETURNING *`,
     deletecar: `DELETE FROM cars WHERE id = $1 RETURNING carName`,
-    isCarExist: `SELECT * FROM cars WHERE owner= $1 AND carName = $2`
+    isCarExist: `SELECT * FROM cars WHERE owner= $1 AND carName = $2`,
+    isOwner: `SELECT * FROM cars WHERE owner= $1`
 };
 
 const order = {

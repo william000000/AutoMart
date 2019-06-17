@@ -22,7 +22,7 @@ const createTables = async () => {
     const carTable = `
     CREATE TABLE IF NOT EXISTS cars(
         id SERIAL PRIMARY KEY UNIQUE,
-        owner TEXT NOT NULL REFERENCES users(email),
+        owner TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         state TEXT NOT NULL,
         status TEXT NOT NULL DEFAULT 'available',
@@ -36,15 +36,15 @@ const createTables = async () => {
     const orderTable = `
     CREATE TABLE IF NOT EXISTS orders(
         id SERIAL PRIMARY KEY UNIQUE,
-        buyer TEXT NOT NULL REFERENCES users(email),
-        car_id INTEGER NOT NULL REFERENCES cars(id),
+        buyer TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
+        car_id INTEGER NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
         amount INTEGER NOT NULL,
         status TEXT DEFAULT 'pending'
     )`;
     const flagTable = `
     CREATE TABLE IF NOT EXISTS flags(
         id SERIAL PRIMARY KEY UNIQUE,
-        car_id INTEGER NOT NULL REFERENCES cars(id),
+        car_id INTEGER NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         reason TEXT,
         description VARCHAR(50)
@@ -53,7 +53,7 @@ const createTables = async () => {
     CREATE TABLE IF NOT EXISTS tokens(
         id SERIAL PRIMARY KEY UNIQUE,
         token TEXT NOT NULL UNIQUE,
-        email TEXT NOT NULL UNIQUE REFERENCES users(email),
+        email TEXT NOT NULL UNIQUE REFERENCES users(email) ON DELETE CASCADE,
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )`;
 
