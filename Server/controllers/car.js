@@ -171,24 +171,54 @@ class carController {
             });
         }
     }
-    static viewSpecificCar(req, res) {
-        const car_id = req.params.id;
-        const checkCar = cars.find(c => c.id === parseInt(car_id));
-        if (checkCar) {
-            res.status(200).send({ status: 200, data: checkCar });
-        }
-        else return res.status(404).send({ status: 404, message: "Car not found" });
-    }
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns view specific car
+     */
+    static async viewSpecificCar(req, res) {
+        const car_id = parseInt(req.params.id);
+        const result = await runQuery(car.getCar, [car_id]);
+        try{
+            if(result[0]){
+                return res.status(200).send({status: 200, data: result});
+            } else {
+                throw new Error("car not exist");
+            }
+           
+        } catch(err){
+            res.status(404).json({
+                status: 404,
+                error: err.message,
 
-    static deleteCar(req, res) {
-        const car_id = req.params.id;
-        const checkCar = cars.find(car => car.id === parseInt(car_id));
-        if (checkCar) {
-            cars.splice(cars.indexOf(checkCar), 1);
-            const result = cars.filter(car => car.id !== parseInt(car_id));
-            return res.status(200).send({ status: 200, message: "Successfully Deleted!" });
+            });
         }
-        else { return res.status(404).send({ status: 404, message: "Car not found" }); }
+    }
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns delete a car
+     */
+    static async deleteCar(req, res) {
+        const car_id = req.params.id;
+        const result = await runQuery(car.deletecar, [car_id]);
+        try{
+            if(result[0]){
+                return res.status(200).send({message: "Successfully deleted!"});
+            } else {
+                throw new Error("car not exist");
+            }
+           
+        } catch(err){
+            res.status(404).json({
+                status: 404,
+                error: err.message,
+
+            });
+        }
+
     }
 
     static flagAsFraudulent(req, res) {
