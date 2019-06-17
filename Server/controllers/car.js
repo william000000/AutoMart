@@ -93,28 +93,46 @@ class carController {
             });
         }
     }
-    static markPosted(req, res) {
-        const singleCar = cars.find(cr => cr.id === parseInt(req.params.id));
-        const userEmail = user.find(us => us.email === req.body.email);
-        if (userEmail) {
-            if (singleCar) {
-                if (singleCar.status === "available") {
-                    cars.map(c => { if (c.status === "available") c.status = "sold"; return c; });
-                    res.status(200).send({
-                        status: 200, data: {
-                            id: singleCar.id,
-                            email: userEmail.email,
-                            created_on: singleCar.created_on,
-                            manufacturer: singleCar.manufacturer,
-                            model: singleCar.model,
-                            status: singleCar.status,
-                            state: singleCar.state
-                        }
-                    });
-                } else return res.status(400).send({ status: 400, message: "car status is sold" });
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns mark a posted car as sold
+     */
+    static async markPosted(req, res) {
+        const id = req.params.id;
+        const email = req.body.email;
+        const singleCar = await runQuery(car.getCar, [id]);
+        const singleUser = await runQuery(car.isOwner, [email]);
+
+        try{
+            if(singleUser[0]){
+                if(singleCar[0]){
+                    if(singleCar[0].status === "available"){
+                        const update = await runQuery(car.updateCar,[id, "sold"]);                       
+                            res.status(200).send({
+                            status: 200,
+                            update
+                        });
+                    } else{
+                        throw new Error("Already sold");
+                    }
+
+                }else {
+                    throw new  Error("car not exist");
+                }
+            } else{
+                throw new Error("User not the owner of a car or not exist");
             }
-            else return res.status(404).send({ status: 404, message: "car is not found" });
-        } else return res.status(400).send({ status: 400, message: "incorrect Email account" });
+
+        } catch(err){
+            res.status(400).json({
+                status: 400,
+                error: err.message,
+
+            });
+        }
+
     }
     static updateCarPrice(req, res) {
         const car_id = req.params.id;
