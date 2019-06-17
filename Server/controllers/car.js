@@ -1,6 +1,6 @@
 import cars from "../modals/cars";
 import flags from "../modals/flags";
-import { car, user, order } from "../db/queries.js";
+import { car, user, order} from "../db/queries.js";
 import runQuery from "../db/executeQuery";
 import { throws } from "assert";
 
@@ -65,25 +65,33 @@ class carController {
         }
 
     }
-    static updatePriceOfOrder(req, res) {
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns update price of order
+     */
+    static async updatePriceOfOrder(req, res) {
         const order_id = req.params.id;
-        const checkOrder = order.find(o => o.id === parseInt(order_id));
-        if (checkOrder) {
-            if (checkOrder.status === "pending") {
-                const newPrice = parseFloat(req.body.price);
-                res.status(200).send({
-                    status: 200, data: {
-                        id: checkOrder.id,
-                        car_id: checkOrder.car_id,
-                        status: checkOrder.status,
-                        oldPrice: parseFloat(checkOrder.amount),
-                        newPrice: parseFloat(newPrice)
-                    }
-                });
+        const isOrder = await runQuery(order.getOrder, [order_id]); 
+        try{
+            if(isOrder[0]){
+                const amount = req.body.amount;
+                
+                const result = await runQuery(order.updateOrder, [order_id, amount]);
+                res.status(200).send({status: 200, result});
+
+            } else{
+                throw new Error("order not exist");
             }
-            else { return res.status(400).send({ status: 400, message: "Your order is not in pending mode" }); }
+
+        } catch(err){ 
+            res.status(400).send({
+                status: 400,
+                error: err.message,
+
+            });
         }
-        else return res.status(404).send({ status: 404, message: "Your order not exist" });
     }
     static markPosted(req, res) {
         const singleCar = cars.find(cr => cr.id === parseInt(req.params.id));

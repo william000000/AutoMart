@@ -1,7 +1,7 @@
 services:
   - postgresql
 addons:
-  postgresql: "11.3"
+  postgresql: "9.6"
 env:
   global:
     - secretKey=dsakjdfeeyf82394sndkfn
