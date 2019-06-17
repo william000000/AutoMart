@@ -143,11 +143,10 @@ class carController {
     static  async updateCarPrice(req, res) {
         const id = parseInt(req.params.id);
         const email = req.body.email;
-        // const singleCar = await runQuery(car.carOwner, [id]);
         const singleUser = await runQuery(car.isOwner, [email]);
 
         try{
-            if(singleUser[0]){
+            if(singleUser[0]&&singleUser[0].status==="available"){
                    const newPrice = req.body.amount;
                     const updateCarPrice = await runQuery(car.updateCarPrice, [id, newPrice, email]);
                     if(updateCarPrice[0]){
@@ -158,7 +157,7 @@ class carController {
                         });
 
                 }else {
-                    throw new  Error("you are not the owner of a car or not exist");
+                    throw new  Error("you are not the owner of a car or not exist and make sure the status is available");
                 }
             } else{
                 throw new Error("User not the owner of a car or not exist");
