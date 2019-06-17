@@ -1,52 +1,40 @@
 import cars from "../modals/cars";
-import user from "../modals/user";
-import order from "../modals/order";
 import flags from "../modals/flags";
+import { car, user, order } from "../db/queries.js";
+import runQuery from "../db/executeQuery";
+import { throws } from "assert";
 
 class carController {
-    static addCarPost(req, res) {
-        const singleUser = user.find(useer => useer.email === req.body.email);
-        if (!req.body.email) { res, status(400).send({ messsage: "not found" }); }
-        else if (!singleUser) { res.status(400).send({ status: 400, message: "not match" }); }
-        else if (singleUser) {
-            const newCar = {
-                id: cars.length + 1,
-                email: singleUser.email,
-                manufacturer: req.body.manufacturer,
-                model: req.body.model,
-                created_on: new Date(),
-                price: parseFloat(req.body.price),
-                state: req.body.state,
-                image: req.body.image,
-                status: "available"
-            };
- 
-            if(newCar&&newCar.state!=="new"&&newCar.state!=="used"){return res.status(400).send({status: 400, message: "state must be [new or used]"});}
-            cars.push(newCar);
-            return res.status(200).send({ status: 200, newCar }); 
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns post a car
+     */
+    static async addCarPost(req, res) {
+        const { owner, state, price, manufacturer, model, image, body_type, carName } = req.body;
+        const isCarExist = await runQuery(car.isCarExist, [owner,carName]);
+        const singleUser = await runQuery(user.userExist, [owner]);
+   
+        if (!singleUser[0]) { return res.status(400).send({ messsage: "user not found" }); }
+        else if( isCarExist[0]){ return res.status(400).send({ message: "car already exist"}); }
+        else if (singleUser[0]) {
+            const newCar = [owner, state, price, manufacturer, model, image, body_type, carName];
+
+            const result = await runQuery(car.createCar, newCar);
+            return res.status(201).send({ status: 201, newCar });
+
         } else { res.status(400).send({ status: 400, message: "invalid data" }); }
     }
-    static purchaseOrder(req, res) {
-        const singleCar = cars.find(c => c.model === req.body.model);
-        const buyer = user.find(us => us.email === req.body.email);
-        if (buyer) {
-            if (singleCar) {
-                if (singleCar.status === "available") {
-                    const priceOffered = req.body.price;
-                    return res.status(200).send({
-                        status: 200, data: {
-                            id: order.length + 1,
-                            car_id: singleCar.id,
-                            created_on: new Date(),
-                            status: "pending",
-                            price: singleCar.price,
-                            priceOfffered: priceOffered
-                        }
-                    });
-                } else { res.status(400).send({ status: 400, message: "pendind or sold" }); }
-            }
-            else { res.status(404).send({ status: 404, message: "car not found" }); }
-        } else res.status(404).send({ status: 404, message: "user not found" });
+
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns make purchase order
+     */
+    static async purchaseOrder(req, res) {
+
     }
     static updatePriceOfOrder(req, res) {
         const order_id = req.params.id;
@@ -147,13 +135,6 @@ class carController {
         else { return res.status(404).send({ status: 404, data: "a car not found" }); }
     }
 
-    /*
-    static viewAllPostedCar(req, res) {
-        const checkCar = cars.filter(car => car.status === "sold" || car.status === "available");
-        if (checkCar.length > 0) { res.status(200).send({ status: 200, data: checkCar }); }
-        else return res.status(400).send({ status: 400, message: "Car not found" });
-    }*/
-
     //Routes with qwery parameter
     static viewCar(req, res) {
 
@@ -180,7 +161,7 @@ class carController {
 
         //find availble cars in range of price
         else if (status && status.toLowerCase() === "available" && min && max) {
-            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status==="available");
+            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status === "available");
             if (check.length > 0) {
                 res.status(200).send({
                     status: 200,
@@ -195,8 +176,8 @@ class carController {
             }
         }
         //find sold cars in range of price
-        else if (status && status.toLowerCase()==="sold"&& min && max) {
-            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status==="sold");
+        else if (status && status.toLowerCase() === "sold" && min && max) {
+            const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status === "sold");
             if (check.length > 0) {
                 res.status(200).send({
                     status: 200,
