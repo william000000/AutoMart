@@ -1,6 +1,7 @@
 const email = /^\S+@[\w\-]+\.[A-Za-z ]{2,}$/;
 const model = /^[a-zA-Z]{1,}$/;
 const amount = /^[+-]?([0-9]*[.])?[0-9]+/;
+const price = /^[+-]?([0-9]*[.])?[0-9]+/;
 const state = /^[a-zA-Z]{3,}$/;
 const manufacturer = /^[a-zA-Z0-9]{1,}$/;
 

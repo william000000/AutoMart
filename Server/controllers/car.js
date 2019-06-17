@@ -112,7 +112,7 @@ class carController {
                         const update = await runQuery(car.updateCar,[id, "sold"]);                       
                             res.status(200).send({
                             status: 200,
-                            update
+                            data: update
                         });
                     } else{
                         throw new Error("Already sold");
@@ -134,26 +134,43 @@ class carController {
         }
 
     }
-    static updateCarPrice(req, res) {
-        const car_id = req.params.id;
-        const checkCar = cars.find(c => c.id === parseInt(car_id));
-        if (checkCar) {
-            const newPrice = parseFloat(req.body.price);
-            checkCar.price = newPrice;
-            res.status(200).send({
-                status: 200, data: {
-                    id: checkCar.id,
-                    car_id: checkCar.car_id,
-                    created_on: new Date(),
-                    model: checkCar.model,
-                    status: checkCar.status,
-                    state: checkCar.state,
-                    price: parseFloat(checkCar.price),
-                    manufacturer: checkCar.manufacturer
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns update the price of a car
+     */
+    static  async updateCarPrice(req, res) {
+        const id = parseInt(req.params.id);
+        const email = req.body.email;
+        // const singleCar = await runQuery(car.carOwner, [id]);
+        const singleUser = await runQuery(car.isOwner, [email]);
+
+        try{
+            if(singleUser[0]){
+                   const newPrice = req.body.amount;
+                    const updateCarPrice = await runQuery(car.updateCarPrice, [id, newPrice, email]);
+                    if(updateCarPrice[0]){
+
+                        return res.status(200).send({
+                            status: 200,
+                            data: updateCarPrice
+                        });
+
+                }else {
+                    throw new  Error("you are not the owner of a car or not exist");
                 }
+            } else{
+                throw new Error("User not the owner of a car or not exist");
+            }
+
+        } catch(err){
+            res.status(400).json({
+                status: 400,
+                error: err.message,
+
             });
         }
-        else return res.status(404).send({ status: 404, message: "Your Car not found" });
     }
     static viewSpecificCar(req, res) {
         const car_id = req.params.id;

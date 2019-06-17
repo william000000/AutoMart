@@ -10,8 +10,7 @@ const user = {
     updatePassword: `UPDATE users SET password = $2 WHERE email = $1 RETURNING password`,
     userExist: `SELECT email FROM users WHERE email = $1`,
     isUserAdmin: `SELECT email FROM users WHERE isAdmin = true`,
-    carOwner: `SELECT users.id FROM users, cars WHERE users.id = cars.owner`,
-    orderOwner: `SELECT users.id FROM users, orders WHERE users.id = orders.buyer`,
+    orderOwner: `SELECT buyer FROM orders WHERE id = $1`,
 };
 
 const car = {
@@ -21,9 +20,11 @@ const car = {
     getCars: `SELECT * FROM cars`,
     getCar: `SELECT * FROM cars WHERE id = $1`,
     updateCar: `UPDATE cars SET status = $2 WHERE id = $1 RETURNING *`,
+    updateCarPrice: `UPDATE cars SET price = $2 WHERE id = $1 AND owner=$3 RETURNING *`,
     deletecar: `DELETE FROM cars WHERE id = $1 RETURNING carName`,
     isCarExist: `SELECT * FROM cars WHERE owner= $1 AND carName = $2`,
-    isOwner: `SELECT * FROM cars WHERE owner= $1`
+    isOwner: `SELECT * FROM cars WHERE owner= $1`,
+    carOwner: `SELECT owner FROM cars WHERE id=$1`
 };
 
 const order = {
