@@ -1,6 +1,6 @@
 import cars from "../modals/cars";
 import flags from "../modals/flags";
-import { car, user, order} from "../db/queries.js";
+import { car, user, order, flag} from "../db/queries.js";
 import runQuery from "../db/executeQuery";
 import { throws } from "assert";
 
@@ -221,19 +221,35 @@ class carController {
 
     }
 
-    static flagAsFraudulent(req, res) {
+    /**
+     * 
+     * @param {object} req 
+     * @param {object} res 
+     * @returns flag a car as fraudulent
+     */
+
+    static async flagAsFraudulent(req, res) {
         const car_id = req.body.id;
-        const checkCar = flags.find(car => car.car_id == car_id);
-        if (checkCar) {
-            const newFlag = {
-                id: flags.length + 1,
-                car_id: checkCar.id,
-                reason: checkCar.reason,
-                description: checkCar.descriptive
-            };
-            return res.status(200).send({ status: 200, data: newFlag });
+        const checkCar = await runQuery(car.getCar, [car_id]);
+        const reason = req.body.reason;
+        const desc = req.body.description;
+
+        try{
+            if(checkCar[0]){
+                const result = await runQuery(flag.createFlag, [car_id, reason, desc]);
+                res.status(200).send({status: 200, message: "Successfully reported!"});
+
+            } else{
+                throw new Error("car not found");
+            }
+
+        } catch(err){
+            res.status(404).json({
+                status: 404,
+                error: err.message,
+
+            });
         }
-        else { return res.status(404).send({ status: 404, data: "a car not found" }); }
     }
 
     //Routes with qwery parameter
