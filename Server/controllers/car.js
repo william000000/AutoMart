@@ -181,10 +181,10 @@ class carController {
         const car_id = parseInt(req.params.id);
         const result = await runQuery(car.getCar, [car_id]);
         try{
-            if(result[0]){
+            if(result[0].status==="available"){
                 return res.status(200).send({status: 200, data: result});
             } else {
-                throw new Error("car not exist,Plz use exist one");
+                throw new Error("car not exist or status not available, Plz use exist one");
             }
            
         } catch(err){
