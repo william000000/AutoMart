@@ -13,11 +13,11 @@ class carController {
      */
     static async addCarPost(req, res) {
         const { owner, state, price, manufacturer, model, image, body_type, carName } = req.body;
-        const isCarExist = await runQuery(car.isCarExist, [owner,carName]);
+        const isCarExist = await runQuery(car.isCarExist, [owner, carName]);
         const singleUser = await runQuery(user.userExist, [owner]);
-   
+
         if (!singleUser[0]) { return res.status(400).send({ messsage: "user not found" }); }
-        else if( isCarExist[0]){ return res.status(400).send({ message: "car already exist"}); }
+        else if (isCarExist[0]) { return res.status(400).send({ message: "car already exist" }); }
         else if (singleUser[0]) {
             const newCar = [owner, state, price, manufacturer, model, image, body_type, carName];
 
@@ -34,6 +34,35 @@ class carController {
      * @returns make purchase order
      */
     static async purchaseOrder(req, res) {
+        try {
+            const { buyer, car_id, amount, status, priceOffered } = req.body;
+            const singleUser = await runQuery(user.userExist, [buyer]);
+            const isOrderExist = await runQuery(order.isOrderExist, [car_id, buyer]);
+            const singleCar = await runQuery(car.getCar, [car_id]);
+
+            if (singleUser) {
+
+                const newOrder = [buyer, car_id, amount];
+                if (singleCar[0]) {
+                    if (isOrderExist[0]) {
+                        console.log(isOrderExist);
+                        throw new Error("Order already exist");
+                    }
+                    const result = await runQuery(order.createOrder, newOrder);
+                    res.status(200).send({ status: 200, result });
+                } else {
+                    throw new Error("Car not exist");
+                }
+            } else {
+                throw new Error("User not exist");
+            }
+        } catch (err) {
+            res.status(400).send({
+                status: 400,
+                error: err.message,
+
+            });
+        }
 
     }
     static updatePriceOfOrder(req, res) {
