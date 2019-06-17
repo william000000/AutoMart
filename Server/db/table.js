@@ -25,11 +25,11 @@ const createTables = async () => {
         owner TEXT NOT NULL REFERENCES users(email),
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         state TEXT NOT NULL,
-        status TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'available',
         price INTEGER NOT NULL,
-        manufacturer TEXT,
-        model TEXT,
-        body_type TEXT,
+        manufacturer TEXT NOT NULL,
+        model TEXT NOT NULL,
+        body_type TEXT NOT NULL,
         carName TEXT NOT NULL,
         image TEXT
     )`;
@@ -56,7 +56,7 @@ const createTables = async () => {
         email TEXT NOT NULL UNIQUE REFERENCES users(email),
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )`;
-        
+
     await pool.query(userTable);
     await pool.query(carTable);
     await pool.query(flagTable);
