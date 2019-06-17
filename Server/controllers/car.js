@@ -184,7 +184,7 @@ class carController {
             if(result[0]){
                 return res.status(200).send({status: 200, data: result});
             } else {
-                throw new Error("car not exist");
+                throw new Error("car not exist,Plz use exist one");
             }
            
         } catch(err){
