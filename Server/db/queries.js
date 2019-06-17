@@ -29,13 +29,12 @@ const order = {
     createOrder: `
     INSERT INTO orders(buyer, car_id, amount) VALUES($1, $2, $3) RETURNING *`,
     getOrder: `SELECT * FROM orders WHERE id = $1`,
-    updateOrder: `UPDATE orders SET $2 = $3 WHERE id = $1 RETURNING *`,
+    updateOrder: `UPDATE orders SET amount = $2 WHERE id = $1 RETURNING *`,
     deleteOrder: `DELETE FROM orders WHERE id = $1 RETURNING id`,
-    isOrderExist: `SELECT * FROM orders WHERE car_id = $1 and buyer = $2`
 };
 
 const flag = {
-    createFlag: `INSERT INTO flags(car_id, reason, description)`,
+    createFlag: `INSERT INTO flags(car_id, reason, description) VALUES($1,$2,$3)`,
 };
 
 export { user, car, order, flag };

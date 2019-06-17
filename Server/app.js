@@ -8,8 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-app.use("/api/v1/auth/",AuthRouter);
-app.use("/api/v1/",carRouter);
+app.use("/api/v2/auth/",AuthRouter);
+app.use("/api/v2/",carRouter);
 app.use("*",(req,res)=>{
     res.status(200).send({
         status: 200,
