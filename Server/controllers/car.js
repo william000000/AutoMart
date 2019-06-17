@@ -181,10 +181,16 @@ class carController {
         const car_id = parseInt(req.params.id);
         const result = await runQuery(car.getCar, [car_id]);
         try{
-            if(result[0].status==="available"){
-                return res.status(200).send({status: 200, data: result});
+            if(result[0]){
+                if(result[0].status==='available'){
+                    return res.status(200).send({status: 200, data: result});
+                }else{
+                    throw new Error("car you are trying, not has status of available");
+                }
+        
+                
             } else {
-                throw new Error("car not exist or status not available, Plz use exist one");
+                throw new Error("car not exist, Plz use exist one");
             }
            
         } catch(err){
@@ -276,7 +282,7 @@ class carController {
             else return res.status(404).send({ status: 404, message: "Manufacturer not found in available car" });
         }
 
-        //find availble cars in range of price
+        //find available cars in range of price
         else if (status && status.toLowerCase() === "available" && min && max) {
             const check = cars.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status === "available");
             if (check.length > 0) {

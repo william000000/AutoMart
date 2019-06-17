@@ -4,11 +4,13 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "nyc --export=text mocha --require @babel/register Server/tests/*.js --exit",
+    "test": "NODE_ENV=TEST nyc --export=text mocha --require @babel/register Server/tests/*.js --exit",
+    "test-win": "set NODE_ENV=TEST&&nyc --export=text mocha --require @babel/register Server/tests/*.js --exit",
     "start": "babel-node Server/app.js",
     "dev": "nodemon --exec babel-node Server/app.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "db": "babel-node server/db/table.js"
+    "db": "babel-node server/db/table.js",
+    "db-test-win": "set NODE_ENV=TEST&&babel-node server/db/table.js"
   },
   "author": "WILLY",
   "license": "ISC",
