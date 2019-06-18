@@ -320,6 +320,66 @@ class carController {
                 });
             }
         }
+        //sstatus available and state used
+        else if (status && status === "available" && state === "used") {
+            const checkCar = allCar.filter(car => car.status === "available" && car.state === "used");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
+        //status availble and state = new
+        else if (status && status === "available" && state === "new") {
+            const checkCar = allCar.filter(car => car.status === "available" && car.state === "new");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
+        //status sold and state = new
+        else if (status && status === "sold" && state === "new") {
+            const checkCar = allCar.filter(car => car.status === "sold" && car.state === "new");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
+        //status sold and state = new
+        else if (status && status === "sold" && state === "used") {
+            const checkCar = allCar.filter(car => car.status === "sold" && car.state === "used");
+            if (checkCar.length > 0) {
+                res.status(200).send({
+                    status: "200",
+                    data: { checkCar }
+                });
+            } else {
+                res.status(404).send({
+                    status: 404,
+                    message: "Not found"
+                });
+            }
+        }
         else {
             return res.status(400).send({ status: 400, message: "Bad request" });
         }
