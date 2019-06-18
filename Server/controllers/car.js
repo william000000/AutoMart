@@ -397,6 +397,14 @@ class carController {
         else if (!status && !min && !max && !maker && !manufacturer && !body_type) {
             return res.status(200).send({ status: 200, data: allCar });
         }
+        //find all unsold by body-type      
+        else if (body_type) {
+            const findBody = allCar.filter(car => car.body_type === body_type.toLowerCase());
+            if (findBody.length > 0) {
+                res.status(200).send({ status: 200, data: findBody });
+            }
+            else return res.status(404).send({ status: 404, message: "Body Type not found" });
+        }
         else {
             return res.status(400).send({ status: 400, message: "Bad request" });
         }
