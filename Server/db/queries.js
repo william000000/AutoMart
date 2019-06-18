@@ -39,7 +39,8 @@ const order = {
 };
 
 const flag = {
-    createFlag: `INSERT INTO flags(car_id, reason, description) VALUES($1,$2,$3)`,
+    createFlag: `INSERT INTO flags(car_id, email, reason, description) VALUES($1,$2,$3,$4)`,
+    isflagExist: `SELECT * FROM flags WHERE email=$1 AND car_id=$2`
 };
 
 export { user, car, order, flag };

@@ -5,7 +5,7 @@ import { loadavg } from "os";
 dotenv.config();
 
 const pool = new Pool({
-    connectionString: (process.env.NODE_ENV==="TEST")?process.env.TS_DATABASE_URL:process.env.DATABASE_URL,
+    connectionString: (process.env.NODE_ENV==="test")?process.env.TS_DATABASE_URL:process.env.DATABASE_URL,
 });
 
 const dropTable = [
@@ -54,6 +54,7 @@ const createTables = async () => {
     CREATE TABLE IF NOT EXISTS flags(
         id SERIAL PRIMARY KEY UNIQUE,
         car_id INTEGER NOT NULL REFERENCES cars(id) ON DELETE CASCADE,
+        email TEXT NOT NULL REFERENCES users(email) ON DELETE CASCADE,
         createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         reason TEXT,
         description VARCHAR(50)
@@ -91,8 +92,8 @@ const createTables = async () => {
      `INSERT INTO cars(id,owner, createdon,state, status, price, manufacturer, model, image, body_type, carName)
      VALUES(7,'willy@gmail.com','12/04/2019','used','available',20000.0,'fusso','huidai','https://william000000.github.io/AutoMart/UI/img/7.jpg','truck','huidai')`,
 
-    `insert into flags(id,car_id,createdon,reason,description) values (1,1,'12/04/2019','pricing','Has weak technology...')`,
-    `insert into flags(id,car_id,createdon,reason,description) values (2,2,'12/04/2019','weirds demands','Engine not working well...')`,
+    `insert into flags(id,car_id,email,createdon,reason,description) values (1,1,'willy@gmail.com','12/04/2019','pricing','Has weak technology...')`,
+    `insert into flags(id,car_id,email,createdon,reason,description) values (2,2,'willy@gmail.com','12/04/2019','weirds demands','Engine not working well...')`,
 
     `insert into orders(id,buyer,car_id,amount,status) values (1,'willy@gmail.com',4,10000,'accepted')`,
     `insert into orders(id,buyer,car_id,amount,status) values (2,'willy@gmail.com',2,10000,'pending')`,
@@ -100,7 +101,7 @@ const createTables = async () => {
 ];
 
 
-    if(process.env.NODE_ENV==="TEST"){
+    if(process.env.NODE_ENV==="test"){
         console.log("Droping tables");
         console.log(process.env.TS_DATABASE_URL);
         dropTable.forEach(async query=>{console.log(query);await pool.query(query);});
@@ -113,7 +114,7 @@ const createTables = async () => {
     await pool.query(tokenTable);
     console.log("Table created");
 
-    if(process.env.NODE_ENV==="TEST"){
+    if(process.env.NODE_ENV==="test"){
         console.log("Dummy data inserted");
         dummy.forEach(async query=>{console.log(query);await pool.query(query);});
     }

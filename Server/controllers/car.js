@@ -236,17 +236,18 @@ class carController {
 
     static async flagAsFraudulent(req, res) {
         const car_id = req.body.id;
-        const checkCar = await runQuery(car.getCar, [car_id]);
+        const email = jwt.decode(req.body.token).email;
+        const checkCar = await runQuery(flag.isflagExist, [email, car_id]);
         const reason = req.body.reason;
         const desc = req.body.description;
 
         try {
-            if (checkCar[0]) {
-                const result = await runQuery(flag.createFlag, [car_id, reason, desc]);
+            if (!checkCar[0]) {
+                const result = await runQuery(flag.createFlag, [car_id, email, reason, desc]);
                 res.status(200).send({ status: 200, message: "Successfully reported!" });
 
             } else {
-                throw new Error("car not found");
+                throw new Error("You have already reported!");
             }
 
         } catch (err) {
