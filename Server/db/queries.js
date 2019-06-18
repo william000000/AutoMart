@@ -24,8 +24,9 @@ const car = {
     deletecar: `DELETE FROM cars WHERE id = $1 RETURNING carName`,
     isCarExist: `SELECT * FROM cars WHERE owner= $1 AND carName = $2`,
     isOwner: `SELECT * FROM cars WHERE owner= $1`,
-    carOwner: `SELECT owner FROM cars WHERE id=$1`
-};
+    carOwner: `SELECT owner FROM cars WHERE id=$1`,
+    unsoldCars: `SELECT * FROM cars WHERE status = $1,
+`};
 
 const order = {
     createOrder: `
