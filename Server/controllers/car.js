@@ -384,8 +384,18 @@ class carController {
         else if (status && status.toLowerCase() === "available" && manufacturer) {
             const findCar = allCar.filter(car => car.manufacturer === manufacturer.toLowerCase());
             if (findCar.length > 0) { return res.status(200).send({ status: 200, data: findCar }); }
-            //else{ return res.status(404).send({status:404, message: "cars status is not available, use (available) status" });}
-
+        }
+        //find all unsold car, status= available
+        else if (status && status.toLowerCase() === "available") {
+            const checkCar = allCar.filter(car => car.status === "available");
+            if (checkCar.length > 0) {
+                return res.status(200).send({ status: 200, data: checkCar });
+            }
+            else return res.status(404).send({ status: 404, message: "Car status are not available" });
+        }
+        //find all posted whether sold or not
+        else if (!status && !min && !max && !maker && !manufacturer && !body_type) {
+            return res.status(200).send({ status: 200, data: allCar });
         }
         else {
             return res.status(400).send({ status: 400, message: "Bad request" });
