@@ -69,7 +69,7 @@ class carController {
 
         const car_id = req.params.id;
         const buyer = jwt.decode(req.body.token).email;
-        const isOrder = await runQuery(order.isOrderOwner, [buyer,car_id]);
+        const isOrder = await runQuery(order.isOrderOwner, [buyer, car_id]);
         try {
             if (isOrder[0]) {
                 const amount = req.body.amount;
@@ -267,13 +267,14 @@ class carController {
     static async viewCar(req, res) {
         const status = req.query.status;
         const state = req.query.state;
-        const min = req.query.min_price;
-        const max = req.query.max_price;
+        let min = req.query.min_price;
+        let max = req.query.max_price;
         const maker = req.body.make;
         const manufacturer = req.query.manufacturer;
         const body_type = req.query.body_type;
 
         const allCar = await runQuery(car.getCars);
+        let allCars = await runQuery(car.getCars);
 
         //find all unsold car by manufacturer and state = used
         if (status && status.toLowerCase() === "available" && maker && state === "used") {
@@ -305,20 +306,20 @@ class carController {
             }
         }
         //find sold cars in range of price
-        else if (status && status.toLowerCase() === "sold" && min && max) {
-            const check = allCar.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status === "sold");
-            if (check.length > 0) {
-                res.status(200).send({
-                    status: 200,
-                    data: check
-                });
+        else if (status && status.toLowerCase() === "available" && min || max) {
+            if (min > max) {
+                let temp = min;
+                min = max;
+                max = temp;
             }
-            else {
-                return res.status(404).send({
-                    status: 404,
-                    data: "Not found, the range of price you specified is available!!"
-                });
+            if (max) {
+                allCars = allCars.filter(car => parseFloat(car.price) <= parseFloat(max) && parseFloat(car.price) >= parseFloat(min) && car.status === "available");
             }
+            if (min) {
+                allCars = allCars.filter(car => parseFloat(car.price) >= parseFloat(min) && car.status === "available");
+            }
+
+            return res.status(200).send({ status: 200, data: allCars });
         }
         //sstatus available and state used
         else if (status && status === "available" && state === "used") {
