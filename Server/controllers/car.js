@@ -304,6 +304,22 @@ class carController {
                 });
             }
         }
+         //find sold cars in range of price
+         else if (status && status.toLowerCase() === "sold" && min && max) {
+            const check = allCar.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status === "sold");
+            if (check.length > 0) {
+                res.status(200).send({
+                    status: 200,
+                    data: check
+                });
+            }
+            else {
+                return res.status(404).send({
+                    status: 404,
+                    data: "Not found, the range of price you specified is available!!"
+                });
+            }
+        }
         else {
             return res.status(400).send({ status: 400, message: "Bad request" });
         }
