@@ -20,12 +20,11 @@ class validateCar {
 
   static createCarPost(req, res, next) {
     try {
-      req.body.owner = req.body.owner.trim();
+    
       req.body.state = req.body.state.trim();
       req.body.manufacturer = req.body.manufacturer.trim();
       req.body.model = req.body.model.trim();
 
-      if (!email.test(req.body.owner)) throw new Error('invalid email, try like this sample ex: willy@gmail.com');
       if (!model.test(req.body.model)) throw new Error('invalid input model');
       if ((req.body.state) !== "new" && (req.body.state) !== "used") throw new Error('invalid input state, use new or used');
       if (!manufacturer.test(req.body.manufacturer)) throw new Error('invalid input manufacturer');
@@ -40,6 +39,7 @@ class validateCar {
 
   static validatePurchaseOrder(req, res, next) {
     try {
+      if(!req.body.token) throw new Error("no token provided");
       if (!amount.test(req.body.amount)) throw new Error('invalid input amount');
       next();
     } catch (err) {
