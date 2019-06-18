@@ -15,9 +15,9 @@ router.post("/car", isUserLogged, cloudinary, createCarPost, carController.addCa
 router.post("/order", isUserLogged, makePurchaseOrder, carController.purchaseOrder);
 router.patch("/order/:id/price", validatePurchaseOrder, carController.updatePriceOfOrder);
 router.patch("/car/:id/status", carController.markPosted);
-router.patch("/car/:id/price", isUserLogged,validatePurchaseOrder, carController.updateCarPrice);
+router.patch("/car/:id/price", isUserLogged, validatePurchaseOrder, carController.updateCarPrice);
 router.get("/car/:id", carController.viewSpecificCar);
 router.delete("/car/:id", [auth, admin], carController.deleteCar);
-router.post("/flag", carController.flagAsFraudulent);
+router.post("/flag", isUserLogged, carController.flagAsFraudulent);
 router.get("/car", validateMake, carController.viewCar);
 export default router;
