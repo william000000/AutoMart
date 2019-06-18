@@ -265,7 +265,32 @@ class carController {
      * @returns Routes with qwery parameter
      */
     static async viewCar(req, res) {
+        const status = req.query.status;
+        const state = req.query.state;
+        const min = req.query.min_price;
+        const max = req.query.max_price;
+        const maker = req.body.make;
+        const manufacturer = req.query.manufacturer;
+        const body_type = req.query.body_type;
 
+        const allCar = await runQuery(car.getCars);
+
+        //find all unsold car by manufacturer and state = used
+        if (status && status.toLowerCase() === "available" && maker && state === "used") {
+            const findCar = allCar.find(car => car.manufacturer === maker.toLowerCase());
+            if (findCar) { return res.status(200).send({ status: 200, data: findCar }); }
+            else return res.status(404).send({ status: 404, message: "Manufacturer not found in available car" });
+        }
+
+        //find all unsold car by manufacturer and state = new
+        else if (status && status.toLowerCase() === "available" && maker && state === "new") {
+            const findCar = allCar.find(car => car.manufacturer === maker.toLowerCase());
+            if (findCar) { return res.status(200).send({ status: 200, data: findCar }); }
+            else return res.status(404).send({ status: 404, message: "Manufacturer not found in available car" });
+        }
+        else {
+            return res.status(400).send({ status: 400, message: "Bad request" });
+        }
 
     }
 
