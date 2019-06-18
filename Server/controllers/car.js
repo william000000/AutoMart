@@ -288,6 +288,22 @@ class carController {
             if (findCar) { return res.status(200).send({ status: 200, data: findCar }); }
             else return res.status(404).send({ status: 404, message: "Manufacturer not found in available car" });
         }
+        //find available cars in range of price
+        else if (status && status.toLowerCase() === "available" && min && max) {
+            const check = allCar.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status === "available");
+            if (check.length > 0) {
+                res.status(200).send({
+                    status: 200,
+                    data: check
+                });
+            }
+            else {
+                return res.status(404).send({
+                    status: 404,
+                    data: "Not found, the range of price you specified not available!!"
+                });
+            }
+        }
         else {
             return res.status(400).send({ status: 400, message: "Bad request" });
         }
