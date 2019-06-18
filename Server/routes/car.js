@@ -4,14 +4,15 @@ import admin from "../middleware/admin";
 import auth from "../middleware/auth";
 import cloudinary from "../middleware/cloudinary";
 import validateCar from "../helper/carValidation";
+import Securities from "../middleware/authUser";
 const router = express.Router();
 const {createCarPost} = validateCar;
 const {makePurchaseOrder} = validateCar;
 const {validatePurchaseOrder} = validateCar;
 const {validateMake} = validateCar;
-
+const { isUserLogged } = Securities;
 router.post("/car", cloudinary, createCarPost, carController.addCarPost);
-router.post("/order", makePurchaseOrder, carController.purchaseOrder);
+router.post("/order", isUserLogged, makePurchaseOrder, carController.purchaseOrder);
 router.patch("/order/:id/price",validatePurchaseOrder,carController.updatePriceOfOrder);
 router.patch("/car/:id/status", carController.markPosted);
 router.patch("/car/:id/price",validatePurchaseOrder, carController.updateCarPrice);
