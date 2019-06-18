@@ -3,6 +3,7 @@ import flags from "../modals/flags";
 import { car, user, order, flag} from "../db/queries.js";
 import runQuery from "../db/executeQuery";
 import { throws } from "assert";
+import jwt from "jsonwebtoken";
 
 class carController {
     /**
@@ -35,28 +36,20 @@ class carController {
      */
     static async purchaseOrder(req, res) {
         try {
-            const { buyer, car_id, amount, status, priceOffered } = req.body;
-            const singleUser = await runQuery(user.userExist, [buyer]);
-            const isOrderExist = await runQuery(order.isOrderExist, [car_id, buyer]);
+            const { car_id, amount, status} = req.body;
+            const buyer = jwt.decode(req.body.token).email;
             const singleCar = await runQuery(car.getCar, [car_id]);
-
-            if (singleUser) {
-
-                const newOrder = [buyer, car_id, amount];
-                if (singleCar[0]) {
-                    if (isOrderExist[0]) {
-                        console.log(isOrderExist);
-                        throw new Error("Order already exist");
-                    }
-                    const result = await runQuery(order.createOrder, newOrder);
-                    res.status(200).send({ status: 200, result });
-                } else {
-                    throw new Error("Car not exist");
-                }
-            } else {
-                throw new Error("User not exist");
-            }
+            if (!singleCar[0] || singleCar[0].owner === buyer) throw new Error('Owner can not make a purchase order');
+            const isOrderExist = await runQuery(order.isOrderExist, [car_id, buyer]);
+            if (isOrderExist[0]) throw new Error("jj");
+            const newOrder = [buyer, car_id, amount];
+            const result = await runQuery(order.createOrder, newOrder);
+            res.status(201).json({
+                status: 201,
+                data: result[0]
+            });
         } catch (err) {
+            console.log(err);
             res.status(400).send({
                 status: 400,
                 error: err.message,
@@ -115,7 +108,11 @@ class carController {
                             data: update
                         });
                     } else{
-                        throw new Error("Already sold");
+                        const update = await runQuery(car.updateCar,[id, "available"]);                       
+                        res.status(200).send({
+                        status: 200,
+                        data: update
+                    });
                     }
 
                 }else {

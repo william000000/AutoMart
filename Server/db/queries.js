@@ -24,7 +24,7 @@ const car = {
     deletecar: `DELETE FROM cars WHERE id = $1 RETURNING carName`,
     isCarExist: `SELECT * FROM cars WHERE owner= $1 AND carName = $2`,
     isOwner: `SELECT * FROM cars WHERE owner= $1`,
-    carOwner: `SELECT owner FROM cars WHERE id=$1`,
+    carOwner: `SELECT owner FROM cars WHERE id=$1 and owner=$2`,
     unsoldCars: `SELECT * FROM cars WHERE status = $1,
 `};
 
@@ -34,6 +34,7 @@ const order = {
     getOrder: `SELECT * FROM orders WHERE id = $1`,
     updateOrder: `UPDATE orders SET amount = $2 WHERE id = $1 RETURNING *`,
     deleteOrder: `DELETE FROM orders WHERE id = $1 RETURNING id`,
+    isOrderExist: 'SELECT * FROM orders where id=$1 AND buyer=$2'
 };
 
 const flag = {

@@ -8,12 +8,7 @@ const manufacturer = /^[a-zA-Z0-9]{1,}$/;
 class validateCar {
   static makePurchaseOrder(req, res, next) {
     try {
-      req.body.buyer = req.body.buyer.trim();
-      // req.body.model = req.body.model.trim();
-
-      if (!email.test(req.body.buyer)) throw new Error('invalid email, try like this sample ex: willy@gmail.com');
       if (!amount.test(req.body.amount)) throw new Error('invalid input amount');
-      // if (!model.test(req.body.model)) throw new Error('invalid input model');
       next();
     } catch (err) {
       res.status(400).json({
