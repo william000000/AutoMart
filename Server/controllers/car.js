@@ -380,6 +380,13 @@ class carController {
                 });
             }
         }
+        //find all unsold by make, status=avail.. and manufacturer=xxx
+        else if (status && status.toLowerCase() === "available" && manufacturer) {
+            const findCar = allCar.filter(car => car.manufacturer === manufacturer.toLowerCase());
+            if (findCar.length > 0) { return res.status(200).send({ status: 200, data: findCar }); }
+            //else{ return res.status(404).send({status:404, message: "cars status is not available, use (available) status" });}
+
+        }
         else {
             return res.status(400).send({ status: 400, message: "Bad request" });
         }
