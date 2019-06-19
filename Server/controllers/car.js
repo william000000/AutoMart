@@ -39,18 +39,26 @@ class carController {
         try {
             const { car_id, amount, status } = req.body;
             const buyer = jwt.decode(req.body.token).email;
-            const singleCar = await runQuery(car.getCar, [car_id]);
-            if (!singleCar[0] || singleCar[0].owner === buyer) throw new Error('Owner can not make a purchase order');
+            const isOrderOwner = await runQuery(car.carOwner, [car_id, buyer]);
             const isOrderExist = await runQuery(order.isOrderExist, [car_id, buyer]);
-            if (isOrderExist[0]) throw new Error("order is already exist");
-            const newOrder = [buyer, car_id, amount];
-            const result = await runQuery(order.createOrder, newOrder);
-            res.status(201).json({
-                status: 201,
-                data: result[0]
-            });
+
+            if (!isOrderOwner[0]) {
+
+                if (!isOrderExist[0]) {
+
+                    const newOrder = [buyer, car_id, amount];
+                    const result = await runQuery(order.createOrder, newOrder);
+                    res.status(201).json({
+                        status: 201,
+                        data: result
+                    });
+
+                } else { throw new Error('order is already exist'); }
+
+
+            } else throw new Error("Owner can not make a purchase order");
+
         } catch (err) {
-            console.log(err);
             res.status(400).send({
                 status: 400,
                 error: err.message,
