@@ -20,8 +20,8 @@ class Password {
         if (singleUser[0]) {
             console.log(singleUser[0]);
             const hash_password = await bcrypt.hash(password, 10);
-            const resetp = await runQuery(user.updatePassword,[email, hash_password]);
-            res.status(200).send({status: 200, message: "Successfully updated!", newPassword: resetp});
+            const resetPassword = await runQuery(user.updatePassword, [email, hash_password]);
+            res.status(200).send({ status: 200, message: "Successfully updated!", newPassword: resetPassword });
         }
 
     }
