@@ -39,14 +39,15 @@ class carController {
         try {
             const { car_id, amount, status } = req.body;
             const buyer = jwt.decode(req.body.token).email;
-            const isCarExist = await runQuery(car.getCar,[car_id]);
+            const isCarExist = await runQuery(car.getCar, [car_id]);
             const isOrderOwner = await runQuery(car.carOwner, [car_id, buyer]);
             const isOrderExist = await runQuery(order.isOrderExist, [car_id, buyer]);
-            
-            if(!isCarExist[0]) { throw new Error("car not exist");} 
+            const isOrderAdded = await runQuery(order.isOrderAdded, [car_id]);
+
+            if (!isCarExist[0]) { throw new Error("car not exist"); }
             if (!isOrderOwner[0]) {
 
-                if (!isOrderExist[0]) {
+                if (!isOrderExist[0] && !isOrderAdded[0]) {
 
                     const newOrder = [buyer, car_id, amount];
                     const result = await runQuery(order.createOrder, newOrder);
@@ -80,10 +81,10 @@ class carController {
         const car_id = req.params.id;
         const buyer = jwt.decode(req.body.token).email;
         const isOrder = await runQuery(order.isOrderOwner, [buyer, car_id]);
-        const isCarOwner = await runQuery(car.carOwner,[car_id,buyer]);
+        const isCarOwner = await runQuery(car.carOwner, [car_id, buyer]);
         try {
             if (isOrder[0]) {
-                if (isCarOwner[0]){ throw new Error("You are the owner of the car");}
+                if (isCarOwner[0]) { throw new Error("You are the owner of the car"); }
                 const amount = req.body.amount;
 
                 const result = await runQuery(order.updateOrder, [car_id, amount]);
@@ -111,7 +112,7 @@ class carController {
         const id = req.params.id;
         const email = jwt.decode(req.body.token).email;
         const singleCar = await runQuery(car.getCar, [id]);
-        const singleUser = await runQuery(car.isOwner, [email]);
+        const singleUser = await runQuery(car.carOwner, [id, email]);
 
         try {
             if (singleUser[0]) {
@@ -250,13 +251,13 @@ class carController {
         const car_id = req.body.id;
         const email = jwt.decode(req.body.token).email;
         const checkCar = await runQuery(flag.isflagExist, [email, car_id]);
-        const isCarExist = await runQuery(car.getCar,[car_id]);
+        const isCarExist = await runQuery(car.getCar, [car_id]);
         const reason = req.body.reason;
         const desc = req.body.description;
 
         try {
             if (!checkCar[0]) {
-                if(isCarExist){ throw new Error("Car not exist");}
+                if (isCarExist) { throw new Error("Car not exist"); }
                 const result = await runQuery(flag.createFlag, [car_id, email, reason, desc]);
                 res.status(200).send({ status: 200, message: "Successfully reported!" });
 
@@ -305,22 +306,6 @@ class carController {
             else return res.status(404).send({ status: 404, message: "Manufacturer not found in available car" });
         }
         //find available cars in range of price
-        else if (status && status.toLowerCase() === "available" && min && max) {
-            const check = allCar.filter(car => parseFloat(car.price) >= parseFloat(min) && parseFloat(car.price) <= parseFloat(max) && car.status === "available");
-            if (check.length > 0) {
-                res.status(200).send({
-                    status: 200,
-                    data: check
-                });
-            }
-            else {
-                return res.status(404).send({
-                    status: 404,
-                    data: "Not found, the range of price you specified not available!!"
-                });
-            }
-        }
-        //find sold cars in range of price
         else if (status && status.toLowerCase() === "available" && min || max) {
             if (min > max) {
                 let temp = min;
@@ -328,7 +313,7 @@ class carController {
                 max = temp;
             }
             if (max) {
-                allCars = allCars.filter(car => parseFloat(car.price) <= parseFloat(max) && parseFloat(car.price) >= parseFloat(min) && car.status === "available");
+                allCars = allCars.filter(car => parseFloat(car.price) <= parseFloat(max) && car.status === "available");
             }
             if (min) {
                 allCars = allCars.filter(car => parseFloat(car.price) >= parseFloat(min) && car.status === "available");
@@ -336,6 +321,7 @@ class carController {
 
             return res.status(200).send({ status: 200, data: allCars });
         }
+
         //sstatus available and state used
         else if (status && status === "available" && state === "used") {
             const checkCar = allCar.filter(car => car.status === "available" && car.state === "used");

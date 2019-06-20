@@ -45,6 +45,67 @@ describe("Cars", () => {
                 });
         });
 
+        it("Should bring all available and used cars", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?status=available&state=used")
+                .end((req, res) => {
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
+
+        it("Should not bring all available and used cars", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?state=availle&state=ued")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should not bring all available and used cars", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?state=ued&state=availle")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+        it("Should bring all sold and used cars", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?status=sold&state=used")
+                .end((req, res) => {
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
+
+        it("Should bring all available and new cars", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?status=available&state=new")
+                .end((req, res) => {
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
+
+        it("Should not bring all available and new cars", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?status=available&state=newdj")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should not bring all available and new cars", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?status=avadfflable&state=newdj")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
 
 
         
@@ -259,6 +320,39 @@ describe("Cars", () => {
                 });
         });
 
+        it("Should not create an account firstname empty", (done) => {
+            const newUser = {
+                "email": "woo1000@gmail.com",
+                "first_name": "",
+                "last_name": "Wiuuuuu",
+                "password": "africa",
+                "address": ""
+            };
+            chai.request(app)
+                .post("/api/v2/auth/signup")
+                .send(newUser)
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should not create an account fields empty", (done) => {
+            const newUser = {
+                "email": "woo1000@gmail.com",
+                "first_name": "m",
+                "last_name": "W",
+                "password": "afric",
+                "address": ""
+            };
+            chai.request(app)
+                .post("/api/v2/auth/signup")
+                .send(newUser)
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
         
         it("Should filter cars according to status and state", (done) => {
             chai.request(app)
@@ -452,7 +546,75 @@ describe("Cars", () => {
                 });
         });
 
+        it("Should make purchase order if user is the owner", (done) => {
+            const newCar = {
+                "token": "eyJhbGciOiIUziIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndpbGx5QGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTU2MTA1NzA5MX0.Qzh5mC8v4YwciVKta7uDeTTheqQDTERR4sAsfrlZDnw",
+                "manufacturer": "Rava4",
+                "model": "Rava",
+                "price": 40000,
+                "state": "new",
+                "car_id": 7
+
+            };
+            chai.request(app)
+            .post("/api/v2/order")
+            .send(newCar)
+            .end((req, res) => {
+                res.should.have.a.status(400);
+                done();
+            });
+        });
+
+        it("Should not make purchase order if user not exist", (done) => {
+            const newCar = {
+                "token": "",
+                "manufacturer": "Rava4",
+                "model": "Rava",
+                "price": 40000,
+                "state": "new"
+            };
+            chai.request(app)
+            .post("/api/v2/order")
+            .send(newCar)
+            .end((req, res) => {
+                res.should.have.a.status(400);
+                done();
+            });
+        });
         
+        it("Should not make purchase order if user exist", (done) => {
+            const newCar = {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndpbGx5QGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTU2MTA1NzA5MX0.Qzh5mC8v4YwciVKta7uDeTTheqQDTERR4sAsfrlZDnw",
+                "manufacturer": "Rava4",
+                "model": "Rava",
+                "price": "",
+                "state": "new"
+            };
+            chai.request(app)
+            .post("/api/v2/order")
+            .send(newCar)
+            .end((req, res) => {
+                res.should.have.a.status(400);
+                done();
+            });
+        });
+
+        it("Should not make purchase order if user exist", (done) => {
+            const newCar = {
+                "token": "",
+                "manufacturer": "",
+                "model": "",
+                "price": -99,
+                "state": "negg"
+            };
+            chai.request(app)
+            .post("/api/v2/order")
+            .send(newCar)
+            .end((req, res) => {
+                res.should.have.a.status(400);
+                done();
+            });
+        });
         
 
         it("Should not make purchase order if user exist", (done) => {
@@ -506,10 +668,51 @@ describe("Cars", () => {
                 });
         });
 
-        it("Should make purchase order if user not exist", (done) => {
+        it("Should not make purchase order if user not exist", (done) => {
             const newCar = {
                 "email": "willy3663@gmail.com",
                 "model": "lamborghini",
+                "price": 500000
+            };
+            chai.request(app)
+                .post("/api/v2/order")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should not make purchase order if no model", (done) => {
+            const newCar = {
+                "email": "willy3663@gmail.com",
+                "model": "",
+                "price": 500000
+            };
+            chai.request(app)
+                .post("/api/v2/order")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should not make purchase order if user is the owner", (done) => {
+            const newCar = {
+                "email": "willy@gmail.com",
+                "model": "lamborghini",
+                "price": 500000
+            };
+            chai.request(app)
+                .post("/api/v2/order")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+        it("Should not make purchase order if user is the owner", (done) => {
+            const newCar = {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndpbGx5MUBnbWFpbC5jb20iLCJmaXJzdF9uYW1lIjoid2lsbHkiLCJsYXN0X25hbWUiOiJib2JvIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU2MTA1NzYwNn0.2kZBhhWjhoAAX9-F9m6rgmhyg3JtSKf2B0nQS_nnAqo",
+                "car_id":2,
                 "price": 500000
             };
             chai.request(app)
@@ -727,11 +930,11 @@ describe("Cars", () => {
                 });
         });
 
-        it("Should not filter car according to prices", (done) => {
+        it("Should filter car according to prices", (done) => {
             chai.request(app)
                 .get("/api/v2/car?status=available&min_price=2000&max_price=1000")
                 .end((req, res) => {
-                    res.should.have.a.status(404);
+                    res.should.have.a.status(200);
                     done();
                 });
         });
@@ -777,11 +980,11 @@ describe("Cars", () => {
         });
 
 
-        it("Should not filter car according to prices", (done) => {
+        it("Should filter car according to prices", (done) => {
             chai.request(app)
-                .get("/api/v2/car?status=available&min_price=-0&max_price=-0")
+                .get("/api/v2/car?status=available&min_price=10000&max_price=30000")
                 .end((req, res) => {
-                    res.should.have.a.status(404);
+                    res.should.have.a.status(200);
                     done();
                 });
         });

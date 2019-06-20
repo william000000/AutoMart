@@ -73,7 +73,6 @@ class userController {
                     last_name: singleUser[0].last_name,
                     email: singleUser[0].email,
                     address: singleUser[0].address,
-                    password: singleUser[0].password,
                     isAdmin: singleUser[0].isAdmin
                 });
             } else throw new Error();
