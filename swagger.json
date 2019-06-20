@@ -10,7 +10,7 @@
         }
     },
     "host": "automart-pro.herokuapp.com",
-    "basePath": "/api/v1",
+    "basePath": "/api/v2",
     "tags": [{
             "name": "User",
             "description": "Endpoint for user to signup and login"

@@ -20,10 +20,10 @@ Auto Mart, users can sell their cars or buy from trusted sellers.
 - Admin can view all posted ads whether sold or unsold.
 
 ## Pivotal Tracker stories
-https://www.pivotaltracker.com/n/projects/2350443
+[PT board link](https://www.pivotaltracker.com/n/projects/2350443)
 
 ### UI Template
- - Use this link to see UI Template https://william000000.github.io/AutoMart/UI/index.html
+ - Use this link to see UI Template [UI link](https://william000000.github.io/AutoMart/UI/html/home.html)
 
 ## Installation(Tools)
 - Text Editor Ex: Visual Studio, Sublime etc
@@ -62,7 +62,7 @@ https://www.pivotaltracker.com/n/projects/2350443
 | GET         | /api/vi/car?`body_type= bodyType`                              | View all cars of a specific body type.
 
 ## API on Heroku
-- https://automart-pro.herokuapp.com/
+- [Heroku Link](https://automart-pro.herokuapp.com/)
 
 ## API Documentation
 -  Swagger

@@ -33,7 +33,7 @@ class userController {
         ];
 
         const result = await runQuery(user.createUser, newUser);
-        const token = jwt.sign({ email: email, first_name: first_name, last_name: last_name, isAdmin: result[0].isAdmin }, process.env.secretKey);
+        const token = jwt.sign({ email: email, first_name: first_name, last_name: last_name, isAdmin: result[0].isadmin }, process.env.secretKey);
         const storeToken = await runQuery(user.createToken, [token, email]);
         if (result) {
             res.status(201).send({
@@ -56,14 +56,14 @@ class userController {
         try {
             const { email, password } = req.body;
             const singleUser = await runQuery(user.login, [email]);
-            if (!singleUser) throw new Error();
-            const isPasswordCorrect = bcrypt.compareSync(req.body.password, singleUser[0].password);
+            if (!singleUser[0]) throw new Error();
+            const isPasswordCorrect = bcrypt.compareSync(password, singleUser[0].password);
             if (isPasswordCorrect) {
                 let result = await runQuery(user.isUserLogged, [email]);
                 let token;
-                if (result) token = result[0].token;
+                if (result[0]) token = result[0].token;
                 else {
-                    token = jwt.sign({ email, isAdmin: singleUser[0].isAdmin }, process.env.secretKey);
+                    token = jwt.sign({ email, isAdmin: singleUser[0].isadmin }, process.env.secretKey);
                     await runQuery(user.createToken, [token, email]);
                 }
                 res.status(200).send({
@@ -76,7 +76,7 @@ class userController {
                     password: singleUser[0].password,
                     isAdmin: singleUser[0].isAdmin
                 });
-            }
+            } else throw new Error();
         } catch (err) {
             res.status(400).send({
                 status: 400,
