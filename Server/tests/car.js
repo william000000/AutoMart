@@ -17,9 +17,9 @@ describe("Cars", () => {
         });
 
         it("Should via a car if id provided exist", (done) => {
-            let id = 1;
+            let id = 5;
             chai.request(app)
-                .get(`/api/v1/car/${id}`)
+                .get(`/api/v2/car/${id}`)
                 .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
@@ -29,7 +29,7 @@ describe("Cars", () => {
         it("Should return an error if id does not exit", (done) => {
             let id = -1;
             chai.request(app)
-                .get(`/api/v1/car/${id}`)
+                .get(`/api/v2/car/${id}`)
                 .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
@@ -38,7 +38,7 @@ describe("Cars", () => {
 
         it("Should bring all available cars", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available")
+                .get("/api/v2/car?status=available")
                 .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
@@ -47,47 +47,12 @@ describe("Cars", () => {
 
 
 
-        it("Should not display via unsold cars ", (done) => {
-            chai.request(app)
-                .get("/api/v1/car/status=sold")
-                .end((req, res) => {
-                    res.should.have.a.status(404);
-                    done();
-                });
-        });
-        it("Should filter cars according to status and state", (done) => {
-            chai.request(app)
-                .get("/api/v1/car?status=available&state=new")
-                .end((req, res) => {
-                    res.should.have.a.status(200);
-                    done();
-                });
-        });
-
-        it("Should filter cars according to status and state", (done) => {
-            chai.request(app)
-                .get("/api/v1/car?status=available&state=used")
-                .end((req, res) => {
-                    res.should.have.a.status(200);
-                    done();
-                });
-        });
-
-        it("Should delete existing car", (done) => {
-            let id = 1;
-            chai.request(app)
-                .delete(`/api/v1/car/${id}`)
-                .set("x-auth-token", TOKEN)
-                .end((req, res) => {
-                    res.should.have.a.status(200);
-                    done();
-                });
-        });
+        
 
         it("Should not delete car when user are unauthorized", (done) => {
             let id = 1;
             chai.request(app)
-                .delete(`/api/v1/car/${id}`)
+                .delete(`/api/v2/car/${id}`)
                 .set("x-auth-to",TOKEN)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -97,7 +62,7 @@ describe("Cars", () => {
 
         it("Should filter cars according to status and state(new)", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=new")
+                .get("/api/v2/car?status=available&state=new")
                 .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
@@ -107,7 +72,7 @@ describe("Cars", () => {
 // To be deleted
         it("Should not filter cars according to status and state(new)", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=new")
+                .get("/api/v2/car?status=available&state=new")
                 .send({ make: "a"})
                 .end((req, res) => {
                     res.should.have.a.status(404);
@@ -117,7 +82,7 @@ describe("Cars", () => {
 
         it("Should not filter cars according to status and state(new)", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=new")
+                .get("/api/v2/car?status=available&state=new")
                 .send({ make: ""})
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -127,7 +92,7 @@ describe("Cars", () => {
 
         it("Should not filter cars according to status and state(new)", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=new")
+                .get("/api/v2/car?status=available&state=new")
                 .send({ make: "nissan"})
                 .end((req, res) => {
                     res.should.have.a.status(200);
@@ -137,7 +102,7 @@ describe("Cars", () => {
 
         it("Should not filter cars according to status and state(new)", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=used")
+                .get("/api/v2/car?status=available&state=used")
                 .send({ make: "a"})
                 .end((req, res) => {
                     res.should.have.a.status(404);
@@ -147,7 +112,7 @@ describe("Cars", () => {
 
         it("Should not filter cars according to status and state(used)", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=used")
+                .get("/api/v2/car?status=available&state=used")
                 .send({ make: ""})
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -157,7 +122,7 @@ describe("Cars", () => {
 
         it("Should not filter cars according to status and state(used)", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=used")
+                .get("/api/v2/car?status=available&state=used")
                 .send({ make: "nissan"})
                 .end((req, res) => {
                     res.should.have.a.status(200);
@@ -169,7 +134,7 @@ describe("Cars", () => {
         it("Should validate the token before delete", (done) => {
             let id = 1;
             chai.request(app)
-                .delete(`/api/v1/car/${id}`)
+                .delete(`/api/v2/car/${id}`)
                 .set("x-auth-token", "ss")
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -180,7 +145,7 @@ describe("Cars", () => {
         it("Should not delete a invalid car", (done) => {
             let id = -1;
             chai.request(app)
-                .delete(`/api/v1/car/${id}`)
+                .delete(`/api/v2/car/${id}`)
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -189,7 +154,7 @@ describe("Cars", () => {
 
         it("Should via get all cars", (done) => {
             chai.request(app)
-                .get("/api/v1/car")
+                .get("/api/v2/car")
                 .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
@@ -204,10 +169,10 @@ describe("Cars", () => {
                 "address": "kigali"
             };
             chai.request(app)
-                .post("/api/v1/auth/signup")
+                .post("/api/v2/auth/signup")
                 .send(newUser)
                 .end((req, res) => {
-                    res.should.have.a.status(200);
+                    res.should.have.a.status(201);
                     done();
                 });
         });
@@ -221,7 +186,7 @@ describe("Cars", () => {
                 "address": "kigali"
             };
             chai.request(app)
-                .post("/api/v1/auth/signup")
+                .post("/api/v2/auth/signup")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -237,7 +202,7 @@ describe("Cars", () => {
                 "address": "kigali"
             };
             chai.request(app)
-                .post("/api/v1/auth/signup")
+                .post("/api/v2/auth/signup")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -254,7 +219,7 @@ describe("Cars", () => {
                 "address": "kigali"
             };
             chai.request(app)
-                .post("/api/v1/auth/signup")
+                .post("/api/v2/auth/signup")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -270,7 +235,7 @@ describe("Cars", () => {
                 "address": "kigali"
             };
             chai.request(app)
-                .post("/api/v1/auth/signup")
+                .post("/api/v2/auth/signup")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -286,10 +251,20 @@ describe("Cars", () => {
                 "address": ""
             };
             chai.request(app)
-                .post("/api/v1/auth/signup")
+                .post("/api/v2/auth/signup")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        
+        it("Should filter cars according to status and state", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?status=available&state=new")
+                .end((req, res) => {
+                    res.should.have.a.status(200);
                     done();
                 });
         });
@@ -304,10 +279,19 @@ describe("Cars", () => {
                 "address": ""
             };
             chai.request(app)
-                .post("/api/v1/auth/signup")
+                .post("/api/v2/auth/signup")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+        it("Should filter cars according to status and state", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?status=available&state=used")
+                .end((req, res) => {
+                    res.should.have.a.status(200);
                     done();
                 });
         });
@@ -321,7 +305,7 @@ describe("Cars", () => {
                 "address": "kigali"
             };
             chai.request(app)
-                .post("/api/v1/auth/signup")
+                .post("/api/v2/auth/signup")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -335,7 +319,7 @@ describe("Cars", () => {
                 "password": "africa"
             };
             chai.request(app)
-                .post("/api/v1/auth/signin")
+                .post("/api/v2/auth/signin")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(200);
@@ -349,7 +333,7 @@ describe("Cars", () => {
                 "password": "africa"
             };
             chai.request(app)
-                .post("/api/v1/auth/signin")
+                .post("/api/v2/auth/signin")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -363,7 +347,7 @@ describe("Cars", () => {
                 "password": ""
             };
             chai.request(app)
-                .post("/api/v1/auth/signin")
+                .post("/api/v2/auth/signin")
                 .send(newUser)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -378,7 +362,7 @@ describe("Cars", () => {
 
             };
             chai.request(app)
-                .post("/api/v1/auth/signin")
+                .post("/api/v2/auth/signin")
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -393,7 +377,7 @@ describe("Cars", () => {
 
             };
             chai.request(app)
-                .post("/api/v1/auth/signin")
+                .post("/api/v2/auth/signin")
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -407,7 +391,7 @@ describe("Cars", () => {
 
             };
             chai.request(app)
-                .post("/api/v1/auth/signin")
+                .post("/api/v2/auth/signin")
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -425,7 +409,7 @@ describe("Cars", () => {
                 "state": "new"
             };
             chai.request(app)
-                .post("/api/v1/car")
+                .post("/api/v2/car")
                 .send(newCar)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -442,7 +426,7 @@ describe("Cars", () => {
                 "state": "new"
             };
             chai.request(app)
-                .post("/api/v1/car")
+                .post("/api/v2/car")
                 .send(newCar)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -460,7 +444,7 @@ describe("Cars", () => {
                 "state": ""
             };
             chai.request(app)
-                .post("/api/v1/car")
+                .post("/api/v2/car")
                 .send(newCar)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -480,10 +464,10 @@ describe("Cars", () => {
                 "state": "new"
             };
             chai.request(app)
-                .post("/api/v1/order")
+                .post("/api/v2/order")
                 .send(newCar)
                 .end((req, res) => {
-                    res.should.have.a.status(404);
+                    res.should.have.a.status(400);
                     done();
                 });
         });
@@ -497,10 +481,10 @@ describe("Cars", () => {
                 "state": "new"
             };
             chai.request(app)
-                .post("/api/v1/order")
+                .post("/api/v2/order")
                 .send(newCar)
                 .end((req, res) => {
-                    res.should.have.a.status(404);
+                    res.should.have.a.status(400);
                     done();
                 });
         });
@@ -514,7 +498,7 @@ describe("Cars", () => {
                 "state": "new"
             };
             chai.request(app)
-                .post("/api/v1/order")
+                .post("/api/v2/order")
                 .send(newCar)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -529,7 +513,7 @@ describe("Cars", () => {
                 "price": 500000
             };
             chai.request(app)
-                .post("/api/v1/order")
+                .post("/api/v2/order")
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -537,15 +521,15 @@ describe("Cars", () => {
         });
 
         it("Should update the price of purchase order if car id exist", (done) => {
-            let id = 2;
+            let id = 1;
             const price = {
                 "price": 500000
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/price`)
+                .patch(`/api/v2/car/${id}/price`)
                 .send(price)
                 .end((req, res) => {
-                    res.should.have.a.status(200);
+                    res.should.have.a.status(400);
                     done();
                 });
         });
@@ -556,7 +540,7 @@ describe("Cars", () => {
                 "price": ""
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/price`)
+                .patch(`/api/v2/car/${id}/price`)
                 .send(price)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -570,10 +554,10 @@ describe("Cars", () => {
                 "price": 500000
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/price`)
+                .patch(`/api/v2/car/${id}/price`)
                 .send(price)
                 .end((req, res) => {
-                    res.should.have.a.status(404);
+                    res.should.have.a.status(400);
                     done();
                 });
         });
@@ -584,7 +568,7 @@ describe("Cars", () => {
                 "price": 500000
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/price`)
+                .patch(`/api/v2/car/${id}/price`)
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -597,7 +581,7 @@ describe("Cars", () => {
                 "email": "willy@gmail.com"
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/status`)
+                .patch(`/api/v2/car/${id}/status`)
                 .send(userEmail)
                 .end((req, res) => {
                     res.should.have.a.status(200);
@@ -605,13 +589,13 @@ describe("Cars", () => {
                 });
         });
 
-        it("Should mark posted car as sold if car already sold", (done) => {
-            let id = 5;
+        it("Should not mark posted car as sold if car already sold", (done) => {
+            let id = -2;
             const userEmail = {
                 "email": "willy@gmail.com"
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/status`)
+                .patch(`/api/v2/car/${id}/status`)
                 .send(userEmail)
                 .end((req, res) => {
                     res.should.have.a.status(400);
@@ -625,10 +609,10 @@ describe("Cars", () => {
                 "email": "willy@gmail.com"
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/status`)
+                .patch(`/api/v2/car/${id}/status`)
                 .send(userEmail)
                 .end((req, res) => {
-                    res.should.have.a.status(404);
+                    res.should.have.a.status(400);
                     done();
                 });
         });
@@ -639,7 +623,7 @@ describe("Cars", () => {
                 "email": "willy6438t@gmail.com"
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/status`)
+                .patch(`/api/v2/car/${id}/status`)
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -654,7 +638,7 @@ describe("Cars", () => {
                 "email": "willy@gmail.com"
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/status`)
+                .patch(`/api/v2/car/${id}/status`)
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -667,7 +651,7 @@ describe("Cars", () => {
                 "price": 500000
             };
             chai.request(app)
-                .patch(`/api/v1/car/${id}/price`)
+                .patch(`/api/v2/car/${id}/price`)
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
@@ -678,7 +662,7 @@ describe("Cars", () => {
 
 
             chai.request(app)
-                .get("/api/v1/car?body_type=truck")
+                .get("/api/v2/car?body_type=truck")
                 .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
@@ -689,7 +673,7 @@ describe("Cars", () => {
 
 
             chai.request(app)
-                .get("/api/v1/car?body_type=truckk")
+                .get("/api/v2/car?body_type=truckk")
                 .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
@@ -698,7 +682,18 @@ describe("Cars", () => {
 
         it("Should filter cars according to status and manufacturer", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&manufacturer=nissan")
+                .get("/api/v2/car?status=available&manufacturer=nissan")
+                .end((req, res) => {
+                    res.should.have.a.status(200);
+                    done();
+                });
+        });
+
+        it("Should delete existing car", (done) => {
+            let id = 1;
+            chai.request(app)
+                .delete(`/api/v2/car/${id}`)
+                .set("x-auth-token", TOKEN)
                 .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
@@ -708,14 +703,14 @@ describe("Cars", () => {
 
 
 
-        it("Should get feedback for car", (done) => {
-            const id = 1;
+        it("Should not get feedback for car", (done) => {
+            const id = -700;
             const data = { id };
             chai.request(app)
-                .post("/api/v1/flag")
+                .post("/api/v2/flag")
                 .send(data)
                 .end((req, res) => {
-                    res.should.have.a.status(200);
+                    res.should.have.a.status(400);
                     done();
                 });
         });
@@ -724,17 +719,17 @@ describe("Cars", () => {
             const id = -1;
             const data = { id };
             chai.request(app)
-                .post("/api/v1/flag")
+                .post("/api/v2/flag")
                 .send(data)
                 .end((req, res) => {
-                    res.should.have.a.status(404);
+                    res.should.have.a.status(400);
                     done();
                 });
         });
 
         it("Should not filter car according to prices", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&min_price=2000&max_price=1000")
+                .get("/api/v2/car?status=available&min_price=2000&max_price=1000")
                 .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
@@ -742,7 +737,7 @@ describe("Cars", () => {
         });
         it("Should not filter car when status not available", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=sold&min_price=1000&max_price=15000")
+                .get("/api/v2/car?status=sold&min_price=1000&max_price=15000")
                 .end((req, res) => {
                     res.should.have.a.status(200);
                     done();
@@ -754,62 +749,44 @@ describe("Cars", () => {
             const ids = [1, 2, 3, 4, 5, 6, 7];
             ids.forEach(id => {
                 chai.request(app)
-                .delete(`/api/v1/car/${id}`)
+                .delete(`/api/v2/car/${id}`)
                 .set("x-auth-token", TOKEN)
                 .end((req, res) => { });
             });
-            chai.request(app)
-                .get("/api/v1/car?status=available")
-                .end((req, res) => {
-                    res.should.have.a.status(404);
-                    done();
-                });
+            done();
+    
         });
 
-        it("Should not filter cars according to status and state(new)", (done) => {
-            chai.request(app)
-                .get("/api/v1/car?status=available&state=new")
-                .end((req, res) => {
-                    res.should.have.a.status(404);
-                    done();
-                });
-        });
 
         it("Should not filter cars according to status and state(used)", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=used")
-                .end((req, res) => {
-                    res.should.have.a.status(404);
-                    done();
-                });
-        });
-
-        it("Should bring error when proveded invalid info", (done) => {
-            chai.request(app)
-                .get("/api/v1/car?status=availabl")
+                .get("/api/v2/car?status=avbv&state=uugu")
                 .end((req, res) => {
                     res.should.have.a.status(400);
                     done();
                 });
         });
 
-        it("Should not filter cars according to status and state", (done) => {
+        it("Should bring error when proveded invalid info", (done) => {
             chai.request(app)
-                .get("/api/v1/car?status=available&state=new")
+                .get("/api/v2/car?status=availabl")
+                .end((req, res) => {
+                    res.should.have.a.status(400);
+                    done();
+                });
+        });
+
+
+        it("Should not filter car according to prices", (done) => {
+            chai.request(app)
+                .get("/api/v2/car?status=available&min_price=-0&max_price=-0")
                 .end((req, res) => {
                     res.should.have.a.status(404);
                     done();
                 });
         });
 
-        it("Should not filter car according to prices", (done) => {
-            chai.request(app)
-                .get("/api/v1/car?status=available&min_price=1000&max_price=15000")
-                .end((req, res) => {
-                    res.should.have.a.status(404);
-                    done();
-                });
-        });
+        
 
         
     });
