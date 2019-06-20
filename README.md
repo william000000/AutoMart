@@ -65,7 +65,7 @@ Auto Mart, users can sell their cars or buy from trusted sellers.
 - [Heroku Link](https://automart-pro.herokuapp.com/)
 
 ## API Documentation
--  Swagger
+-  [Swagger](https://automart-pro.herokuapp.com/apiDoc)
 
 ## Technologies Used
 
