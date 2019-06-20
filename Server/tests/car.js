@@ -576,9 +576,9 @@ describe("Cars", () => {
         });
 
         it("Should mark posted car as sold if user email exist", (done) => {
-            let id = 5;
+            let id = 2;
             const userEmail = {
-                "email": "willy@gmail.com"
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndpbGx5QGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTU2MTAzMzk3M30.Fyd-VM55PwDedEncgdznyCX0cMv8H_e_x1ieA2uqk-I"
             };
             chai.request(app)
                 .patch(`/api/v2/car/${id}/status`)

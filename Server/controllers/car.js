@@ -39,9 +39,11 @@ class carController {
         try {
             const { car_id, amount, status } = req.body;
             const buyer = jwt.decode(req.body.token).email;
+            const isCarExist = await runQuery(car.getCar,[car_id]);
             const isOrderOwner = await runQuery(car.carOwner, [car_id, buyer]);
             const isOrderExist = await runQuery(order.isOrderExist, [car_id, buyer]);
-
+            
+            if(!isCarExist[0]) { throw new Error("car not exist");} 
             if (!isOrderOwner[0]) {
 
                 if (!isOrderExist[0]) {
@@ -78,15 +80,17 @@ class carController {
         const car_id = req.params.id;
         const buyer = jwt.decode(req.body.token).email;
         const isOrder = await runQuery(order.isOrderOwner, [buyer, car_id]);
+        const isCarOwner = await runQuery(car.carOwner,[car_id,buyer]);
         try {
             if (isOrder[0]) {
+                if (isCarOwner[0]){ throw new Error("You are the owner of the car");}
                 const amount = req.body.amount;
 
                 const result = await runQuery(order.updateOrder, [car_id, amount]);
                 res.status(200).send({ status: 200, result });
 
             } else {
-                throw new Error("order not exist");
+                throw new Error("you are not the owner of that order");
             }
 
         } catch (err) {
@@ -105,7 +109,7 @@ class carController {
      */
     static async markPosted(req, res) {
         const id = req.params.id;
-        const email = req.body.email;
+        const email = jwt.decode(req.body.token).email;
         const singleCar = await runQuery(car.getCar, [id]);
         const singleUser = await runQuery(car.isOwner, [email]);
 
@@ -246,11 +250,13 @@ class carController {
         const car_id = req.body.id;
         const email = jwt.decode(req.body.token).email;
         const checkCar = await runQuery(flag.isflagExist, [email, car_id]);
+        const isCarExist = await runQuery(car.getCar,[car_id]);
         const reason = req.body.reason;
         const desc = req.body.description;
 
         try {
             if (!checkCar[0]) {
+                if(isCarExist){ throw new Error("Car not exist");}
                 const result = await runQuery(flag.createFlag, [car_id, email, reason, desc]);
                 res.status(200).send({ status: 200, message: "Successfully reported!" });
 

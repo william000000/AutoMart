@@ -35,7 +35,7 @@ const order = {
     updateOrder: `UPDATE orders SET amount = $2 WHERE id = $1 RETURNING *`,
     deleteOrder: `DELETE FROM orders WHERE id = $1 RETURNING id`,
     isOrderExist: 'SELECT * FROM orders where car_id=$1 AND buyer=$2',
-    isOrderOwner: 'SELECT * FROM cars where owner=$1 AND id=$2'
+    isOrderOwner: 'SELECT * FROM orders where buyer=$1 AND id=$2'
 };
 
 const flag = {

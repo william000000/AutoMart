@@ -71,6 +71,20 @@ class validateCar {
       });
     }
   }
+  static markAssold(req, res, next){
+    const { token } = req.body;
+
+    try {
+      if(!token) throw new Error("no token provided");
+      next();
+    } catch (err) {
+      res.status(400).send({
+        status: 400,
+        error: err.message,
+      });
+    }
+  }
+  
 }
 
 export default validateCar;
