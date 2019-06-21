@@ -85,11 +85,11 @@ const createTables = async () => {
         `INSERT INTO cars(owner, createdon,state, status, price, manufacturer, model, image, body_type, carName)
      VALUES('willy@gmail.com','12/04/2019','used','available',20000.0,'fusso','huidai','https://william000000.github.io/AutoMart/UI/img/7.jpg','truck','huidai')`,
 
-        `insert into flags(id,car_id,email,createdon,reason,description) values (1,1,'willy@gmail.com','12/04/2019','pricing','Has weak technology...')`,
-        `insert into flags(id,car_id,email,createdon,reason,description) values (2,2,'willy@gmail.com','12/04/2019','weirds demands','Engine not working well...')`,
+        `insert into flags(car_id,email,createdon,reason,description) values (1,'willy@gmail.com','12/04/2019','pricing','Has weak technology...')`,
+        `insert into flags(car_id,email,createdon,reason,description) values (2,'willy@gmail.com','12/04/2019','weirds demands','Engine not working well...')`,
 
-        `insert into orders(id,buyer,car_id,amount,status) values (1,'willy@gmail.com',4,10000,'accepted')`,
-        `insert into orders(id,buyer,car_id,amount,status) values (2,'willy@gmail.com',2,10000,'pending')`,
+        `insert into orders(buyer,car_id,amount,status) values ('willy@gmail.com',4,10000,'accepted')`,
+        `insert into orders(buyer,car_id,amount,status) values ('willy@gmail.com',2,10000,'pending')`,
 
     ];
 

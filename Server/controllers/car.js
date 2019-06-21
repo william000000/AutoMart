@@ -159,7 +159,7 @@ class carController {
         const singleUser = await runQuery(car.isOwner, [owner]);
 
         try {
-            if (singleUser[0] && singleUser[0].status === "available") {
+            if (singleUser[0]) {
                 const newPrice = req.body.amount;
                 const updateCarPrice = await runQuery(car.updateCarPrice, [id, newPrice, owner]);
                 if (updateCarPrice[0]) {
