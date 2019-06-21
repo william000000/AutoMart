@@ -7,8 +7,10 @@
       "contact": {}
     },
     "host": "automart-pro.herokuapp.com",
-    "basePath": "/",
-    "schemes": [],
+    "basePath": "/api",
+    "schemes": [
+      "https"
+    ],
     "consumes": [
       "application/json"
     ],
@@ -16,14 +18,14 @@
       "application/json"
     ],
     "paths": {
-      "//localhost:2000/api/v2/auth/signup": {
+      "/v1/auth/signup": {
         "post": {
           "description": "TODO: Add Description",
           "summary": "Create Use",
           "tags": [
             "Misc"
           ],
-          "operationId": "Localhost2000ApiV2AuthSignupPost",
+          "operationId": "V1AuthSignupPost",
           "deprecated": false,
           "produces": [
             "application/json"
@@ -83,52 +85,14 @@
           }
         }
       },
-      "//localhost:2000/api/v2/auth/signin": {
+      "/v2/auth/signin": {
         "post": {
           "description": "TODO: Add Description",
           "summary": "User Login",
           "tags": [
             "Misc"
           ],
-          "operationId": "Localhost2000Apiv2AuthSigninPost",
-          "deprecated": false,
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "x-auth-token",
-              "in": "header",
-              "required": true,
-              "type": "string",
-              "description": ""
-            },
-            {
-              "name": "Body",
-              "in": "body",
-              "required": true,
-              "description": "",
-              "schema": {
-                "$ref": "#/definitions/UserLoginRequest"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "headers": {}
-            }
-          }
-        }
-      },
-      "//localhost:2000/api/v2/car": {
-        "post": {
-          "description": "TODO: Add Description",
-          "summary": "Create a car sale ad",
-          "tags": [
-            "Misc"
-          ],
-          "operationId": "Localhost2000Apiv2CarPost",
+          "operationId": "V2AuthSigninPost",
           "deprecated": false,
           "produces": [
             "application/json"
@@ -152,6 +116,52 @@
               "description": ""
             },
             {
+              "name": "password",
+              "in": "formData",
+              "required": true,
+              "type": "string",
+              "description": ""
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {}
+            }
+          }
+        }
+      },
+      "/v2/car": {
+        "post": {
+          "description": "TODO: Add Description",
+          "summary": "Create a car sale ad",
+          "tags": [
+            "Misc"
+          ],
+          "operationId": "V2CarPost",
+          "deprecated": false,
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/x-www-form-urlencoded"
+          ],
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "token",
+              "in": "formData",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
               "name": "manufacturer",
               "in": "formData",
               "required": true,
@@ -169,7 +179,8 @@
               "name": "price",
               "in": "formData",
               "required": true,
-              "type": "string",
+              "type": "integer",
+              "format": "int32",
               "description": ""
             },
             {
@@ -180,7 +191,14 @@
               "description": ""
             },
             {
-              "name": "status",
+              "name": "carName",
+              "in": "formData",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "body_type",
               "in": "formData",
               "required": true,
               "type": "string",
@@ -203,11 +221,11 @@
         },
         "get": {
           "description": "TODO: Add Description",
-          "summary": "View All Unsold Cars",
+          "summary": "within a price range",
           "tags": [
             "Misc"
           ],
-          "operationId": "Localhost2000Apiv2CarGet",
+          "operationId": "V2CarGet",
           "deprecated": false,
           "produces": [
             "application/json"
@@ -220,149 +238,6 @@
               "type": "string",
               "description": ""
             },
-            {
-              "name": "Content-Type",
-              "in": "header",
-              "required": true,
-              "type": "string",
-              "description": ""
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "headers": {}
-            }
-          }
-        }
-      },
-      "//localhost:2000/api/v2/order": {
-        "post": {
-          "description": "TODO: Add Description",
-          "summary": "Make Purchase Order",
-          "tags": [
-            "Misc"
-          ],
-          "operationId": "Localhost2000Apiv2OrderPost",
-          "deprecated": false,
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "Content-Type",
-              "in": "header",
-              "required": true,
-              "type": "string",
-              "description": ""
-            },
-            {
-              "name": "Body",
-              "in": "body",
-              "required": true,
-              "description": "",
-              "schema": {
-                "$ref": "#/definitions/MakePurchaseOrderRequest"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "headers": {}
-            }
-          }
-        }
-      },
-      "//localhost:2000/api/v2/order/2/price": {
-        "patch": {
-          "description": "TODO: Add Description",
-          "summary": "Update the price of a purchase order",
-          "tags": [
-            "Misc"
-          ],
-          "operationId": "Localhost2000Apiv2Order2PricePatch",
-          "deprecated": false,
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "Content-Type",
-              "in": "header",
-              "required": true,
-              "type": "string",
-              "description": ""
-            },
-            {
-              "name": "Body",
-              "in": "body",
-              "required": true,
-              "description": "",
-              "schema": {
-                "$ref": "#/definitions/UpdatethepriceofapurchaseorderRequest"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "headers": {}
-            }
-          }
-        }
-      },
-      "//localhost:2000/api/v2/car/1/status": {
-        "patch": {
-          "description": "TODO: Add Description",
-          "summary": "Mark a posted car Ad as sold",
-          "tags": [
-            "Misc"
-          ],
-          "operationId": "Localhost2000Apiv2Car1StatusPatch",
-          "deprecated": false,
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "Content-Type",
-              "in": "header",
-              "required": true,
-              "type": "string",
-              "description": ""
-            },
-            {
-              "name": "Body",
-              "in": "body",
-              "required": true,
-              "description": "",
-              "schema": {
-                "$ref": "#/definitions/MarkapostedcarAdassoldRequest"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "headers": {}
-            }
-          }
-        }
-      },
-      "//localhost:2000/api/v2/car-range": {
-        "get": {
-          "description": "TODO: Add Description",
-          "summary": "within a price range",
-          "tags": [
-            "Misc"
-          ],
-          "operationId": "Localhost2000Apiv2CarRangeGet",
-          "deprecated": false,
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
             {
               "name": "min_price",
               "in": "query",
@@ -395,14 +270,155 @@
           }
         }
       },
-      "//localhost:2000/api/v2/car/1": {
+      "/v2/order": {
+        "post": {
+          "description": "TODO: Add Description",
+          "summary": "Make Purchase Order",
+          "tags": [
+            "Misc"
+          ],
+          "operationId": "V2OrderPost",
+          "deprecated": false,
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/x-www-form-urlencoded"
+          ],
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "token",
+              "in": "formData",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "amount",
+              "in": "formData",
+              "required": true,
+              "type": "integer",
+              "format": "int32",
+              "description": ""
+            },
+            {
+              "name": "car_id",
+              "in": "formData",
+              "required": true,
+              "type": "integer",
+              "format": "int32",
+              "description": ""
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {}
+            }
+          }
+        }
+      },
+      "/v2/order/5/price": {
+        "patch": {
+          "description": "TODO: Add Description",
+          "summary": "Update the price of a purchase order",
+          "tags": [
+            "Misc"
+          ],
+          "operationId": "V2Order5PricePatch",
+          "deprecated": false,
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/x-www-form-urlencoded"
+          ],
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "token",
+              "in": "formData",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "amount",
+              "in": "formData",
+              "required": true,
+              "type": "integer",
+              "format": "int32",
+              "description": ""
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {}
+            }
+          }
+        }
+      },
+      "/v2/car/7/status": {
+        "patch": {
+          "description": "TODO: Add Description",
+          "summary": "Mark a posted car Ad as sold",
+          "tags": [
+            "Misc"
+          ],
+          "operationId": "V2Car7StatusPatch",
+          "deprecated": false,
+          "produces": [
+            "application/json"
+          ],
+          "consumes": [
+            "application/x-www-form-urlencoded"
+          ],
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "token",
+              "in": "formData",
+              "required": true,
+              "type": "string",
+              "description": ""
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "",
+              "headers": {}
+            }
+          }
+        }
+      },
+      "/v2/car/1": {
         "delete": {
           "description": "TODO: Add Description",
           "summary": "Delete a Car",
           "tags": [
             "Misc"
           ],
-          "operationId": "Localhost2000Apiv2Car1Delete",
+          "operationId": "V2Car1Delete",
           "deprecated": false,
           "produces": [
             "application/json"
@@ -410,6 +426,13 @@
           "parameters": [
             {
               "name": "Content-Type",
+              "in": "header",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "x-auth-token",
               "in": "header",
               "required": true,
               "type": "string",
@@ -424,17 +447,20 @@
           }
         }
       },
-      "//localhost:2000/api/v2/car/1/price": {
+      "/v2/car/4/price": {
         "patch": {
           "description": "TODO: Add Description",
           "summary": "Update the price of a car",
           "tags": [
             "Misc"
           ],
-          "operationId": "Localhost2000Apiv2Car1PricePatch",
+          "operationId": "V2Car4PricePatch",
           "deprecated": false,
           "produces": [
             "application/json"
+          ],
+          "consumes": [
+            "application/x-www-form-urlencoded"
           ],
           "parameters": [
             {
@@ -445,13 +471,19 @@
               "description": ""
             },
             {
-              "name": "Body",
-              "in": "body",
+              "name": "token",
+              "in": "formData",
               "required": true,
-              "description": "",
-              "schema": {
-                "$ref": "#/definitions/UpdatethepriceofacarRequest"
-              }
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "amount",
+              "in": "formData",
+              "required": true,
+              "type": "integer",
+              "format": "int32",
+              "description": ""
             }
           ],
           "responses": {
@@ -462,14 +494,14 @@
           }
         }
       },
-      "//localhost:2000/api/v2/car/15": {
+      "/v2/car/2": {
         "get": {
           "description": "TODO: Add Description",
           "summary": "View Specific Car",
           "tags": [
             "Misc"
           ],
-          "operationId": "Localhost2000ApiV2Car15Get",
+          "operationId": "V2Car2Get",
           "deprecated": false,
           "produces": [
             "application/json"
@@ -491,43 +523,39 @@
           }
         }
       },
-      "/": {
-        "get": {
+      "/v2/auth/resetpassword": {
+        "post": {
           "description": "TODO: Add Description",
           "summary": "resetpassword",
           "tags": [
             "Misc"
           ],
-          "operationId": "UnnammedEndpointGet",
+          "operationId": "V2AuthResetpasswordPost",
           "deprecated": false,
           "produces": [
             "application/json"
           ],
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "",
-              "headers": {}
-            }
-          }
-        }
-      },
-      "//localhost:2000/api/v2/car-all": {
-        "get": {
-          "description": "TODO: Add Description",
-          "summary": "whether sold or unsold",
-          "tags": [
-            "Misc"
-          ],
-          "operationId": "Localhost2000Apiv2CarAllGet",
-          "deprecated": false,
-          "produces": [
-            "application/json"
+          "consumes": [
+            "application/x-www-form-urlencoded"
           ],
           "parameters": [
             {
               "name": "Content-Type",
               "in": "header",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "token",
+              "in": "formData",
+              "required": true,
+              "type": "string",
+              "description": ""
+            },
+            {
+              "name": "password",
+              "in": "formData",
               "required": true,
               "type": "string",
               "description": ""
@@ -541,17 +569,20 @@
           }
         }
       },
-      "//localhost:2000/api/v2/flag": {
+      "/v2/flag": {
         "post": {
           "description": "TODO: Add Description",
           "summary": "Flag/report posted AD as Fraudulent",
           "tags": [
             "Misc"
           ],
-          "operationId": "Localhost2000Apiv2FlagPost",
+          "operationId": "V2FlagPost",
           "deprecated": false,
           "produces": [
             "application/json"
+          ],
+          "consumes": [
+            "application/x-www-form-urlencoded"
           ],
           "parameters": [
             {
@@ -562,53 +593,30 @@
               "description": ""
             },
             {
-              "name": "Body",
-              "in": "body",
+              "name": "id",
+              "in": "formData",
               "required": true,
-              "description": "",
-              "schema": {
-                "$ref": "#/definitions/Flag~1reportpostedADasFraudulentRequest"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "headers": {}
-            }
-          }
-        }
-      },
-      "//localhost:2000/api/v2/car-used": {
-        "get": {
-          "description": "TODO: Add Description",
-          "summary": "By specific make & state=Used",
-          "tags": [
-            "Misc"
-          ],
-          "operationId": "Localhost2000Apiv2CarUsedGet",
-          "deprecated": false,
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
+              "type": "integer",
+              "format": "int32",
+              "description": ""
+            },
             {
-              "name": "status",
-              "in": "query",
+              "name": "reason",
+              "in": "formData",
               "required": true,
               "type": "string",
               "description": ""
             },
             {
-              "name": "state",
-              "in": "query",
+              "name": "description",
+              "in": "formData",
               "required": true,
               "type": "string",
               "description": ""
             },
             {
-              "name": "Content-Type",
-              "in": "header",
+              "name": "token",
+              "in": "formData",
               "required": true,
               "type": "string",
               "description": ""
@@ -621,160 +629,6 @@
             }
           }
         }
-      },
-      "//localhost:2000/api/v2/car-make": {
-        "get": {
-          "description": "TODO: Add Description",
-          "summary": "Find by manufacturer",
-          "tags": [
-            "Misc"
-          ],
-          "operationId": "Localhost2000Apiv2CarMakeGet",
-          "deprecated": false,
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "name": "status",
-              "in": "query",
-              "required": true,
-              "type": "string",
-              "description": ""
-            },
-            {
-              "name": "manufacturer",
-              "in": "query",
-              "required": true,
-              "type": "string",
-              "description": ""
-            },
-            {
-              "name": "Content-Type",
-              "in": "header",
-              "required": true,
-              "type": "string",
-              "description": ""
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "",
-              "headers": {}
-            }
-          }
-        }
-      }
-    },
-    "definitions": {
-      "UserLoginRequest": {
-        "title": "UserLoginRequest",
-        "example": {
-          "email": "magoo@gmail.com",
-          "password": "1"
-        },
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "email",
-          "password"
-        ]
-      },
-      "MakePurchaseOrderRequest": {
-        "title": "MakePurchaseOrderRequest",
-        "example": {
-          "email": "willy@gmail.com",
-          "model": "range",
-          "price": 299.8
-        },
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "model": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number",
-            "format": "double"
-          }
-        },
-        "required": [
-          "email",
-          "model",
-          "price"
-        ]
-      },
-      "UpdatethepriceofapurchaseorderRequest": {
-        "title": "UpdatethepriceofapurchaseorderRequest",
-        "example": {
-          "price": 40000000
-        },
-        "type": "object",
-        "properties": {
-          "price": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "required": [
-          "price"
-        ]
-      },
-      "MarkapostedcarAdassoldRequest": {
-        "title": "MarkapostedcarAdassoldRequest",
-        "example": {
-          "email": "willy@gmail.com"
-        },
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "email"
-        ]
-      },
-      "UpdatethepriceofacarRequest": {
-        "title": "UpdatethepriceofacarRequest",
-        "example": {
-          "price": 3000000
-        },
-        "type": "object",
-        "properties": {
-          "price": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "required": [
-          "price"
-        ]
-      },
-      "Flag/reportpostedADasFraudulentRequest": {
-        "title": "Flag/reportpostedADasFraudulentRequest",
-        "example": {
-          "id": 1
-        },
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "required": [
-          "id"
-        ]
       }
     },
     "tags": [
