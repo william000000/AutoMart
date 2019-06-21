@@ -431,7 +431,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Successfully reported as fraudulent",
+                        "description": "Successfully reported as fraudulents",
                         "schema": {
                             "properties": {
                                 "status": {
